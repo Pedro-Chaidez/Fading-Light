@@ -7,34 +7,30 @@ jobs:
     name: Build and Test for Errors/Warnings
     runs-on: ubuntu-latest
     steps:
-      # Step 1: Check out the repository's code (no changes here)
+      # Step 1: Check out the repository's code
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Step 2: Cache the Library folder (UPDATED)
+      # Step 2: Cache the Unity Library folder to improve build times
       - name: Cache Unity Library
         uses: actions/cache@v4
-        # Run this step inside your project folder
-        working-directory: ./pedro-chaidez-fading-light
+        # Ensure this folder exists in your project structure
         with:
-          # The path is now relative to the working-directory
           path: Library
           key: Library-${{ hashFiles('ProjectSettings/ProjectVersion.txt') }}
           restore-keys: |
             Library-
 
-      # Step 3: Build the Unity project (UPDATED)
+      # Step 3: Build the Unity project
       - name: Build for StandaloneLinux64
         uses: game-ci/unity-builder@v4
-        # Run this step inside your project folder
-        working-directory: ./pedro-chaidez-fading-light
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
-          # projectPath is now "." because we are already inside the folder
+          # Assuming the Unity project is in the root directory
           projectPath: .
-          unityVersion: 6000.2.7f2
+          unityVersion: 2021.3.16f1 # Replace with your correct Unity version
           targetPlatform: StandaloneLinux64
           customParameters: -nographics -warningsAsErrors
