@@ -1,49 +1,40 @@
 name: Unity CI Test
 
-# This workflow runs on pushes and pull requests to the 'main' branch
 on: [push, pull_request]
 
 jobs:
   build:
-    # Name of the job
     name: Build and Test for Errors/Warnings
-    # Runner to use (ubuntu is recommended for Unity)
     runs-on: ubuntu-latest
     steps:
-      # Step 1: Check out the repository's code
+      # Step 1: Check out the repository's code (no changes here)
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Step 2: Cache the Library folder to speed up subsequent builds
+      # Step 2: Cache the Library folder (UPDATED)
       - name: Cache Unity Library
         uses: actions/cache@v4
+        # Run this step inside your project folder
+        working-directory: ./pedro-chaidez-fading-light
         with:
-          path: pedro-chaidez-fading-light/Library
-          key: Library-${{ hashFiles('pedro-chaidez-fading-light/ProjectSettings/ProjectVersion.txt') }}
+          # The path is now relative to the working-directory
+          path: Library
+          key: Library-${{ hashFiles('ProjectSettings/ProjectVersion.txt') }}
           restore-keys: |
             Library-
 
-      # Step 3: Build the Unity project for the StandaloneLinux64 platform
-      # This step will automatically activate a Unity license, build, and then return the license.
-      # The build will fail if there are any compilation errors or warnings.
+      # Step 3: Build the Unity project (UPDATED)
       - name: Build for StandaloneLinux64
         uses: game-ci/unity-builder@v4
+        # Run this step inside your project folder
+        working-directory: ./pedro-chaidez-fading-light
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
-          # The path to your Unity project, relative to the repository root
-          projectPath: pedro-chaidez-fading-light
-
-          # The Unity version from ProjectSettings/ProjectVersion.txt
-          # NOTE: '6000.2.7f2' is an unusual version format. Please ensure it is correct.
+          # projectPath is now "." because we are already inside the folder
+          projectPath: .
           unityVersion: 6000.2.7f2
-
-          # The platform to build for. StandaloneLinux64 is ideal for server-based CI.
           targetPlatform: StandaloneLinux64
-
-          # Custom parameters passed to the Unity build command.
-          # -nographics: Runs Unity without a graphical interface.
-          # -warningsAsErrors: Treats any compiler warning as an error, failing the build.
           customParameters: -nographics -warningsAsErrors
