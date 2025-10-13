@@ -1,5 +1,4 @@
 name: Unity CI Test
-
 on: [push, pull_request]
 
 jobs:
