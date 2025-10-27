@@ -1,4 +1,4 @@
-/*using UnityEngine;
+using UnityEngine;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.Timeline;
 
@@ -10,11 +10,10 @@ public class PlayerMotor : MonoBehaviour
     private bool lerpCrouch;
     public bool crouching;
     public bool sprinting;
-    public float speed = 2.0f;
-    public float gravity = -15.0f;
-    public float jumpHeight = 1.2f;
+    public float speed = 5f;
+    public float gravity = -9.8f;
+    public float jumpHeight = 1.5f;
     public float crouchTimer = 1f;
-    public float terminalVelocity = 53.0f;
     private void Start()
     {
         controller = GetComponent<CharacterController>();
@@ -34,18 +33,18 @@ public class PlayerMotor : MonoBehaviour
         crouching = !crouching;
         crouchTimer = 0;
         lerpCrouch = true;
-        
+
     }
     public void Sprint()
     {
         sprinting = !sprinting;
-        if(sprinting)
+        if (sprinting)
         {
-            speed = 5.335f;
+            speed = 8f;
         }
         else
         {
-            speed = 2.0f;
+            speed = 5f;
         }
     }
     public void ProcessMove(Vector2 input)
@@ -68,4 +67,3 @@ public class PlayerMotor : MonoBehaviour
         }
     }
 }
-*/

@@ -1,15 +1,15 @@
-/*using UnityEngine;
+using UnityEngine;
 using UnityEngine.InputSystem;
 public class InputManager : MonoBehaviour
 {
-    private PlayerInput playerInput;
-    private PlayerInput.OnFootActions onFoot;
+    private InputSystem_Actions playerInput;
+    private InputSystem_Actions.PlayerActions onFoot;
     private PlayerMotor motor;
     private PlayerLook look;
     private void Awake()
     {
-        playerInput = new PlayerInput();
-        onFoot = playerInput.OnFoot;
+        playerInput = new InputSystem_Actions();
+        onFoot = playerInput.Player;
 
         motor = GetComponent<PlayerMotor>();
         look = GetComponent<PlayerLook>();
@@ -20,7 +20,7 @@ public class InputManager : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        motor.ProcessMove(onFoot.Movement.ReadValue<Vector2>());
+        motor.ProcessMove(onFoot.Move.ReadValue<Vector2>());
     }
     private void LateUpdate()
     {
@@ -35,4 +35,3 @@ public class InputManager : MonoBehaviour
         onFoot.Disable();
     }
 }
-*/
