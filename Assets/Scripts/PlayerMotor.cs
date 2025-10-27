@@ -33,12 +33,12 @@ public class PlayerMotor : MonoBehaviour
         crouching = !crouching;
         crouchTimer = 0;
         lerpCrouch = true;
-        
+
     }
     public void Sprint()
     {
         sprinting = !sprinting;
-        if(sprinting)
+        if (sprinting)
         {
             speed = 8f;
         }
