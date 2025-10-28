@@ -6,6 +6,7 @@ public class InputManager : MonoBehaviour
     private InputSystem_Actions.PlayerActions onFoot;
     private PlayerMotor motor;
     private PlayerLook look;
+    private Player player;
     private void Awake()
     {
         playerInput = new InputSystem_Actions();
@@ -13,10 +14,12 @@ public class InputManager : MonoBehaviour
 
         motor = GetComponent<PlayerMotor>();
         look = GetComponent<PlayerLook>();
+        player = GetComponent<Player>();
 
         onFoot.Jump.performed += ctx => motor.Jump();
         onFoot.Crouch.performed += ctx => motor.Crouch();
         onFoot.Sprint.performed += ctx => motor.Sprint();
+        onFoot.Interact.performed += ctx => player.FlashlightToggle();
     }
     private void FixedUpdate()
     {

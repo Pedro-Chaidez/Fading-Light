@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.Timeline;
 
+[RequireComponent(typeof(CharacterController))]
 public class PlayerMotor : MonoBehaviour
 {
     private CharacterController controller;
@@ -10,9 +11,9 @@ public class PlayerMotor : MonoBehaviour
     private bool lerpCrouch;
     public bool crouching;
     public bool sprinting;
-    public float speed = 5f;
-    public float gravity = -9.8f;
-    public float jumpHeight = 1.5f;
+    public float speed = 6f;
+    public float gravity = -10f;
+    public float jumpHeight = 7f;
     public float crouchTimer = 1f;
     private void Start()
     {
@@ -40,18 +41,18 @@ public class PlayerMotor : MonoBehaviour
         sprinting = !sprinting;
         if (sprinting)
         {
-            speed = 8f;
+            speed = 12f;
         }
         else
         {
-            speed = 5f;
+            speed = 6f;
         }
     }
     public void ProcessMove(Vector2 input)
     {
         Vector3 moveDirection = Vector3.zero;
         moveDirection.x = input.x;
-        moveDirection.y = input.y;
+        moveDirection.z = input.y;
         controller.Move(transform.TransformDirection(moveDirection) * speed * Time.deltaTime);
         playerVelocity.y += gravity * Time.deltaTime;
         if (isGrounded && playerVelocity.y < 0)
