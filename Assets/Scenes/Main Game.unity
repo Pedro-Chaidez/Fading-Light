@@ -171,6 +171,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LittleGhost_LP (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1937501896765498627, guid: b37ba23530e631144948efe5d1a7f7ac, type: 3}
+      propertyPath: m_ProvidesContacts
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -476,7 +480,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1477060170852493455, guid: 7ab53f3568627d34687bd4f000bc911f, type: 3}
       propertyPath: m_Name
-      value: Armature (1)
+      value: Armature
       objectReference: {fileID: 0}
     - target: {fileID: 2248495552825799221, guid: 7ab53f3568627d34687bd4f000bc911f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -517,6 +521,14 @@ PrefabInstance:
     - target: {fileID: 2248495552825799221, guid: 7ab53f3568627d34687bd4f000bc911f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6307170492611821237, guid: 7ab53f3568627d34687bd4f000bc911f, type: 3}
+      propertyPath: jumpHeight
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6307170492611821237, guid: 7ab53f3568627d34687bd4f000bc911f, type: 3}
+      propertyPath: crouchTimer
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
