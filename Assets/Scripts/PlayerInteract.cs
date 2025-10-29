@@ -23,11 +23,14 @@ public class PlayerInteract : MonoBehaviour
         RaycastHit hitInfo;
         if(Physics.Raycast(ray, out hitInfo, distance, mask))
         {
+            Debug.Log("Raycast hit: " + hitInfo.collider.gameObject.name);
             Interactable interactable = hitInfo.collider.GetComponent<Interactable>();
             if(interactable != null) {
+                Debug.Log("Interactable found: " + interactable.name);
                 playerUI.UpdateText(interactable.promptMessage);
                 if(inputManager.onFoot.Interact.triggered)
                 {
+                    Debug.Log("Interact key pressed! Calling Interact...");
                     interactable.BaseInteract();
                 }
             }

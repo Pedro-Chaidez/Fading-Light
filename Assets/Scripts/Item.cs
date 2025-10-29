@@ -1,8 +1,7 @@
 using UnityEngine;
 
-public class Item : MonoBehaviour
+public abstract class Item : MonoBehaviour
 {
-    [SerializeField]
     private string itemName;
     private string itemType;
     private float durability;

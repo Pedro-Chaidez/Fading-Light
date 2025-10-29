@@ -20,7 +20,7 @@ public class PlayerLook : MonoBehaviour
     }
     private void Awake()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
     }
 }
