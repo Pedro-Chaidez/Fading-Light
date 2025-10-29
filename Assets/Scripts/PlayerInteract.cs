@@ -15,7 +15,7 @@ public class PlayerInteract : MonoBehaviour
         playerUI = GetComponent<PlayerUI>();
         inputManager = GetComponent<InputManager>();
     }
-    private void Update()
+    private void FixedUpdate()
     {
         playerUI.UpdateText(string.Empty);
         Ray ray = new Ray(cam.transform.position, cam.transform.forward);
