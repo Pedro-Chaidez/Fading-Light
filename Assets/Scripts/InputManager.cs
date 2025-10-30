@@ -3,9 +3,10 @@ using UnityEngine.InputSystem;
 public class InputManager : MonoBehaviour
 {
     private InputSystem_Actions playerInput;
-    private InputSystem_Actions.PlayerActions onFoot;
+    public InputSystem_Actions.PlayerActions onFoot;
     private PlayerMotor motor;
     private PlayerLook look;
+    private Inventory inventory;
     private void Awake()
     {
         playerInput = new InputSystem_Actions();
@@ -13,10 +14,14 @@ public class InputManager : MonoBehaviour
 
         motor = GetComponent<PlayerMotor>();
         look = GetComponent<PlayerLook>();
+        inventory = GetComponent<Inventory>();
 
         onFoot.Jump.performed += ctx => motor.Jump();
         onFoot.Crouch.performed += ctx => motor.Crouch();
         onFoot.Sprint.performed += ctx => motor.Sprint();
+        onFoot.NextItem.performed += ctx => inventory.scrollUp();
+        onFoot.PreviousItem.performed += ctx => inventory.scrollDown();
+        onFoot.DropItem.performed += ctx => inventory.RemoveItem();
     }
     private void FixedUpdate()
     {
