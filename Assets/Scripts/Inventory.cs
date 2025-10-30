@@ -1,25 +1,19 @@
 using UnityEngine;
-using System.Collections.Generic;
-using UnityEditorInternal.Profiling.Memory.Experimental;
-using System.Linq;
+
 public class Inventory : MonoBehaviour
 {
     private readonly static int LIST_CAPACITY = 5;
-    private List<Item> items = new List<Item>(LIST_CAPACITY);
+    private Item[] items = new Item[LIST_CAPACITY];
     [SerializeField]
     private int selectedItem = 0;
-    private InputManager inputManager;
-    private void Start()
-    {
-        inputManager = GetComponent<InputManager>();
-    }
     public Item GetItem()
     {
         return new Battery();
     }
     public void AddItem(Item newItem)
     {
-        items.Append(newItem);
+        Debug.Log("Add Item Triggered");
+        //items.Append(newItem);
     }
     public void RemoveItem()
     {
