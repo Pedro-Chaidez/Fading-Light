@@ -1,39 +1,57 @@
-name: Build project
+  # Cache the Library folder (project import cache)
+  - uses: actions/cache@v3
+    with:
+      path: Library
+      key: Library-${{ matrix.targetPlatform }}-${{ hashFiles('**/ProjectSettings/ProjectVersion.txt') }}
+      restore-keys: |
+        Library-${{ matrix.targetPlatform }}-
 
-on: [push, pull_request]
+  # Use game-ci's editor cache to avoid pulling the full editor every run.
+  # This step tries to restore a cached Unity editor tarball (if previously saved).
+  - name: Restore Unity editor cache
+    uses: actions/cache@v3
+    id: unity-editor-cache
+    with:
+      path: .unity-editor-cache
+      key: unity-editor-${{ env.UNITY_VERSION }}-${{ matrix.targetPlatform }}
+      restore-keys: |
+        unity-editor-${{ env.UNITY_VERSION }}-
 
-jobs:
-  buildForAllSupportedPlatforms:
-    name: Build for ${{ matrix.targetPlatform }}
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        targetPlatform:
-          - StandaloneOSX # Build a macOS standalone (Intel 64-bit).
-          - StandaloneWindows # Build a Windows standalone.
-          - StandaloneWindows64 # Build a Windows 64-bit standalone.
-          - StandaloneLinux64 # Build a Linux 64-bit standalone.
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          lfs: true
-      - uses: actions/cache@v3
-        with:
-          path: Library
-          key: Library-${{ matrix.targetPlatform }}
-          restore-keys: Library-
-      - if: matrix.targetPlatform == 'Android'
-        uses: jlumbroso/free-disk-space@v1.3.1
-      - uses: game-ci/unity-builder@v4
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-        with:
-          targetPlatform: ${{ matrix.targetPlatform }}
-      - uses: actions/upload-artifact@v4
-        with:
-          name: Build-${{ matrix.targetPlatform }}
-          path: build/${{ matrix.targetPlatform }}
+  # If you need to free space on the runner before the heavy image pull, prune docker (optional)
+  - name: Prune docker (free space)
+    if: runner.os == 'Linux'
+    run: |
+      docker system prune -af || true
+
+  # Build with game-ci/unity-builder.
+  # We enable the action's caching features and also save the editor into our cache after a successful run.
+  - name: Build with Unity (game-ci/unity-builder)
+    uses: game-ci/unity-builder@v4
+    id: unity-builder
+    env:
+      UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+      UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+      UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+    with:
+      targetPlatform: ${{ matrix.targetPlatform }}
+      cache: true                # enable game-ci builder cache (Library, etc.)
+      cache-name: Library-${{ matrix.targetPlatform }}
+      # Note: unity-builder will still need to pull the editor image the first time.
+      # The Restore/Save cache steps above help persist the editor between runs.
+
+  # Persist the Unity editor into the cache so future runs won't need to re-download the entire editor.
+  # This step archives the editor from the runner and stores it in the actions cache.
+  - name: Save Unity editor to cache
+    if: always()
+    uses: actions/cache@v3
+    with:
+      path: |
+        /opt/unity
+        .unity-editor-cache
+      key: unity-editor-${{ env.UNITY_VERSION }}-${{ matrix.targetPlatform }}
+      # If you prefer, narrow the path to wherever the editor is installed on the runner/container.
+
+  - uses: actions/upload-artifact@v4
+    with:
+      name: Build-${{ matrix.targetPlatform }}
+      path: build/${{ matrix.targetPlatform }}
