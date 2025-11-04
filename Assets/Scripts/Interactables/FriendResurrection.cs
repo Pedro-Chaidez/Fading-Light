@@ -1,8 +1,19 @@
 ﻿using UnityEngine;
 public class FriendResurrection : Item
 {
-    protected override void Interact()
+    private void Start()
     {
-        Debug.Log("Interacted with FriendResurrection");
+        itemName = "FriendResurrection";
+        itemType = "Revive";
+        durability = 1;
+    }
+    protected override void useItem()
+    {
+
+    }
+    protected override void Interact(Inventory playerInventory)
+    {
+        playerInventory.AddItem(this);
+        Destroy(gameObject);
     }
 }
