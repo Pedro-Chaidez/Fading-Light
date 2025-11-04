@@ -7,7 +7,7 @@ public class NetworkManagerUI : MonoBehaviour
     public GameObject TitleScreenUI;
     public GameObject inGameUI;
 
-    // We no longer need playerArmature or cameraLookScript!
+    
 
     [SerializeField] private Button serverBtn;
     [SerializeField] private Button hostBtn;
@@ -15,7 +15,6 @@ public class NetworkManagerUI : MonoBehaviour
 
     private void Awake()
     {
-        // No more disabling scripts, the player doesn't exist yet!
 
         if (serverBtn != null)
         {
@@ -23,7 +22,6 @@ public class NetworkManagerUI : MonoBehaviour
             {
                 TitleScreenUI.SetActive(false);
                 inGameUI.SetActive(true);
-                // The player spawn is handled by NetworkManager
                 NetworkManager.Singleton.StartServer();
             });
         }
@@ -34,7 +32,6 @@ public class NetworkManagerUI : MonoBehaviour
             {
                 TitleScreenUI.SetActive(false);
                 inGameUI.SetActive(true);
-                // The player spawn is handled by NetworkManager
                 NetworkManager.Singleton.StartHost();
             });
         }
@@ -45,7 +42,6 @@ public class NetworkManagerUI : MonoBehaviour
             {
                 TitleScreenUI.SetActive(false);
                 inGameUI.SetActive(true);
-                // The player spawn is handled by NetworkManager
                 NetworkManager.Singleton.StartClient();
             });
         }
