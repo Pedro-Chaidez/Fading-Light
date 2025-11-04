@@ -1,22 +1,24 @@
 using UnityEngine;
-using System.Collections.Generic; 
+using System.Collections.Generic;
+using System;
 
 public class Inventory : MonoBehaviour
 {
+    public static Inventory instance;
     private readonly static int LIST_CAPACITY = 5;
     [SerializeField]
     private List<Item> items = new List<Item>(LIST_CAPACITY);
     [SerializeField]
     private int selectedItem = 0;
-    public void GetItem(Item newItem)
+    private void Awake()
     {
-        if (items[selectedItem] == null)
+        if (instance == null)
         {
-            items[selectedItem] = newItem;
+            instance = this;
         }
         else
         {
-            Debug.Log("Tried to add an item on a slot with an item already there");
+            Debug.LogWarning("More than one instance of inventory found!");
         }
     }
     public void AddItem(Item newItem)
@@ -40,19 +42,31 @@ public class Inventory : MonoBehaviour
         }
         else
         {
-            Debug.Log("Tried to use an Item that is not there");
+            Debug.LogWarning("Tried to use an Item that is not there");
         }
     }
     public void DropItem()
     {
-        if (items[selectedItem] != null)
+        if(items.Count == 0)
         {
-            Debug.Log("Dropped " + items[selectedItem].name);
-            items.RemoveAt(selectedItem);
+            Debug.Log("Inventory is empty. Cannot drop an item.");
+            return;
         }
-        else
+        try
         {
-            Debug.Log("Tried to drop an Item that is not there");
+            if (items[selectedItem] != null)
+            {
+                Debug.Log("Dropped " + items[selectedItem].name);
+                items.RemoveAt(selectedItem);
+            }
+            else
+            {
+                Debug.LogWarning("Selected item slot was already empty.");
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("An unexpected error occurred while dropping an item: " + ex.Message);
         }
     }
     public void scrollUp()

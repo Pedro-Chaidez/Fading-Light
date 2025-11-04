@@ -14,7 +14,7 @@ public class Battery : Item
     }
     protected override void Interact(Inventory playerInventory)
     {
-        playerInventory.GetItem(this);
-        Destroy(gameObject);
+        playerInventory.AddItem(this);
+        //Destroy(gameObject); //this stops generation and deletes item, bug adds empty item
     }
 }

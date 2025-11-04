@@ -26,7 +26,7 @@ public class DamageProtection : Item
     }*/
     protected override void Interact(Inventory playerInventory)
     {
-        playerInventory.GetItem(this);
+        playerInventory.AddItem(this);
         Destroy(gameObject);
     }
 }
