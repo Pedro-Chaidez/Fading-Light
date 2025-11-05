@@ -13,9 +13,4 @@ public class PortableBanish : Item
     {
         Debug.Log("Used Portable banish with color: " + color);
     }
-    protected override void Interact(Inventory playerInventory)
-    {
-        playerInventory.AddItem(this);
-        Destroy(gameObject);
-    }
 }

@@ -16,9 +16,4 @@ public class SpeedBoost : Item
     {
         Debug.Log("Used Speed boost with duration: " + duration + "and new speed: "+newSpeed);
     }
-    protected override void Interact(Inventory playerInventory)
-    {
-        playerInventory.AddItem(this);
-        Destroy(gameObject);
-    }
 }

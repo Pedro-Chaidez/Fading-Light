@@ -4,9 +4,9 @@ public abstract class Interactable : MonoBehaviour
 {
     public string promptMessage;
 
-    public void ItemInteract(Inventory playerInventory)
+    public void BaseInteract()
     {
-        Interact(playerInventory);
+        Interact();
     }
-    protected virtual void Interact(Inventory playerInventory) { }
+    protected virtual void Interact() { }
 }

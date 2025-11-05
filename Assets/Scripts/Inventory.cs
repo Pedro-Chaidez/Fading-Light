@@ -10,6 +10,9 @@ public class Inventory : MonoBehaviour
     private List<Item> items = new List<Item>(LIST_CAPACITY);
     [SerializeField]
     private int selectedItem = 0;
+
+    [SerializeField]
+    private Transform dropPoint;
     private void Awake()
     {
         if (instance == null)
@@ -26,7 +29,7 @@ public class Inventory : MonoBehaviour
         if (items.Count < LIST_CAPACITY)
         {
             items.Add(newItem);
-            Debug.Log("Added " + newItem.name);
+            Debug.Log("Added " + newItem.itemName);
         }
         else
         {
@@ -37,7 +40,8 @@ public class Inventory : MonoBehaviour
     {
         if (items[selectedItem] != null)
         {
-            Debug.Log("Used " + items[selectedItem].name);
+            Debug.Log("Used " + items[selectedItem].itemName);
+            Destroy(items[selectedItem].gameObject);
             items.RemoveAt(selectedItem);
         }
         else
@@ -56,7 +60,30 @@ public class Inventory : MonoBehaviour
         {
             if (items[selectedItem] != null)
             {
-                Debug.Log("Dropped " + items[selectedItem].name);
+                Item itemToDrop = items[selectedItem];
+
+                // Use .itemName
+                Debug.Log("Dropped " + itemToDrop.itemName);
+
+                // --- THIS IS THE FIX ---
+                // 1. Un-parent the item
+                itemToDrop.transform.parent = null;
+
+                // 2. Set its position to the drop point (or in front of the player)
+                if (dropPoint != null)
+                {
+                    itemToDrop.transform.position = dropPoint.position;
+                }
+                else
+                {
+                    // Fallback if no dropPoint is assigned
+                    itemToDrop.transform.position = transform.position + (transform.forward * 2);
+                }
+
+                // 3. Reactivate it so it appears in the world
+                itemToDrop.gameObject.SetActive(true);
+
+                // 4. Remove it from the inventory list
                 items.RemoveAt(selectedItem);
             }
             else
