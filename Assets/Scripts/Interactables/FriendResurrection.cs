@@ -11,9 +11,4 @@ public class FriendResurrection : Item
     {
 
     }
-    protected override void Interact(Inventory playerInventory)
-    {
-        playerInventory.AddItem(this);
-        Destroy(gameObject);
-    }
 }

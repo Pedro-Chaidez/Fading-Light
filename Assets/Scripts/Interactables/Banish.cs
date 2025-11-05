@@ -13,9 +13,4 @@ public class Banish : Item
     {
         Debug.Log("Used Banish with color: " + color);
     }
-    protected override void Interact(Inventory playerInventory)
-    {
-        playerInventory.AddItem(this);
-        Destroy(gameObject);
-    }
 }
