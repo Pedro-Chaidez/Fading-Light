@@ -15,7 +15,8 @@ public class ItemSpawnLocation : MonoBehaviour
     {
         if (prefabToSpawn != null && respawnPoint != null)
         {
-            Instantiate(prefabToSpawn, respawnPoint.position, respawnPoint.rotation);
+            // The 'transform' at the end sets the parent
+            Instantiate(prefabToSpawn, respawnPoint.position, respawnPoint.rotation, transform);
             Debug.Log("Spawned item: "+prefabToSpawn.name);
         }
         else
