@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ItemSpawnLocation : MonoBehaviour
+public class PrefabSpawner : MonoBehaviour
 {
     [SerializeField]
     private GameObject prefabToSpawn; 
@@ -17,7 +17,7 @@ public class ItemSpawnLocation : MonoBehaviour
         {
             // The 'transform' at the end sets the parent
             Instantiate(prefabToSpawn, respawnPoint.position, respawnPoint.rotation, transform);
-            Debug.Log("Spawned item: "+prefabToSpawn.name);
+            Debug.Log("Spawned Prefab: "+prefabToSpawn.name);
         }
         else
         {

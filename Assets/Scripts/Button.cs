@@ -3,7 +3,7 @@ using UnityEngine;
 public class Button : Interactable
 {
     [SerializeField]
-    private ItemSpawnLocation spawnLocation;
+    private PrefabSpawner spawnLocation;
     protected override void Interact()
     {
         spawnLocation.RespawnPrefab();
