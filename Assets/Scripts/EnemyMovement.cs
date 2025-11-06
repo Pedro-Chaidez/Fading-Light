@@ -7,7 +7,7 @@ public class EnemyMovement : MonoBehaviour
 {
     public NavMeshAgent agent;
 
-    public Transform player;
+    public Transform[] players;
 
     public LayerMask obstacleMask, groundMask;
 
@@ -17,18 +17,26 @@ public class EnemyMovement : MonoBehaviour
     //Roam
     public Vector3 walkPoint;
     bool walkPointSet;
-    public float walkPointRange = 10f;
+    public float walkPointRange;
 
     public bool chasing;
 
     public float aggroLost = 3f;
     public float outOfSight = 0f;
 
+    public Transform currPlayer;
+
 
 
     private void Start()
     {
-        player = GameObject.FindWithTag("Player").transform;  //Will change to array in the future, need to decide if we want to give players an ID to differentiate them
+        GameObject[] temp;
+        temp = GameObject.FindGameObjectsWithTag("Player");
+        players = new Transform[temp.Length];
+        for (int i = 0; i < temp.Length; i++)
+        {
+            players.SetValue(temp[i].transform, i);
+        }
         agent = GetComponent<NavMeshAgent>();
         walkPointSet = false;
         chasing = false;
@@ -40,14 +48,14 @@ public class EnemyMovement : MonoBehaviour
         {
             outOfSight = 0f;
             chasing = true;
-            agent.SetDestination(player.position);
+            agent.SetDestination(currPlayer.position);
         }
         else if (chasing)
         {
             outOfSight += Time.deltaTime;
             if (outOfSight < aggroLost)
             {
-                agent.SetDestination(player.position);
+                agent.SetDestination(currPlayer.position);
             }
             else
             {
@@ -63,26 +71,40 @@ public class EnemyMovement : MonoBehaviour
     }
     private bool playerInView()
     {
-        Vector3 dirToPlayer = (player.position - transform.position).normalized;
-        float distanceToPlayer = dirToPlayer.magnitude;
+        Vector3[] dirToPlayers = new Vector3[players.Length];
+        float[] distanceToPlayers = new float[players.Length];
+        float[] anglesBetweenPlayers = new float[players.Length];
 
-        if (distanceToPlayer > viewDistance)
+        for (int i = 0; i < players.Length; i++)
         {
-            return false;
+            dirToPlayers.SetValue((players[i].position - transform.position).normalized, i);
+            distanceToPlayers.SetValue(dirToPlayers[i].magnitude, i);
+            anglesBetweenPlayers.SetValue(Vector3.Angle(transform.forward, dirToPlayers[i]), i);
         }
 
-        float angleBetween = Vector3.Angle(transform.forward, dirToPlayer);
-        if (angleBetween > viewAngle / 2f)
-        {
-            return false;
-        }
+        float shortestDist = int.MaxValue;
 
-        if (Physics.Raycast(transform.position + Vector3.up, dirToPlayer, out RaycastHit hit, viewDistance, ~obstacleMask))
+        for (int i = 0; i < players.Length; i++)
         {
-            if (hit.transform == player)
+            if (distanceToPlayers[i] <= viewDistance && anglesBetweenPlayers[i] <= viewAngle / 2f)
             {
-                return true;
+                if (Physics.Raycast(transform.position + Vector3.up, dirToPlayers[i], out RaycastHit hit, viewDistance, ~obstacleMask))
+                {
+                    if (hit.transform == players[i])
+                    {
+                        if (distanceToPlayers[i] < shortestDist)
+                        {
+                            currPlayer = players[i];
+                            shortestDist = distanceToPlayers[i];
+                        }
+                    }
+                }
             }
+        }
+
+        if (shortestDist != int.MaxValue)
+        {
+            return true;
         }
 
         return false;
@@ -122,4 +144,3 @@ public class EnemyMovement : MonoBehaviour
 
     }
 }
-
