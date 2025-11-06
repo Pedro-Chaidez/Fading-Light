@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class Battery : Item
 {
-    private void Start()
+    private void Awake()
     {
         itemName = "Battery";
         itemType = "Consumable";
         durability = 100;
     }
-    protected override void Interact()
+    protected override void useItem()
     {
-        Debug.Log("Interacted with Battery");
+
     }
 }

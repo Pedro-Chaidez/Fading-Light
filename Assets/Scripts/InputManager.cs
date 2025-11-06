@@ -23,7 +23,7 @@ public class InputManager : NetworkBehaviour
         onFoot.Sprint.performed += ctx => motor.Sprint();
         onFoot.NextItem.performed += ctx => inventory.scrollUp();
         onFoot.PreviousItem.performed += ctx => inventory.scrollDown();
-        onFoot.DropItem.performed += ctx => inventory.RemoveItem();
+        onFoot.DropItem.performed += ctx => inventory.DropItem();
     }
     private void FixedUpdate()
     {

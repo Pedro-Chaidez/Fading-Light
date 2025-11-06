@@ -9,8 +9,8 @@ public class Banish : Item
         durability = 1;
         color = "grey";
     }
-    protected override void Interact()
+    protected override void useItem()
     {
-        Debug.Log("Interacted with Banish and it has the color: "+color);
+        Debug.Log("Used Banish with color: " + color);
     }
 }
