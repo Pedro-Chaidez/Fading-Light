@@ -11,6 +11,11 @@ public class Banish : Item
     }
     protected override void useItem()
     {
+        GameObject[] temp = GameObject.FindGameObjectsWithTag("Ghost");
+        if(temp.Length > 0)
+        {
+            Destroy(temp[0]);
+        }
         Debug.Log("Used Banish with color: " + color);
     }
 }
