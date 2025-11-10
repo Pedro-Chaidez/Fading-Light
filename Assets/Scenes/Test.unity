@@ -236,7 +236,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
   maxHealth: 20
   currentHealth: 0
-  diedScreen: {fileID: 67931673}
+  diedScreen: {fileID: 1372491963}
 --- !u!114 &103283254
 MonoBehaviour:
   m_ObjectHideFlags: 0

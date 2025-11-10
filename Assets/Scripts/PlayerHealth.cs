@@ -7,12 +7,17 @@ public class PlayerHealth : MonoBehaviour {
     public float currentHealth;
     public GameObject diedScreen;
 
+    private PlayerCoordinates playerCoordinates;
+    private CharacterController character;
+
     private void Start() {
         currentHealth = maxHealth;
         Debug.Log("Player Health: " + currentHealth);
         if (diedScreen != null) {
             diedScreen.SetActive(false);
         }
+        playerCoordinates = GetComponent<PlayerCoordinates>();
+        character = GetComponent<CharacterController>();
     }
 
     public void TakeDamage(float amount) {
@@ -33,14 +38,21 @@ public class PlayerHealth : MonoBehaviour {
         GetComponent<InputManager>().enabled = false;
     }
 
-    public void Ressurect() {
+    public void Resurrect() {
         Debug.Log("Resurrected");
-        //SceneManager.LoadScene("Test");'
         if (diedScreen != null) {
             diedScreen.SetActive(false);
-            currentHealth = maxHealth;
-            GetComponent<InputManager>().enabled = false;
         }
+        currentHealth = maxHealth;
+        GetComponent<InputManager>().enabled = true;
+        
+        if (playerCoordinates != null && character != null) {
+            character.enabled = false;
+            transform.position = playerCoordinates.GetPosition();
+            transform.rotation = playerCoordinates.GetRotation();
+            character.enabled = true;
+        }
+
         Debug.Log("Player Health: " + currentHealth);
     }
 }
