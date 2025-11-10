@@ -24,9 +24,4 @@ public class DamageProtection : Item
             timer = 0.0f; // Reset timer
         }
     }*/
-    protected override void Interact(Inventory playerInventory)
-    {
-        playerInventory.AddItem(this);
-        Destroy(gameObject);
-    }
 }

@@ -9,13 +9,11 @@ public class PlayerInteract : MonoBehaviour
     private LayerMask mask;
     private PlayerUI playerUI;
     private InputManager inputManager;
-    private Inventory inventory;
     private void Start()
     {
         cam = GetComponent<PlayerLook>().cam;
         playerUI = GetComponent<PlayerUI>();
         inputManager = GetComponent<InputManager>();
-        inventory = GetComponent<Inventory>();
     }
     private void FixedUpdate()
     {
@@ -33,7 +31,7 @@ public class PlayerInteract : MonoBehaviour
                 if(inputManager.onFoot.Interact.triggered)
                 {
                     Debug.Log("Interact key pressed! Calling Interact...");
-                    interactable.ItemInteract(inventory);
+                    interactable.BaseInteract();
                 }
             }
         }
