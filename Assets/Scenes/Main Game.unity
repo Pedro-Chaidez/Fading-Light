@@ -1692,6 +1692,89 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1362515344}
   m_CullTransparentMesh: 1
+--- !u!1 &1378021234
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1378021237}
+  - component: {fileID: 1378021236}
+  - component: {fileID: 1378021235}
+  m_Layer: 0
+  m_Name: MansionGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1378021235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1378021234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 702b40efbfbb2904e956a9fcafee37aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DungeonGenerator
+  dungeonLength: 3
+  dungeonWidth: 3
+  dungeonHeight: 1
+  floorSpacing: 1
+  numberOfRoomsPerFloor: 10
+  minRoomLength: 1
+  maxRoomLength: 5
+  minRoomWidth: 1
+  maxRoomWidth: 3
+  roomHeightInUnits: 4
+  floorPrefab: {fileID: 5540497731923070114, guid: 8927255400146a04781b8f08508b71c4, type: 3}
+  wallPrefab: {fileID: 7717795647677422554, guid: 96798173f0b9c6d4e8b337c8419ffc88, type: 3}
+  ceilingPrefab: {fileID: 6369650183143406789, guid: 1f1de36799a00d74ba0d43f77e543088, type: 3}
+  doorPrefab: {fileID: 5438929456684804745, guid: 696c030f110c1ae428a2395e931216d3, type: 3}
+  stairsPrefab: {fileID: 5795679777822089838, guid: b678864adbf66fd44bbf0a7f2e559e54, type: 3}
+  maxAttempts: 100
+  generateStairsBetweenFloors: 1
+--- !u!114 &1378021236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1378021234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 789fd5d8a5806e048afb000514cfb86c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Door
+  isLocked: 0
+  requiresKey: 0
+  requiredKeyID: 
+  openSpeed: 2
+  doorOpenAngle: 90
+  doorTransform: {fileID: 0}
+  openSound: {fileID: 8300000, guid: 56581f92fab239549aa4dd611298d2ee, type: 3}
+  closeSound: {fileID: 8300000, guid: 9410e1c11bb39794797dad1533aa6bc7, type: 3}
+  lockedSound: {fileID: 8300000, guid: 832f518cf68f3314786c1063ae9a6f11, type: 3}
+--- !u!4 &1378021237
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1378021234}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 20, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1395349975
 GameObject:
   m_ObjectHideFlags: 0
@@ -3210,3 +3293,4 @@ SceneRoots:
   - {fileID: 2045236705}
   - {fileID: 1229437210}
   - {fileID: 881077779}
+  - {fileID: 1378021237}
