@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Door : MonoBehaviour
+public class Door : Interactable
 {
     [Header("Door Settings")]
     [SerializeField] private bool isLocked = false;
