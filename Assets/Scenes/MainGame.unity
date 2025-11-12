@@ -1,0 +1,11 @@
+# MainGame.unity (YAML-like pseudo code)
+Scene:
+  SceneRoots:
+    - MansionGenerator:
+        Type: MansionGenerator
+    - BatteryCollector:
+        Type: BatteryCollector
+    - EnemySpawner:
+        Type: EnemySpawner
+    - YouDiedScreen:
+        Type: YouDiedScreen
