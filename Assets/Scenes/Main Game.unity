@@ -1335,6 +1335,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1378021237}
   - component: {fileID: 1378021238}
+  - component: {fileID: 1378021240}
+  - component: {fileID: 1378021239}
   m_Layer: 0
   m_Name: MansionGenerator
   m_TagString: Untagged
@@ -1375,6 +1377,41 @@ MonoBehaviour:
   doorWallPrefab: {fileID: 5115870096352119691, guid: e5175d92b2485d84ea5e9b34f5673b07, type: 3}
   roomPosition: {x: -4, y: 0, z: 7}
   generateOnStart: 1
+--- !u!114 &1378021239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1378021234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b9e863156202b842b6d6f69eba19d0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RoomConnectionManager
+  doorPrefab: {fileID: 9074594807983055082, guid: 15745f8b70e5d524183539fa272d90a3, type: 3}
+  hallwayPrefab: {fileID: 791388096509451994, guid: a87068452574cdd40bd9abdbce4a4487, type: 3}
+--- !u!114 &1378021240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1378021234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 702b40efbfbb2904e956a9fcafee37aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DungeonGenerator
+  numberOfFloors: 2
+  roomsPerFloor: 7
+  floorHeight: 1
+  roomPrefabs: []
+  spawnRoomPrefab: {fileID: 0}
+  staircasePrefab: {fileID: 0}
+  generateOnStart: 0
+  seed: 0
+  useRandomSeed: 1
 --- !u!1 &1395349975
 GameObject:
   m_ObjectHideFlags: 0

@@ -49,6 +49,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2094299493630488810}
+  - component: {fileID: 4224072493268643060}
   m_Layer: 0
   m_Name: SpawnRoom
   m_TagString: Untagged
@@ -74,6 +75,24 @@ Transform:
   - {fileID: 998532844742988241}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4224072493268643060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5492555965007311791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b2dfa3341e39a54a80ab78c9de2d697, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Room
+  roomSize: {x: 3, y: 1, z: 3}
+  roomName: SpawnRoom
+  floorParent: {fileID: 1471285966409227213}
+  ceilingParent: {fileID: 8922951172055625025}
+  wallsParent: {fileID: 998532844742988241}
+  doorLocations: []
 --- !u!1 &6488868495117616963
 GameObject:
   m_ObjectHideFlags: 0

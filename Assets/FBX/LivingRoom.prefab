@@ -51,6 +51,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4994166867411024031}
+  - component: {fileID: 4083242124836268382}
   m_Layer: 0
   m_Name: LivingRoom
   m_TagString: Untagged
@@ -77,6 +78,24 @@ Transform:
   - {fileID: 4361088863287793355}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4083242124836268382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5710348155225903176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b2dfa3341e39a54a80ab78c9de2d697, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Room
+  roomSize: {x: 2, y: 1, z: 3}
+  roomName: LivingRoom
+  floorParent: {fileID: 6698038114386392812}
+  ceilingParent: {fileID: 913571196100617942}
+  wallsParent: {fileID: 7513360264977684012}
+  doorLocations: []
 --- !u!1 &6441458281345403836
 GameObject:
   m_ObjectHideFlags: 0
@@ -1470,6 +1489,14 @@ PrefabInstance:
     - target: {fileID: 5115870096352119691, guid: e5175d92b2485d84ea5e9b34f5673b07, type: 3}
       propertyPath: m_Name
       value: DoorWall (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7430014763621203022, guid: e5175d92b2485d84ea5e9b34f5673b07, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.67
+      objectReference: {fileID: 0}
+    - target: {fileID: 7430014763621203022, guid: e5175d92b2485d84ea5e9b34f5673b07, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
