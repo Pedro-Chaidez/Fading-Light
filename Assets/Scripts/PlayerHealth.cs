@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour {
     public float maxHealth = 100f;
@@ -91,7 +90,7 @@ public class PlayerHealth : MonoBehaviour {
         
         if (playerCoordinates != null && character != null) {
             character.enabled = false;
-            transform.position = playerCoordinates.GetPosition();
+            transform.position = playerCoordinates.GetInitPosition();
             transform.rotation = playerCoordinates.GetRotation();
             character.enabled = true;
         }
