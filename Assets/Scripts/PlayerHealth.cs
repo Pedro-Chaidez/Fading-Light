@@ -16,6 +16,8 @@ public class PlayerHealth : MonoBehaviour {
 
     private PlayerCoordinates playerCoordinates;
     private CharacterController character;
+    private PlayerMotor movement;
+    private Stamina stamina;
 
     private void Start() {
         currentHealth = maxHealth;
@@ -25,6 +27,8 @@ public class PlayerHealth : MonoBehaviour {
         }
         playerCoordinates = GetComponent<PlayerCoordinates>();
         character = GetComponent<CharacterController>();
+        movement = GetComponent<PlayerMotor>();
+        stamina = GetComponent<Stamina>();
     }
     private void Update() {
         if (currentHealth > maxHealth) {
@@ -78,6 +82,7 @@ public class PlayerHealth : MonoBehaviour {
             diedScreen.SetActive(true);
         }
         GetComponent<InputManager>().enabled = false;
+        stamina.enabled = false;
     }
 
     public void Resurrect() {
@@ -86,7 +91,11 @@ public class PlayerHealth : MonoBehaviour {
             diedScreen.SetActive(false);
         }
         currentHealth = maxHealth;
+        stamina.current = stamina.max;
+        movement.sprinting = false;
+        movement.speed = 6f;
         GetComponent<InputManager>().enabled = true;
+        stamina.enabled = true;
         
         if (playerCoordinates != null && character != null) {
             character.enabled = false;

@@ -248,7 +248,7 @@ MonoBehaviour:
   healthBar: {fileID: 1158787649}
   diedScreen: {fileID: 1776742444}
   lerp: 10
-  lowHealthThreshold: 25
+  lowHealthThreshold: 30
   flashSpeed: 4
 --- !u!114 &103283254
 MonoBehaviour:
@@ -327,9 +327,9 @@ MonoBehaviour:
   current: 0
   staminaBar: {fileID: 1949251087}
   lerp: 5
-  drainSpeed: 20
+  drainSpeed: 25
   regenSpeed: 15
-  regenDelay: 2
+  regenDelay: 3
 --- !u!1 &175173662
 GameObject:
   m_ObjectHideFlags: 0
@@ -414,8 +414,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 398114050219118619, guid: cb7ac8ec3e4f0c742a9a189a4b6ee90c, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 398114050219118619, guid: cb7ac8ec3e4f0c742a9a189a4b6ee90c, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 398114050219118619, guid: cb7ac8ec3e4f0c742a9a189a4b6ee90c, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 350
+      objectReference: {fileID: 0}
+    - target: {fileID: 398114050219118619, guid: cb7ac8ec3e4f0c742a9a189a4b6ee90c, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 1148632048815331937, guid: cb7ac8ec3e4f0c742a9a189a4b6ee90c, type: 3}
       propertyPath: m_Name
@@ -432,6 +444,10 @@ PrefabInstance:
     - target: {fileID: 4074718491404170787, guid: cb7ac8ec3e4f0c742a9a189a4b6ee90c, type: 3}
       propertyPath: m_Color.r
       value: 0.9954613
+      objectReference: {fileID: 0}
+    - target: {fileID: 4074718491404170787, guid: cb7ac8ec3e4f0c742a9a189a4b6ee90c, type: 3}
+      propertyPath: m_FillAmount
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7503811409535364024, guid: cb7ac8ec3e4f0c742a9a189a4b6ee90c, type: 3}
       propertyPath: m_Pivot.x
@@ -514,8 +530,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8675242116922651549, guid: cb7ac8ec3e4f0c742a9a189a4b6ee90c, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8675242116922651549, guid: cb7ac8ec3e4f0c742a9a189a4b6ee90c, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 8675242116922651549, guid: cb7ac8ec3e4f0c742a9a189a4b6ee90c, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 350
+      objectReference: {fileID: 0}
+    - target: {fileID: 8675242116922651549, guid: cb7ac8ec3e4f0c742a9a189a4b6ee90c, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3488,6 +3516,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 398114050219118619, guid: cb7ac8ec3e4f0c742a9a189a4b6ee90c, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 398114050219118619, guid: cb7ac8ec3e4f0c742a9a189a4b6ee90c, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 398114050219118619, guid: cb7ac8ec3e4f0c742a9a189a4b6ee90c, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 1148632048815331937, guid: cb7ac8ec3e4f0c742a9a189a4b6ee90c, type: 3}
       propertyPath: m_Name
       value: HealthBar
@@ -3583,6 +3623,18 @@ PrefabInstance:
     - target: {fileID: 7503811409535364024, guid: cb7ac8ec3e4f0c742a9a189a4b6ee90c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8675242116922651549, guid: cb7ac8ec3e4f0c742a9a189a4b6ee90c, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8675242116922651549, guid: cb7ac8ec3e4f0c742a9a189a4b6ee90c, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 8675242116922651549, guid: cb7ac8ec3e4f0c742a9a189a4b6ee90c, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

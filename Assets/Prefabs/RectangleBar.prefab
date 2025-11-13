@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4430759610224327007}
   - component: {fileID: 5572348593356283755}
   m_Layer: 5
-  m_Name: ResourceBar
+  m_Name: RectangleBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
