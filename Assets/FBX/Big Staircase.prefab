@@ -259,7 +259,13 @@ MonoBehaviour:
   floorParent: {fileID: 6405814507327899721}
   ceilingParent: {fileID: 7499758542775576400}
   wallsParent: {fileID: 7431244769139027897}
-  doorLocations: []
+  doorLocations:
+  - doorName: UpperDoor
+    localPosition: {x: 2, y: 1, z: 4}
+    direction: 0
+  - doorName: LowerDoor
+    localPosition: {x: 2, y: 0, z: 0}
+    direction: 1
 --- !u!1001 &80030230387370083
 PrefabInstance:
   m_ObjectHideFlags: 0

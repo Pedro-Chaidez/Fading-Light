@@ -95,7 +95,22 @@ MonoBehaviour:
   floorParent: {fileID: 6698038114386392812}
   ceilingParent: {fileID: 913571196100617942}
   wallsParent: {fileID: 7513360264977684012}
-  doorLocations: []
+  doorLocations:
+  - doorName: NorthDoor1
+    localPosition: {x: 0, y: 0, z: 2}
+    direction: 0
+  - doorName: NorthDoor2
+    localPosition: {x: 1, y: 0, z: 2}
+    direction: 0
+  - doorName: EastDoor
+    localPosition: {x: 1, y: 0, z: 1}
+    direction: 2
+  - doorName: SouthDoor1
+    localPosition: {x: 0, y: 0, z: 0}
+    direction: 1
+  - doorName: SouthDoor2
+    localPosition: {x: 1, y: 0, z: 0}
+    direction: 1
 --- !u!1 &6441458281345403836
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,13 +18,15 @@ public class Room : MonoBehaviour
     public Vector3Int RoomSize => roomSize;
     public string RoomName => roomName;
     public List<DoorLocation> DoorLocations => doorLocations;
+    public Vector3Int GridPosition { get; private set; }
 
     private Vector3 worldPosition;
 
-    public void Initialize(Vector3 position, int floorLevel)
+    public void Initialize(Vector3 position, Vector3Int gridPosition)
     {
         worldPosition = position;
-        transform.position = new Vector3(position.x, floorLevel * 5f, position.z);
+        GridPosition = gridPosition;
+        transform.position = position;
     }
 
     public Vector3 GetDoorWorldPosition(DoorLocation door)
@@ -41,7 +43,9 @@ public class Room : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.cyan;
-        Gizmos.DrawWireCube(transform.position, new Vector3(roomSize.x, roomSize.y, roomSize.z));
+        Vector3 size = new Vector3(roomSize.x, roomSize.y, roomSize.z);
+        Vector3 center = transform.position + size / 2f;
+        Gizmos.DrawWireCube(center, size);
 
         // Draw door locations
         Gizmos.color = Color.green;

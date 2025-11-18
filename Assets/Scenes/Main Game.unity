@@ -1334,9 +1334,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1378021237}
-  - component: {fileID: 1378021238}
-  - component: {fileID: 1378021240}
   - component: {fileID: 1378021239}
+  - component: {fileID: 1378021240}
   m_Layer: 0
   m_Name: MansionGenerator
   m_TagString: Untagged
@@ -1353,30 +1352,12 @@ Transform:
   m_GameObject: {fileID: 1378021234}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 20, y: 0, z: 0}
+  m_LocalPosition: {x: 30, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1378021238
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1378021234}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0df4b813ff0f5e04d979a2bc3f481140, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RoomGenerator
-  floorPrefab: {fileID: 2021926822154840307, guid: 0d780173c250d334f80c9061373c8e4f, type: 3}
-  ceilingPrefab: {fileID: 919132149155446097, guid: fda570f865414d7488dcbdef0612e4c1, type: 3}
-  basicWallPrefab: {fileID: 7717795647677422554, guid: 96798173f0b9c6d4e8b337c8419ffc88, type: 3}
-  doorWallPrefab: {fileID: 5115870096352119691, guid: e5175d92b2485d84ea5e9b34f5673b07, type: 3}
-  roomPosition: {x: -4, y: 0, z: 7}
-  generateOnStart: 1
 --- !u!114 &1378021239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1403,15 +1384,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 702b40efbfbb2904e956a9fcafee37aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DungeonGenerator
-  numberOfFloors: 2
-  roomsPerFloor: 7
-  floorHeight: 1
-  roomPrefabs: []
+  totalRooms: 15
+  gridSize: {x: 10, y: 3, z: 10}
+  cellSize: {x: 4, y: 5, z: 4}
+  roomPrefabs:
+  - {fileID: 5598787522310263721, guid: 30cd9df842b9bf54aaa80dc71472597b, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   spawnRoomPrefab: {fileID: 0}
   staircasePrefab: {fileID: 0}
+  bigStaircasePrefab: {fileID: 0}
+  corridorPrefab: {fileID: 0}
+  corridorSize: {x: 1, y: 1, z: 1}
   generateOnStart: 0
   seed: 0
   useRandomSeed: 1
+  minStaircasesPerFloor: 1
 --- !u!1 &1395349975
 GameObject:
   m_ObjectHideFlags: 0
