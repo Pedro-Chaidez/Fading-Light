@@ -38,10 +38,11 @@ jobs:
             unity-editor-${{ env.UNITY_VERSION }}-
 
       # If you need to free space on the runner before the heavy image pull, prune docker (optional)
-      - name: Prune docker (free space)
+      - name: Clean Docker Environment
         if: runner.os == 'Linux'
         run: |
-          docker system prune -af || true
+          docker system prune -af
+          docker volume prune -f
 
       # Build with game-ci/unity-builder.
       # --- IMPORTANT CHANGE FOR PROFESSIONAL LICENSE ---
