@@ -7,6 +7,7 @@ public class InputManager : MonoBehaviour
     private PlayerMotor motor;
     private PlayerLook look;
     private Inventory inventory;
+    private Flashlight flashlight;
     private void Awake()
     {
         playerInput = new InputSystem_Actions();
@@ -15,6 +16,7 @@ public class InputManager : MonoBehaviour
         motor = GetComponent<PlayerMotor>();
         look = GetComponent<PlayerLook>();
         inventory = GetComponent<Inventory>();
+        flashlight = GetComponent<Flashlight>();
 
         onFoot.Jump.performed += ctx => motor.Jump();
         onFoot.Crouch.performed += ctx => motor.Crouch();
@@ -22,6 +24,9 @@ public class InputManager : MonoBehaviour
         onFoot.NextItem.performed += ctx => inventory.scrollUp();
         onFoot.PreviousItem.performed += ctx => inventory.scrollDown();
         onFoot.DropItem.performed += ctx => inventory.DropItem();
+        onFoot.ToggleFlashlight.performed += ctx => flashlight.normLight();
+        onFoot.ToggleMaxFlash.performed += ctx => flashlight.maxLight();
+        //onFoot.UseItem.performed += ctx => inventory.UseItem();
     }
     private void FixedUpdate()
     {
