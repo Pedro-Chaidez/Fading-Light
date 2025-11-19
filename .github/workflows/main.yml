@@ -38,23 +38,25 @@ jobs:
             unity-editor-${{ env.UNITY_VERSION }}-
 
       # If you need to free space on the runner before the heavy image pull, prune docker (optional)
-      - name: Prune docker (free space)
+      - name: Clean Docker Environment
         if: runner.os == 'Linux'
         run: |
-          docker system prune -af || true
+          docker system prune -af
+          docker volume prune -f
 
       # Build with game-ci/unity-builder.
-      # We enable the action's caching features and also save the editor into our cache after a successful run.
+      # --- IMPORTANT CHANGE FOR PROFESSIONAL LICENSE ---
+      # We now pass UNITY_SERIAL instead of UNITY_LICENSE for activation.
       - name: Build with Unity (game-ci/unity-builder)
         uses: game-ci/unity-builder@v4
         id: unity-builder
         env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           targetPlatform: ${{ matrix.targetPlatform }}
-          cache: true                # enable game-ci builder cache (Library, etc.)
+          cache: true          # enable game-ci builder cache (Library, etc.)
           cache-name: Library-${{ matrix.targetPlatform }}
           # Note: unity-builder will still need to pull the editor image the first time.
           # The Restore/Save cache steps above help persist the editor between runs.
