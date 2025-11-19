@@ -9,17 +9,16 @@ jobs:
   check-scripts:
     runs-on: ubuntu-latest
     steps:
-      # 1. REQUIRED: Free up space for the Unity Image
-      - name: Free Disk Space (Ubuntu)
-        uses: sudo-rm/github-action-free-disk-space@v1
-        with:
-          tool-cache: false
-          android: true
-          dotnet: true
-          haskell: true
-          large-packages: true
-          docker-images: true
-          swap-storage: false
+      # 1. FIX: Manually delete files to avoid "Repository not found" errors
+      # This replaces the external action that was failing.
+      - name: Free Disk Space (Manual)
+        run: |
+          echo "Freeing up disk space..."
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /opt/ghc
+          sudo rm -rf /usr/share/swift
+          echo "Disk space freed!"
 
       # 2. Checkout Code
       - name: Checkout repository
@@ -36,7 +35,7 @@ jobs:
           restore-keys: |
             Library-
 
-      # 4. THE CHANGE: Use Test Runner instead of Builder
+      # 4. Test Runner (Checks for Errors & Warnings)
       - name: Check for Errors (Test Runner)
         uses: game-ci/unity-test-runner@v4
         env:
@@ -44,7 +43,5 @@ jobs:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
-          # 'editmode' is fastest. It compiles your scripts and runs editor tests.
-          # If your code has syntax errors, this step will fail immediately.
           testMode: editmode
           customParameters: '-warningsAsErrors'
