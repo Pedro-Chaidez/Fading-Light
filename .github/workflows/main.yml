@@ -11,7 +11,7 @@ jobs:
     steps:
       # 1. REQUIRED: Free up space for the Unity Image
       - name: Free Disk Space (Ubuntu)
-        uses: jlumbroso/free-disk-space-action@v1.3.1
+        uses: sudo-rm/github-action-free-disk-space@v1
         with:
           tool-cache: false
           android: true
