@@ -1,11 +1,13 @@
 using UnityEngine;
+using TMPro;
 
 public class PowerManager : MonoBehaviour
 {
     public float start = 100f;
-    public float current = 0f;
-    private float tickTime = 1f;
+    public float current = 100f;
+    private float tickTime = 0.01f;
     private float lastTick = 0f;
+    public TMP_Text percentage;
     public GameObject bar1;
     public GameObject bar3;
     private Flashlight flashlight;
@@ -22,11 +24,11 @@ public class PowerManager : MonoBehaviour
 
         if (flashlight != null && Time.time - lastTick >= tickTime) {
             if (flashlight.viewDistance == 10f) {
-                current -= 0.15f;
+                current -= 0.01f;
                 bar1.SetActive(true);
                 bar3.SetActive(false);
             } else if (flashlight.viewDistance == 15f) {
-                current -= 0.5f;
+                current -= 1f;
                 bar1.SetActive(true);
                 bar3.SetActive(true);
             } else {
@@ -36,5 +38,6 @@ public class PowerManager : MonoBehaviour
                 lastTick = Time.time;
         }
         current = Mathf.Clamp(current, 0f, start);
+        percentage.text = Mathf.RoundToInt(current).ToString() + "%";
     }
 }

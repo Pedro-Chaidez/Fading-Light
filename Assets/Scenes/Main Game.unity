@@ -617,6 +617,23 @@ MonoBehaviour:
   maxLightToggle: 0
   normLightToggle: 0
   viewDistance: 0
+--- !u!114 &103283280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 103283240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf1bb74121ab0e74cbcd9f1489f75ce7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PowerManager
+  start: 100
+  current: 100
+  percentage: {fileID: 25472909}
+  bar1: {fileID: 1824695600}
+  bar3: {fileID: 928918710}
 --- !u!1 &175173662
 GameObject:
   m_ObjectHideFlags: 0
@@ -1033,11 +1050,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1374618978}
+  m_Father: {fileID: 1824695601}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 825.1, y: -475}
+  m_AnchoredPosition: {x: 39.80005, y: 0}
   m_SizeDelta: {x: 40, y: 57.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &506721075
@@ -2182,6 +2199,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1477060170852493455, guid: 7ab53f3568627d34687bd4f000bc911f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 103283273}
+    - targetCorrespondingSourceObject: {fileID: 1477060170852493455, guid: 7ab53f3568627d34687bd4f000bc911f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 103283280}
   m_SourcePrefab: {fileID: 100100000, guid: 7ab53f3568627d34687bd4f000bc911f, type: 3}
 --- !u!114 &1158787649 stripped
 MonoBehaviour:
@@ -2723,9 +2743,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7432970433546540614, guid: 02db1f74bbb97cd40b18328d67ee2b0f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1824695601}
-    - targetCorrespondingSourceObject: {fileID: 7432970433546540614, guid: 02db1f74bbb97cd40b18328d67ee2b0f, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 506721074}
     - targetCorrespondingSourceObject: {fileID: 7432970433546540614, guid: 02db1f74bbb97cd40b18328d67ee2b0f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 928918711}
@@ -3736,7 +3753,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1824695601
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3748,7 +3765,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 506721074}
   m_Father: {fileID: 1374618978}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
