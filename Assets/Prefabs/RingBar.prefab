@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3798939827693856616}
   - component: {fileID: 8087577148830543379}
   m_Layer: 5
-  m_Name: YouDiedScreen
+  m_Name: RingBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
