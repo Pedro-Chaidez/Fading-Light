@@ -1,12 +1,15 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-public class InputManager : MonoBehaviour
+using Unity.Netcode;
+
+public class InputManager : NetworkBehaviour
 {
     private InputSystem_Actions playerInput;
     public InputSystem_Actions.PlayerActions onFoot;
     private PlayerMotor motor;
     private PlayerLook look;
     private Inventory inventory;
+    private Flashlight flashlight;
     private void Awake()
     {
         playerInput = new InputSystem_Actions();
@@ -15,6 +18,7 @@ public class InputManager : MonoBehaviour
         motor = GetComponent<PlayerMotor>();
         look = GetComponent<PlayerLook>();
         inventory = GetComponent<Inventory>();
+        flashlight = GetComponent<Flashlight>();
 
         onFoot.Jump.performed += ctx => motor.Jump();
         onFoot.Crouch.performed += ctx => motor.Crouch();
@@ -22,21 +26,76 @@ public class InputManager : MonoBehaviour
         onFoot.NextItem.performed += ctx => inventory.scrollUp();
         onFoot.PreviousItem.performed += ctx => inventory.scrollDown();
         onFoot.DropItem.performed += ctx => inventory.DropItem();
+        onFoot.ToggleFlashlight.performed += ctx => flashlight.normLight();
+        onFoot.ToggleMaxFlash.performed += ctx => flashlight.maxLight();
+        //onFoot.UseItem.performed += ctx => inventory.UseItem();
     }
     private void FixedUpdate()
     {
+        if (!IsOwner)
+        {
+            return;
+        }
         motor.ProcessMove(onFoot.Move.ReadValue<Vector2>());
     }
     private void LateUpdate()
     {
+        if (!IsOwner)
+        {
+            return;
+        }
         look.ProcessLook(onFoot.Look.ReadValue<Vector2>());
     }
     private void OnEnable()
     {
-        onFoot.Enable();
+        if (playerInput == null)
+        {
+            return;
+        }
+        if (!IsOwner)
+        {
+            return;
+        }
+        if (!onFoot.enabled)
+        {
+            onFoot.Enable();
+        }
     }
     private void OnDisable()
     {
-        onFoot.Disable();
+        if (playerInput == null)
+        {
+            return;
+        }
+        if (onFoot.enabled)
+        {
+            onFoot.Disable();
+        }
+    }
+    public override void OnNetworkSpawn()
+    {
+        if (playerInput == null)
+        {
+            return;
+        }
+        if (!IsOwner)
+        {
+            return;
+        }
+        if (!onFoot.enabled)
+        {
+            onFoot.Enable();
+        }
+    }
+    public override void OnNetworkDespawn()
+    {
+        if (playerInput == null)
+        {
+            return;
+        }
+        if (onFoot.enabled)
+        {
+            onFoot.Disable();
+        }
     }
 }
