@@ -5,6 +5,7 @@ public class PowerManager : MonoBehaviour
 {
     public float start = 100f;
     public float current = 100f;
+    public float tickValue = 0.01f;
     private float tickTime = 0.01f;
     private float lastTick = 0f;
     public TMP_Text percentage;
@@ -24,11 +25,11 @@ public class PowerManager : MonoBehaviour
 
         if (flashlight != null && Time.time - lastTick >= tickTime) {
             if (flashlight.viewDistance == 10f) {
-                current -= 0.01f;
+                current -= tickValue;
                 bar1.SetActive(true);
                 bar3.SetActive(false);
             } else if (flashlight.viewDistance == 15f) {
-                current -= 1f;
+                current -= (tickValue) * 5;
                 bar1.SetActive(true);
                 bar3.SetActive(true);
             } else {
