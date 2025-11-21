@@ -38,7 +38,11 @@ public class Inventory : MonoBehaviour
     }
     public void UseItem()
     {
-        if (items[selectedItem] != null)
+        if(items.Count == 0)
+        {
+            Debug.LogWarning("Inventory is empty!");
+        }
+        else if (items[selectedItem] != null)
         {
             Debug.Log("Used " + items[selectedItem].itemName);
             Destroy(items[selectedItem].gameObject);

@@ -28,7 +28,7 @@ public class InputManager : NetworkBehaviour
         onFoot.DropItem.performed += ctx => inventory.DropItem();
         onFoot.ToggleFlashlight.performed += ctx => flashlight.normLight();
         onFoot.ToggleMaxFlash.performed += ctx => flashlight.maxLight();
-        //onFoot.UseItem.performed += ctx => inventory.UseItem();
+        onFoot.UseItem.performed += ctx => inventory.UseItem();
     }
     private void FixedUpdate()
     {
