@@ -4,7 +4,7 @@ using TMPro;
 public class PowerManager : MonoBehaviour
 {
     public float start = 100f;
-    public float current = 100f;
+    public float current = 0f;
     public float tickValue = 0.01f;
     private float tickTime = 0.01f;
     private float lastTick = 0f;
