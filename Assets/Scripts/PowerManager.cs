@@ -4,7 +4,7 @@ using TMPro;
 public class PowerManager : MonoBehaviour
 {
     public float start = 100f;
-    public float current = 100f;
+    public float current = 0f;
     public float tickValue = 0.01f;
     private float tickTime = 0.01f;
     private float lastTick = 0f;
@@ -29,7 +29,7 @@ public class PowerManager : MonoBehaviour
                 bar1.SetActive(true);
                 bar3.SetActive(false);
             } else if (flashlight.viewDistance == 15f) {
-                current -= (tickValue) * 5;
+                current -= (tickValue * 5);
                 bar1.SetActive(true);
                 bar3.SetActive(true);
             } else {
