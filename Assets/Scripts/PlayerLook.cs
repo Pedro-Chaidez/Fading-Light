@@ -10,13 +10,19 @@ public class PlayerLook : NetworkBehaviour
 
     private InputSystem_Actions playerControls;
     private Animator anim;
+
+    private bool CanLook()
+    {
+        // Allow camera/look if not spawned (singleplayer) or if this is the owner in multiplayer
+        return !IsSpawned || IsOwner;
+    }
     
     public override void OnNetworkSpawn()
     {
         playerControls = new InputSystem_Actions(); 
         anim = this.GetComponent<Animator>(); 
 
-        if (IsOwner)
+        if (CanLook())
         {
             if (Camera.main != null)
             {
@@ -34,7 +40,7 @@ public class PlayerLook : NetworkBehaviour
     
     public void ProcessLook(Vector2 input)
     {
-        if (!IsOwner)
+        if (!CanLook())
         {
             return;
         }

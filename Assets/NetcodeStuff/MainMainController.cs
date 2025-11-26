@@ -1,47 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement; // For loading scenes
+using UnityEngine.SceneManagement;
 using Unity.Netcode;
 using UnityEngine.UI;
-using Unity.VisualScripting;
-using TMPro;     
+using TMPro;
 
 public class MenuController : MonoBehaviour
 {
     [Header("Scene To Load")]
     [SerializeField] private string singlePlayerSceneName = "Main Game";
 
-
-
     [Header("UI Panels")]
     [SerializeField] private GameObject optionsMenuPanel = null;
-
-
 
     [Header("Volume Settings")]
     [SerializeField] private TMP_Text volValue = null;
     [SerializeField] private Slider volSlider = null;
     [SerializeField] private float defaultVol = 1.0f;
 
-
-
     [Header("Confirmation")]
     [SerializeField] private GameObject confirmationPrompt = null;
     public int mainControllerSen = 4;
 
-
-
     [Header("Toggle Settings")]
     [SerializeField] private Toggle invertY = null;
-
-
 
     [Header("GamePlay Setting")]
     [SerializeField] private TMP_Text controllerSenTextValue = null;
     [SerializeField] private Slider senSlider = null;
     [SerializeField] private int defaultSen = 4;
-
 
     [Header("Graphic Setting")]
     [SerializeField] private Slider brightnessSlider = null;
@@ -60,22 +48,28 @@ public class MenuController : MonoBehaviour
 
     private void Start()
     {
-        resolutions = Screen.resolutions;
-        resolutionDropdown.ClearOptions();
-
-        List<string> options = new List<string>();
-
-        int currentResolutionIndex = 0;
-
-        for (int i = 0; i < resolutions.Length; i++)
+        if (resolutionDropdown != null)
         {
-            string option = resolutions[i].width + " x " + resolutions[i].height;
-            options.Add(option);
+            resolutions = Screen.resolutions;
+            resolutionDropdown.ClearOptions();
 
-            if (resolutions[i].width == Screen.width && resolutions[i].height == Screen.height)
+            List<string> options = new List<string>();
+
+            int currentResolutionIndex = 0;
+
+            for (int i = 0; i < resolutions.Length; i++)
             {
-                currentResolutionIndex = i;
+                string option = resolutions[i].width + " x " + resolutions[i].height;
+                options.Add(option);
+
+                if (resolutions[i].width == Screen.width && resolutions[i].height == Screen.height)
+                {
+                    currentResolutionIndex = i;
+                }
             }
+            resolutionDropdown.AddOptions(options);
+            resolutionDropdown.value = currentResolutionIndex;
+            resolutionDropdown.RefreshShownValue();
         }
     }
 
@@ -85,10 +79,8 @@ public class MenuController : MonoBehaviour
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
     }
 
-    
     public void OnSinglePlayer()
     {
-        // Shutdown any active netcode session for pure singleplayer
         if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsListening)
         {
             NetworkManager.Singleton.Shutdown();
@@ -98,9 +90,6 @@ public class MenuController : MonoBehaviour
 
     public void OnHostGame()
     {
-        // OLD: SceneManager.LoadScene("Main Game");  <-- DELETED
-        // OLD: NetworkManager.Singleton.StartHost(); <-- DELETED
-
         if (LobbyManager.Instance != null)
         {
             LobbyManager.Instance.CreateLobby();
@@ -113,7 +102,6 @@ public class MenuController : MonoBehaviour
 
     public void OnJoinGame()
     {
-      
         if (LobbyManager.Instance != null)
         {
             LobbyManager.Instance.JoinLobby();
@@ -123,6 +111,7 @@ public class MenuController : MonoBehaviour
             Debug.LogError("LobbyManager is missing from the scene!");
         }
     }
+
     public void OnOptionsButton()
     {
         if (optionsMenuPanel != null)
@@ -133,13 +122,19 @@ public class MenuController : MonoBehaviour
 
     public void OnExitGame()
     {
-        Application.Quit(); 
+        Debug.Log("Exiting Game...");
+
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
+            Application.Quit();
+        #endif
     }
 
     public void SetVolume(float volume)
     {
         AudioListener.volume = volume;
-        volValue.text = volume.ToString("0.0");
+        if (volValue) volValue.text = volume.ToString("0.0");
     }
 
     public void VolumeApply()
@@ -151,7 +146,7 @@ public class MenuController : MonoBehaviour
     public void SetControllerSen(float sensitivity)
     {
         mainControllerSen = Mathf.RoundToInt(sensitivity);
-        controllerSenTextValue.text = sensitivity.ToString("0");
+        if (controllerSenTextValue) controllerSenTextValue.text = sensitivity.ToString("0");
     }
 
     public void GameplayApply()
@@ -172,7 +167,7 @@ public class MenuController : MonoBehaviour
     public void SetBrightness(float brightness)
     {
         _brightnessLevel = brightness;
-        brightnessTextValue.text = brightness.ToString("0.0");
+        if (brightnessTextValue) brightnessTextValue.text = brightness.ToString("0.0");
     }
 
     public void SetFullscreen(bool isFullscreen)
@@ -182,7 +177,6 @@ public class MenuController : MonoBehaviour
 
     public void SetQuality(int qualityIndex)
     {
-
         _qualityLevel = qualityIndex;
     }
 
@@ -198,6 +192,7 @@ public class MenuController : MonoBehaviour
 
         StartCoroutine(ConfirmationBox());
     }
+
     public void resetButton(string menuType)
     {
         if (menuType == "Graphics")
@@ -235,13 +230,13 @@ public class MenuController : MonoBehaviour
         }
     }
 
-
-
     public IEnumerator ConfirmationBox()
     {
-        confirmationPrompt.SetActive(true);
-        yield return new WaitForSeconds(2);
-        confirmationPrompt.SetActive(false);
+        if (confirmationPrompt != null)
+        {
+            confirmationPrompt.SetActive(true);
+            yield return new WaitForSeconds(2);
+            confirmationPrompt.SetActive(false);
+        }
     }
-
 }

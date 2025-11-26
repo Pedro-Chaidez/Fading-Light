@@ -5,7 +5,8 @@ using Unity.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
-using UnityEngine.UI;
+using UnityEngine.UI; 
+using Unity.Netcode.Transports.UTP; 
 
 public class LobbyManager : NetworkBehaviour
 {
@@ -18,6 +19,8 @@ public class LobbyManager : NetworkBehaviour
     [Header("Visual Customization")]
     [SerializeField] private Color localPlayerColor = Color.green; 
     [SerializeField] private Color otherPlayerColor = Color.white;
+    [SerializeField] private int listTopPadding = 150;
+    [SerializeField] private int fontSize = 24;
 
     [Header("UI References")]
     [SerializeField] private GameObject lobbyPanel;       
@@ -31,8 +34,11 @@ public class LobbyManager : NetworkBehaviour
     [SerializeField] private GameObject joinPanel;
     [SerializeField] private Transform serverListContainer;
     [SerializeField] private GameObject serverButtonPrefab;
+    [SerializeField] private GameObject joinSelectionButton; 
 
     private NetworkList<FixedString32Bytes> connectedPlayers;
+    private HashSet<string> foundServers = new HashSet<string>(); 
+    private string selectedServerIP; 
 
     private void Awake()
     {
@@ -50,11 +56,16 @@ public class LobbyManager : NetworkBehaviour
         if (lobbyPanel != null) lobbyPanel.SetActive(false);
         if (joinPanel != null) joinPanel.SetActive(false);
         if (mainMenuPanel != null) mainMenuPanel.SetActive(true);
-        
+
         if (NetworkManager.Singleton != null)
         {
             NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
             NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
+        }
+
+        if (LanDiscovery.Instance != null)
+        {
+            LanDiscovery.Instance.OnServerFound += AddServerToList;
         }
     }
 
@@ -65,12 +76,21 @@ public class LobbyManager : NetworkBehaviour
             NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
             NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnected;
         }
+        if (LanDiscovery.Instance != null)
+        {
+            LanDiscovery.Instance.OnServerFound -= AddServerToList;
+        }
         base.OnDestroy();
     }
 
     public void CreateLobby()
     {
+        if (NetworkManager.Singleton.IsListening) NetworkManager.Singleton.Shutdown();
+
         NetworkManager.Singleton.StartHost();
+        
+        if (LanDiscovery.Instance != null) LanDiscovery.Instance.StartBroadcasting();
+
         ShowLobbyUI(true);
         
         if (IsServer) 
@@ -84,40 +104,152 @@ public class LobbyManager : NetworkBehaviour
     {
         if (mainMenuPanel != null) mainMenuPanel.SetActive(false);
         if (joinPanel != null) joinPanel.SetActive(true);
-        //RefreshServerList();
+        
+        selectedServerIP = "";
+        
+        if (joinSelectionButton != null)
+        {
+            joinSelectionButton.SetActive(false);
+            UnityEngine.UI.Button btn = joinSelectionButton.GetComponent<UnityEngine.UI.Button>();
+            if (btn != null)
+            {
+                btn.onClick.RemoveAllListeners();
+                btn.onClick.AddListener(() => {
+                    Debug.Log($"[LobbyManager] Join button clicked! Selected IP: {selectedServerIP}");
+                    if (!string.IsNullOrEmpty(selectedServerIP))
+                    {
+                        ConnectToIP(selectedServerIP);
+                    }
+                });
+                Debug.Log("[LobbyManager] Join button listener added");
+            }
+        }
+
+        ClearServerList();
+        if (LanDiscovery.Instance != null) LanDiscovery.Instance.StartListening();
     }
 
-    /*public void RefreshServerList()
+    private void ClearServerList()
     {
-        if (serverListContainer == null || serverButtonPrefab == null) return;
-
-        for (int i = serverListContainer.childCount - 1; i >= 0; i--)
+        foundServers.Clear();
+        if (serverListContainer != null)
         {
-            DestroyImmediate(serverListContainer.GetChild(i).gameObject);
+            for (int i = serverListContainer.childCount - 1; i >= 0; i--)
+            {
+                DestroyImmediate(serverListContainer.GetChild(i).gameObject);
+            }
         }
+    }
+
+    private void AddServerToList(string ipAddress)
+    {
+        if (foundServers.Contains(ipAddress)) return;
+        
+        foundServers.Add(ipAddress);
+
+        if (serverListContainer == null || serverButtonPrefab == null) return;
 
         GameObject btn = Instantiate(serverButtonPrefab, serverListContainer);
         TMP_Text btnText = btn.GetComponentInChildren<TMP_Text>();
-        if (btnText != null) btnText.text = "Local Game (Click to Join)";
+        
+        if (btnText != null)
+        {
+            btnText.text = $"FOUND: {ipAddress}";
+            btnText.enableAutoSizing = false;
+            btnText.fontSize = fontSize;
+            btnText.fontStyle = FontStyles.Normal;
+            btnText.color = otherPlayerColor; 
+        }
 
-        btn.GetComponent<Button>().onClick.AddListener(() => {
-            NetworkManager.Singleton.StartClient();
-        });
-    } */
+        UnityEngine.UI.Button btnComp = btn.GetComponent<UnityEngine.UI.Button>();
+        if (btnComp != null)
+        {
+            btnComp.onClick.AddListener(() => {
+                selectedServerIP = ipAddress;
+                Debug.Log($"Selected Server: {ipAddress}");
+                if (joinSelectionButton != null) joinSelectionButton.SetActive(true);
+            });
+        }
+    }
+
+    private void ConnectToIP(string ip)
+    {
+        Debug.Log($"[LobbyManager] Connecting to IP: {ip}");
+        
+        if (LanDiscovery.Instance != null) LanDiscovery.Instance.StopListening();
+
+        if (NetworkManager.Singleton.IsListening)
+        {
+            Debug.Log("[LobbyManager] Shutting down existing connection before joining");
+            NetworkManager.Singleton.Shutdown();
+            StartCoroutine(ConnectAfterShutdown(ip));
+            return;
+        }
+
+        AttemptConnection(ip);
+    }
+
+    private System.Collections.IEnumerator ConnectAfterShutdown(string ip)
+    {
+        yield return new WaitForSeconds(0.5f);
+        AttemptConnection(ip);
+    }
+
+    private void AttemptConnection(string ip)
+    {
+        Debug.Log($"[LobbyManager] Attempting connection to {ip}:7777");
+        
+        var transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
+        if (transport != null)
+        {
+            transport.SetConnectionData(ip, 7777);
+            Debug.Log($"[LobbyManager] Transport configured for {ip}:7777");
+        }
+        else
+        {
+            Debug.LogError("[LobbyManager] UnityTransport component not found on NetworkManager!");
+            return;
+        }
+
+        bool started = NetworkManager.Singleton.StartClient();
+        Debug.Log($"[LobbyManager] StartClient() returned: {started}");
+        
+        if (!started)
+        {
+            Debug.LogError("[LobbyManager] Failed to start client!");
+        }
+    }
 
     public void BackToMain()
     {
+        if (LanDiscovery.Instance != null) LanDiscovery.Instance.StopListening();
         if (joinPanel != null) joinPanel.SetActive(false);
         if (mainMenuPanel != null) mainMenuPanel.SetActive(true);
     }
 
     private void OnClientConnected(ulong clientId)
     {
+        Debug.Log($"[LobbyManager] Client connected: {clientId}, LocalClientId: {NetworkManager.Singleton.LocalClientId}, IsServer: {IsServer}");
+        
         if (IsServer)
         {
-            if (!IsPlayerInList(clientId)) connectedPlayers.Add($"Player {clientId}");
+            if (!IsPlayerInList(clientId))
+            {
+                connectedPlayers.Add($"Player {clientId}");
+                Debug.Log($"[LobbyManager] Added player {clientId} to list. Total players: {connectedPlayers.Count}");
+            }
         }
-        if (clientId == NetworkManager.Singleton.LocalClientId) ShowLobbyUI(IsHost);
+        
+        if (clientId == NetworkManager.Singleton.LocalClientId)
+        {
+            Debug.Log($"[LobbyManager] THIS IS ME! Local client connected. IsHost: {IsHost}, showing lobby UI...");
+            ShowLobbyUI(IsHost);
+            
+            if (lobbyPanel != null)
+            {
+                Debug.Log($"[LobbyManager] Lobby panel state after ShowLobbyUI: {lobbyPanel.activeSelf}");
+            }
+        }
     }
 
     private bool IsPlayerInList(ulong clientId)
@@ -170,7 +302,13 @@ public class LobbyManager : NetworkBehaviour
     {
         if (playerListContainer == null) return;
 
-        // 1. REVERSE LOOP (The only way to delete correctly)
+        VerticalLayoutGroup layout = playerListContainer.GetComponent<VerticalLayoutGroup>();
+        if (layout != null)
+        {
+            layout.padding.top = listTopPadding;
+            LayoutRebuilder.ForceRebuildLayoutImmediate(playerListContainer as RectTransform);
+        }
+
         for (int i = playerListContainer.childCount - 1; i >= 0; i--)
         {
             DestroyImmediate(playerListContainer.GetChild(i).gameObject);
@@ -181,19 +319,18 @@ public class LobbyManager : NetworkBehaviour
             GameObject item = Instantiate(playerListItemPrefab, playerListContainer);
             TMP_Text textComp = item.GetComponentInChildren<TMP_Text>();
             
-            if (textComp != null) 
+            if (textComp != null)
             {
                 string pName = playerName.ToString();
                 textComp.text = pName;
                 
-                // --- VISUAL FIXES ---
-                textComp.enableAutoSizing = false; // Turn off auto-size so we can control it
-                textComp.fontSize = 24;            // Force font size to 24 (Make this smaller if needed)
+                textComp.enableAutoSizing = false;
+                textComp.fontSize = fontSize;
+                textComp.fontStyle = FontStyles.Normal; 
                 
                 if (NetworkManager.Singleton != null && pName.Contains($"Player {NetworkManager.Singleton.LocalClientId}"))
                 {
                     textComp.color = localPlayerColor;
-                    textComp.fontStyle = FontStyles.Normal; 
                 }
                 else
                 {
@@ -205,21 +342,29 @@ public class LobbyManager : NetworkBehaviour
 
     private void ShowLobbyUI(bool isHost)
     {
+        Debug.Log($"[LobbyManager] ShowLobbyUI called. IsHost: {isHost}");
         if (mainMenuPanel != null) mainMenuPanel.SetActive(false);
         if (joinPanel != null) joinPanel.SetActive(false);
         if (lobbyPanel != null) lobbyPanel.SetActive(true);
         if (startGameButton != null) startGameButton.SetActive(isHost);
+        Debug.Log($"[LobbyManager] Lobby UI shown. Panel active: {lobbyPanel != null && lobbyPanel.activeSelf}");
     }
 
     public void OnStartGameClicked()
     {
         if (!IsHost) return;
-        if (connectedPlayers.Count < minPlayersToStart) return; 
+        if (connectedPlayers.Count < minPlayersToStart) return;
         NetworkManager.Singleton.SceneManager.LoadScene(gameSceneName, LoadSceneMode.Single);
     }
 
     public void LeaveLobby()
     {
+        if (LanDiscovery.Instance != null)
+        {
+            LanDiscovery.Instance.StopBroadcasting();
+            LanDiscovery.Instance.StopListening();
+        }
+
         if (NetworkManager.Singleton != null) NetworkManager.Singleton.Shutdown();
         
         if (lobbyPanel != null) lobbyPanel.SetActive(false);

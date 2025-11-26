@@ -10,6 +10,13 @@ public class InputManager : NetworkBehaviour
     private PlayerLook look;
     private Inventory inventory;
     private Flashlight flashlight;
+
+    private bool CanInput()
+    {
+        // Allow input if not spawned (singleplayer) or if this is the owner in multiplayer
+        return !IsSpawned || IsOwner;
+    }
+
     private void Awake()
     {
         playerInput = new InputSystem_Actions();
@@ -32,7 +39,7 @@ public class InputManager : NetworkBehaviour
     }
     private void FixedUpdate()
     {
-        if (!IsOwner)
+        if (!CanInput() || motor == null)
         {
             return;
         }
@@ -40,7 +47,7 @@ public class InputManager : NetworkBehaviour
     }
     private void LateUpdate()
     {
-        if (!IsOwner)
+        if (!CanInput() || look == null)
         {
             return;
         }
@@ -52,7 +59,7 @@ public class InputManager : NetworkBehaviour
         {
             return;
         }
-        if (!IsOwner)
+        if (!CanInput())
         {
             return;
         }
@@ -78,7 +85,7 @@ public class InputManager : NetworkBehaviour
         {
             return;
         }
-        if (!IsOwner)
+        if (!CanInput())
         {
             return;
         }

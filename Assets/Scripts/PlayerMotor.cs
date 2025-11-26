@@ -16,13 +16,20 @@ public class PlayerMotor : NetworkBehaviour
     public float gravity = -10f;
     public float jumpHeight = 7f;
     public float crouchTimer = 1f;
+
+    private bool CanMove()
+    {
+        // Allow movement if not spawned (singleplayer) or if this is the owner in multiplayer
+        return !IsSpawned || IsOwner;
+    }
+
     private void Start()
     {
         controller = GetComponent<CharacterController>();
     }
     private void Update()
     {
-        if (!IsOwner)
+        if (!CanMove())
         {
             return;
         }
@@ -36,7 +43,7 @@ public class PlayerMotor : NetworkBehaviour
     }
     public void Crouch()
     {
-        if (!IsOwner)
+        if (!CanMove())
         {
             return;
         }
@@ -47,7 +54,7 @@ public class PlayerMotor : NetworkBehaviour
     }
     public void Sprint()
     {
-        if (!IsOwner)
+        if (!CanMove())
         {
             return;
         }
@@ -63,7 +70,7 @@ public class PlayerMotor : NetworkBehaviour
     }
     public void ProcessMove(Vector2 input)
     {
-        if (!IsOwner)
+        if (!CanMove())
         {
             return;
         }
@@ -79,7 +86,7 @@ public class PlayerMotor : NetworkBehaviour
     }
     public void Jump()
     {
-        if (!IsOwner)
+        if (!CanMove())
         {
             return;
         }
