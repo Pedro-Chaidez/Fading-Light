@@ -1,10 +1,9 @@
 using UnityEngine;
-using Unity.Netcode;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.Timeline;
 
 [RequireComponent(typeof(CharacterController))]
-public class PlayerMotor : NetworkBehaviour
+public class PlayerMotor : MonoBehaviour
 {
     private CharacterController controller;
     private Vector3 playerVelocity;
@@ -29,10 +28,13 @@ public class PlayerMotor : NetworkBehaviour
     }
     private void Update()
     {
+<<<<<<< HEAD
         if (!CanMove())
         {
             return;
         }
+=======
+>>>>>>> main
         isGrounded = controller.isGrounded;
         if (lerpCrouch)
         {
@@ -43,10 +45,13 @@ public class PlayerMotor : NetworkBehaviour
     }
     public void Crouch()
     {
+<<<<<<< HEAD
         if (!CanMove())
         {
             return;
         }
+=======
+>>>>>>> main
         crouching = !crouching;
         crouchTimer = 0;
         lerpCrouch = true;
@@ -54,10 +59,13 @@ public class PlayerMotor : NetworkBehaviour
     }
     public void Sprint()
     {
+<<<<<<< HEAD
         if (!CanMove())
         {
             return;
         }
+=======
+>>>>>>> main
         sprinting = !sprinting;
         if (sprinting)
         {
@@ -70,10 +78,13 @@ public class PlayerMotor : NetworkBehaviour
     }
     public void ProcessMove(Vector2 input)
     {
+<<<<<<< HEAD
         if (!CanMove())
         {
             return;
         }
+=======
+>>>>>>> main
         Vector3 moveDirection = Vector3.zero;
         moveDirection.x = input.x;
         moveDirection.z = input.y;
@@ -86,10 +97,13 @@ public class PlayerMotor : NetworkBehaviour
     }
     public void Jump()
     {
+<<<<<<< HEAD
         if (!CanMove())
         {
             return;
         }
+=======
+>>>>>>> main
         if (isGrounded)
         {
             playerVelocity.y = Mathf.Sqrt(jumpHeight * -3.0f * gravity);

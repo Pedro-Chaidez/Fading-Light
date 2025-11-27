@@ -1,8 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Unity.Netcode;
-
-public class InputManager : NetworkBehaviour
+public class InputManager : MonoBehaviour
 {
     private InputSystem_Actions playerInput;
     public InputSystem_Actions.PlayerActions onFoot;
@@ -39,22 +37,29 @@ public class InputManager : NetworkBehaviour
     }
     private void FixedUpdate()
     {
+<<<<<<< HEAD
         if (!CanInput() || motor == null)
         {
             return;
         }
+=======
+>>>>>>> main
         motor.ProcessMove(onFoot.Move.ReadValue<Vector2>());
     }
     private void LateUpdate()
     {
+<<<<<<< HEAD
         if (!CanInput() || look == null)
         {
             return;
         }
+=======
+>>>>>>> main
         look.ProcessLook(onFoot.Look.ReadValue<Vector2>());
     }
     private void OnEnable()
     {
+<<<<<<< HEAD
         if (playerInput == null)
         {
             return;
@@ -104,5 +109,12 @@ public class InputManager : NetworkBehaviour
         {
             onFoot.Disable();
         }
+=======
+        onFoot.Enable();
+    }
+    private void OnDisable()
+    {
+        onFoot.Disable();
+>>>>>>> main
     }
 }

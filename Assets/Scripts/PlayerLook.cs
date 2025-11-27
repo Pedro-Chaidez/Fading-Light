@@ -1,12 +1,12 @@
 using UnityEngine;
-using Unity.Netcode;
 
-public class PlayerLook : NetworkBehaviour
+public class PlayerLook : MonoBehaviour
 {
     public Camera cam;
     private float xRotation = 0f;
     public float xSensitivity = 30f;
     public float ySensitivity = 30f;
+<<<<<<< HEAD
 
     private InputSystem_Actions playerControls;
     private Animator anim;
@@ -44,6 +44,10 @@ public class PlayerLook : NetworkBehaviour
         {
             return;
         }
+=======
+    public void ProcessLook(Vector2 input)
+    {
+>>>>>>> main
         float mouseX = input.x;
         float mouseY = input.y;
 
