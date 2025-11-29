@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-public class InputManager : MonoBehaviour
+using Unity.Netcode;
+
+public class InputManager : NetworkBehaviour
 {
     private InputSystem_Actions playerInput;
     public InputSystem_Actions.PlayerActions onFoot;
@@ -11,7 +13,6 @@ public class InputManager : MonoBehaviour
 
     private bool CanInput()
     {
-        // Allow input if not spawned (singleplayer) or if this is the owner in multiplayer
         return !IsSpawned || IsOwner;
     }
 
@@ -25,41 +26,49 @@ public class InputManager : MonoBehaviour
         inventory = GetComponent<Inventory>();
         flashlight = GetComponent<Flashlight>();
 
-        onFoot.Jump.performed += ctx => motor.Jump();
-        onFoot.Crouch.performed += ctx => motor.Crouch();
-        onFoot.Sprint.performed += ctx => motor.Sprint();
-        onFoot.NextItem.performed += ctx => inventory.scrollUp();
-        onFoot.PreviousItem.performed += ctx => inventory.scrollDown();
-        onFoot.DropItem.performed += ctx => inventory.DropItem();
-        onFoot.ToggleFlashlight.performed += ctx => flashlight.normLight();
-        onFoot.ToggleMaxFlash.performed += ctx => flashlight.maxLight();
-        //onFoot.UseItem.performed += ctx => inventory.UseItem();
+        // --- SAFETY CHECKS ---
+        if (motor != null)
+        {
+            onFoot.Jump.performed += ctx => motor.Jump();
+            onFoot.Crouch.performed += ctx => motor.Crouch();
+            onFoot.Sprint.performed += ctx => motor.Sprint();
+        }
+        else Debug.LogError("InputManager: Missing 'PlayerMotor' script on this object!");
+
+        if (inventory != null)
+        {
+            onFoot.NextItem.performed += ctx => inventory.scrollUp();
+            onFoot.PreviousItem.performed += ctx => inventory.scrollDown();
+            onFoot.DropItem.performed += ctx => inventory.DropItem();
+        }
+
+        if (flashlight != null)
+        {
+            onFoot.ToggleFlashlight.performed += ctx => flashlight.normLight();
+            onFoot.ToggleMaxFlash.performed += ctx => flashlight.maxLight();
+        }
     }
+    
     private void FixedUpdate()
     {
-<<<<<<< HEAD
-        if (!CanInput() || motor == null)
+        if (!CanInput() || motor == null || playerInput == null || !onFoot.enabled)
         {
             return;
         }
-=======
->>>>>>> main
         motor.ProcessMove(onFoot.Move.ReadValue<Vector2>());
     }
+    
     private void LateUpdate()
     {
-<<<<<<< HEAD
-        if (!CanInput() || look == null)
+        if (!CanInput() || look == null || playerInput == null || !onFoot.enabled)
         {
             return;
         }
-=======
->>>>>>> main
         look.ProcessLook(onFoot.Look.ReadValue<Vector2>());
     }
+    
     private void OnEnable()
     {
-<<<<<<< HEAD
         if (playerInput == null)
         {
             return;
@@ -73,6 +82,7 @@ public class InputManager : MonoBehaviour
             onFoot.Enable();
         }
     }
+    
     private void OnDisable()
     {
         if (playerInput == null)
@@ -84,6 +94,7 @@ public class InputManager : MonoBehaviour
             onFoot.Disable();
         }
     }
+    
     public override void OnNetworkSpawn()
     {
         if (playerInput == null)
@@ -99,6 +110,7 @@ public class InputManager : MonoBehaviour
             onFoot.Enable();
         }
     }
+    
     public override void OnNetworkDespawn()
     {
         if (playerInput == null)
@@ -109,12 +121,5 @@ public class InputManager : MonoBehaviour
         {
             onFoot.Disable();
         }
-=======
-        onFoot.Enable();
-    }
-    private void OnDisable()
-    {
-        onFoot.Disable();
->>>>>>> main
     }
 }

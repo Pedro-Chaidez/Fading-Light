@@ -1,19 +1,18 @@
 using UnityEngine;
+using Unity.Netcode;
 
-public class PlayerLook : MonoBehaviour
+public class PlayerLook : NetworkBehaviour
 {
     public Camera cam;
     private float xRotation = 0f;
     public float xSensitivity = 30f;
     public float ySensitivity = 30f;
-<<<<<<< HEAD
 
     private InputSystem_Actions playerControls;
     private Animator anim;
 
     private bool CanLook()
     {
-        // Allow camera/look if not spawned (singleplayer) or if this is the owner in multiplayer
         return !IsSpawned || IsOwner;
     }
     
@@ -32,7 +31,7 @@ public class PlayerLook : MonoBehaviour
             cam.gameObject.SetActive(true); 
            
         }
-        else // This is not the owner
+        else
         {
             cam.gameObject.SetActive(false); 
         }
@@ -44,10 +43,6 @@ public class PlayerLook : MonoBehaviour
         {
             return;
         }
-=======
-    public void ProcessLook(Vector2 input)
-    {
->>>>>>> main
         float mouseX = input.x;
         float mouseY = input.y;
 
@@ -58,6 +53,7 @@ public class PlayerLook : MonoBehaviour
 
         transform.Rotate(Vector3.up * (mouseX * Time.deltaTime) * xSensitivity);
     }
+    
     private void Awake()
     {
         //Cursor.lockState = CursorLockMode.Locked;

@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem.Controls;
-using UnityEngine.Timeline;
+using Unity.Netcode;
 
 [RequireComponent(typeof(CharacterController))]
-public class PlayerMotor : MonoBehaviour
+public class PlayerMotor : NetworkBehaviour
 {
     private CharacterController controller;
     private Vector3 playerVelocity;
@@ -18,7 +18,6 @@ public class PlayerMotor : MonoBehaviour
 
     private bool CanMove()
     {
-        // Allow movement if not spawned (singleplayer) or if this is the owner in multiplayer
         return !IsSpawned || IsOwner;
     }
 
@@ -26,15 +25,13 @@ public class PlayerMotor : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
     }
+    
     private void Update()
     {
-<<<<<<< HEAD
         if (!CanMove())
         {
             return;
         }
-=======
->>>>>>> main
         isGrounded = controller.isGrounded;
         if (lerpCrouch)
         {
@@ -43,29 +40,24 @@ public class PlayerMotor : MonoBehaviour
             p *= p;
         }
     }
+    
     public void Crouch()
     {
-<<<<<<< HEAD
         if (!CanMove())
         {
             return;
         }
-=======
->>>>>>> main
         crouching = !crouching;
         crouchTimer = 0;
         lerpCrouch = true;
-
     }
+    
     public void Sprint()
     {
-<<<<<<< HEAD
         if (!CanMove())
         {
             return;
         }
-=======
->>>>>>> main
         sprinting = !sprinting;
         if (sprinting)
         {
@@ -76,15 +68,13 @@ public class PlayerMotor : MonoBehaviour
             speed = 6f;
         }
     }
+    
     public void ProcessMove(Vector2 input)
     {
-<<<<<<< HEAD
         if (!CanMove())
         {
             return;
         }
-=======
->>>>>>> main
         Vector3 moveDirection = Vector3.zero;
         moveDirection.x = input.x;
         moveDirection.z = input.y;
@@ -93,17 +83,14 @@ public class PlayerMotor : MonoBehaviour
         if (isGrounded && playerVelocity.y < 0)
             playerVelocity.y = -2f;
         controller.Move(playerVelocity * Time.deltaTime);
-
     }
+    
     public void Jump()
     {
-<<<<<<< HEAD
         if (!CanMove())
         {
             return;
         }
-=======
->>>>>>> main
         if (isGrounded)
         {
             playerVelocity.y = Mathf.Sqrt(jumpHeight * -3.0f * gravity);

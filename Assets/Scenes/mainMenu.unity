@@ -480,7 +480,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -510.82013, y: -9.889282}
+  m_AnchoredPosition: {x: -510.82007, y: -9.889343}
   m_SizeDelta: {x: -1336.658, y: -1202.032}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &142848065
@@ -6696,7 +6696,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -685.388, y: -10.393921}
+  m_AnchoredPosition: {x: -685.38794, y: -10.393982}
   m_SizeDelta: {x: -1690.7761, y: -1579.2125}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1073760413
@@ -12043,7 +12043,6 @@ MonoBehaviour:
     NetworkTopology: 0
     UseCMBService: 0
     AutoSpawnPlayerPrefabClientSide: 1
-    NetworkMessageMetrics: 1
     NetworkProfilingMetrics: 1
     OldPrefabList: []
   RunInBackground: 1
