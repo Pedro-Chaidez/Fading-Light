@@ -565,6 +565,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Inventory
   items: []
   selectedItem: 0
+  slotIcons:
+  - {fileID: 1478293790}
+  - {fileID: 1943596988}
+  - {fileID: 1034943203}
+  - {fileID: 1540851677}
+  - {fileID: 2034121025}
   dropPoint: {fileID: 485536323}
 --- !u!4 &103283263 stripped
 Transform:
