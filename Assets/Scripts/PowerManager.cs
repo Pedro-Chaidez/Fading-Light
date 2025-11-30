@@ -29,7 +29,7 @@ public class PowerManager : MonoBehaviour
                 bar1.SetActive(true);
                 bar3.SetActive(false);
             } else if (flashlight.viewDistance == 15f) {
-                current -= (tickValue * 5);
+                current -= (tickValue * 3);
                 bar1.SetActive(true);
                 bar3.SetActive(true);
             } else {

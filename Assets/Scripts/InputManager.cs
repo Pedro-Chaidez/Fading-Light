@@ -1,8 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Unity.Netcode;
-
-public class InputManager : NetworkBehaviour
+public class InputManager : MonoBehaviour
 {
     private InputSystem_Actions playerInput;
     public InputSystem_Actions.PlayerActions onFoot;
@@ -32,70 +30,18 @@ public class InputManager : NetworkBehaviour
     }
     private void FixedUpdate()
     {
-        if (!IsOwner)
-        {
-            return;
-        }
         motor.ProcessMove(onFoot.Move.ReadValue<Vector2>());
     }
     private void LateUpdate()
     {
-        if (!IsOwner)
-        {
-            return;
-        }
         look.ProcessLook(onFoot.Look.ReadValue<Vector2>());
     }
     private void OnEnable()
     {
-        if (playerInput == null)
-        {
-            return;
-        }
-        if (!IsOwner)
-        {
-            return;
-        }
-        if (!onFoot.enabled)
-        {
-            onFoot.Enable();
-        }
+        onFoot.Enable();
     }
     private void OnDisable()
     {
-        if (playerInput == null)
-        {
-            return;
-        }
-        if (onFoot.enabled)
-        {
-            onFoot.Disable();
-        }
-    }
-    public override void OnNetworkSpawn()
-    {
-        if (playerInput == null)
-        {
-            return;
-        }
-        if (!IsOwner)
-        {
-            return;
-        }
-        if (!onFoot.enabled)
-        {
-            onFoot.Enable();
-        }
-    }
-    public override void OnNetworkDespawn()
-    {
-        if (playerInput == null)
-        {
-            return;
-        }
-        if (onFoot.enabled)
-        {
-            onFoot.Disable();
-        }
+        onFoot.Disable();
     }
 }
