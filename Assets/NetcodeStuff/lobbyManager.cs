@@ -36,7 +36,7 @@ public class LobbyManager : NetworkBehaviour
     
     [SerializeField] private GameObject joinSelectionButton; 
 
-    private NetworkList<FixedString32Bytes> connectedPlayers;
+    private NetworkList<FixedString32Bytes> connectedPlayers = new NetworkList<FixedString32Bytes>();
     private HashSet<string> foundServers = new HashSet<string>(); 
     private string selectedServerIP; 
 
@@ -124,8 +124,6 @@ public class LobbyManager : NetworkBehaviour
             Debug.Log("NetworkManager was active. Shutting down...");
             NetworkManager.Singleton.Shutdown();
         }
-
-        connectedPlayers = new NetworkList<FixedString32Bytes>();
 
         bool started = NetworkManager.Singleton.StartHost();
         if (started)
@@ -230,8 +228,6 @@ public class LobbyManager : NetworkBehaviour
     {
         if (IsServer)
         {
-            if (connectedPlayers == null) connectedPlayers = new NetworkList<FixedString32Bytes>();
-            
             if (!IsPlayerInList(clientId)) 
             {
                 connectedPlayers.Add($"Player {clientId}");
@@ -246,7 +242,6 @@ public class LobbyManager : NetworkBehaviour
 
     private bool IsPlayerInList(ulong clientId)
     {
-        if (connectedPlayers == null) return false;
         foreach (var p in connectedPlayers)
         {
             if (p.ToString().Contains($"Player {clientId}")) return true;
@@ -277,11 +272,6 @@ public class LobbyManager : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        if (IsServer)
-        {
-             if (connectedPlayers == null) connectedPlayers = new NetworkList<FixedString32Bytes>();
-        }
-
         if (IsClient)
         {
             connectedPlayers.OnListChanged += OnPlayerListChanged;
