@@ -26,7 +26,6 @@ public class InputManager : NetworkBehaviour
         inventory = GetComponent<Inventory>();
         flashlight = GetComponent<Flashlight>();
 
-        // --- SAFETY CHECKS ---
         if (motor != null)
         {
             onFoot.Jump.performed += ctx => motor.Jump();
