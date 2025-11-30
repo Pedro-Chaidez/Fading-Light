@@ -40,6 +40,7 @@ public class InputManager : NetworkBehaviour
             onFoot.NextItem.performed += ctx => inventory.scrollUp();
             onFoot.PreviousItem.performed += ctx => inventory.scrollDown();
             onFoot.DropItem.performed += ctx => inventory.DropItem();
+            onFoot.UseItem.performed += ctx => inventory.UseItem();
         }
 
         if (flashlight != null)

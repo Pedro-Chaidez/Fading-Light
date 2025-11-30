@@ -25,13 +25,32 @@ public class PlayerInteract : MonoBehaviour
         {
             Debug.Log("Raycast hit: " + hitInfo.collider.gameObject.name);
             Interactable interactable = hitInfo.collider.GetComponent<Interactable>();
-            if(interactable != null) {
+            if(interactable != null && interactable.name != "Banish Button") {
                 Debug.Log("Interactable found: " + interactable.name);
                 playerUI.UpdateText(interactable.promptMessage);
                 if(inputManager.onFoot.Interact.triggered)
                 {
                     Debug.Log("Interact key pressed! Calling Interact...");
                     interactable.BaseInteract();
+                }
+            }
+            else if (interactable != null && interactable.name == "Banish Button")
+            {
+                Inventory playerInventory = GetComponentInParent<Inventory>();
+                Debug.Log("Interactable found: " + interactable.name);
+                playerUI.UpdateText(interactable.promptMessage);
+                if (inputManager.onFoot.Interact.triggered)
+                {
+                    Debug.Log("Interact key pressed! Calling Interact...");
+                    if (playerInventory.isBanish())
+                    {
+                        interactable.BaseInteract();
+                        playerInventory.UseItem_Banish();
+                    }
+                    else
+                    {
+                        interactable.BaseInteract();
+                    }
                 }
             }
         }

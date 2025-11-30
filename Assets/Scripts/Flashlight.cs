@@ -8,12 +8,19 @@ public class Flashlight : MonoBehaviour
     public bool normLightToggle;
     public float viewDistance;
     private PowerManager powerManager;
+    public Light lightSource;
     private void Start()
     {
         viewDistance = 5f;
         normLightToggle = false;
         maxLightToggle = false;
         powerManager = GetComponent<PowerManager>();
+        lightSource = GetComponentInChildren<Light>();
+        if(lightSource != null)
+        {
+            lightSource.enabled = true;
+            lightSource.range = 5f;
+        }
     }
 
     private void Update()
@@ -28,7 +35,7 @@ public class Flashlight : MonoBehaviour
             }
             return;
         }
-        if(!normLightToggle && !maxLightToggle)
+        else if(!normLightToggle && !maxLightToggle)
         {
             viewDistance = 5f;
         }
@@ -39,6 +46,10 @@ public class Flashlight : MonoBehaviour
         else
         {
             viewDistance = 15f;
+        }
+        if(lightSource != null)
+        {
+            lightSource.range = viewDistance;
         }
     }
 
