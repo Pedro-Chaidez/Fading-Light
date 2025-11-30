@@ -81,6 +81,7 @@ public class MenuController : MonoBehaviour
 
     public void OnSinglePlayer()
     {
+        Debug.Log("OnSinglePlayer called");
         if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsListening)
         {
             NetworkManager.Singleton.Shutdown();
@@ -90,6 +91,7 @@ public class MenuController : MonoBehaviour
 
     public void OnHostGame()
     {
+        Debug.Log("OnHostGame called");
         if (LobbyManager.Instance != null)
         {
             LobbyManager.Instance.CreateLobby();
@@ -102,6 +104,7 @@ public class MenuController : MonoBehaviour
 
     public void OnJoinGame()
     {
+        Debug.Log("OnJoinGame called");
         if (LobbyManager.Instance != null)
         {
             LobbyManager.Instance.JoinLobby();
