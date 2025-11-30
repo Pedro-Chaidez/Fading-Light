@@ -10,9 +10,15 @@ public class Inventory : MonoBehaviour
     private List<Item> items = new List<Item>(LIST_CAPACITY);
     [SerializeField]
     private int selectedItem = 0;
+    [SerializeField]
+    private GameObject[] slotIcons;
 
     [SerializeField]
     private Transform dropPoint;
+
+    public void Start() {
+        UpdateUI();
+    }
     private void Awake()
     {
         if (instance == null)
@@ -30,10 +36,21 @@ public class Inventory : MonoBehaviour
         {
             items.Add(newItem);
             Debug.Log("Added " + newItem.itemName);
+            UpdateUI();
         }
         else
         {
             Debug.Log("Inventory is full!");
+        }
+    }
+
+    private void UpdateUI() {
+        for (int i = 0; i < slotIcons.Length; i++) {
+            slotIcons[i].SetActive(false);
+        }
+        
+        for (int i = 0; i < items.Count; i++) {
+            slotIcons[i].SetActive(true);
         }
     }
     public void UseItem()
@@ -43,6 +60,7 @@ public class Inventory : MonoBehaviour
             Debug.Log("Used " + items[selectedItem].itemName);
             Destroy(items[selectedItem].gameObject);
             items.RemoveAt(selectedItem);
+            UpdateUI();
         }
         else
         {
@@ -85,6 +103,7 @@ public class Inventory : MonoBehaviour
 
                 // 4. Remove it from the inventory list
                 items.RemoveAt(selectedItem);
+                UpdateUI();
             }
             else
             {
