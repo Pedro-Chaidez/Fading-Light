@@ -48,6 +48,10 @@ public class MenuController : MonoBehaviour
 
     private void Start()
     {
+        // Ensure cursor is visible and unlocked in the menu
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
         if (resolutionDropdown != null)
         {
             resolutions = Screen.resolutions;

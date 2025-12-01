@@ -217,6 +217,9 @@ public class LobbyManager : NetworkBehaviour
 
     public void BackToMain()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
         if (LanDiscovery.Instance != null) LanDiscovery.Instance.StopListening();
         
         if (joinPanel != null) joinPanel.SetActive(false);
