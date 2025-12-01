@@ -8,8 +8,6 @@ public class SingletonEventSystem : MonoBehaviour
 
     void Awake()
     {
-        // We do NOT persist this object. Each scene should handle its own EventSystem.
-        // This prevents the "Multiple EventSystems" error.
         if (instance != null && instance != this)
         {
             Destroy(gameObject);
