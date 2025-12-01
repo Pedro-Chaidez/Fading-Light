@@ -5,7 +5,7 @@ using TMPro;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
-using UnityEngine.InputSystem; // Needed for the Input System fix
+using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.UI;
 
@@ -13,16 +13,14 @@ public class inGameUI : MonoBehaviour
 {
     [Header("UI Panels")]
     [SerializeField] private GameObject pauseMenuPanel;
-    [SerializeField] private GameObject optionsMenuPanel; // Must match the name in your MenuController code
+    [SerializeField] private GameObject optionsMenuPanel;
     [SerializeField] private GameObject confirmationPrompt;
     
-    // --- NEW: Drag your main HUD (Health, Battery, Stamina) here ---
     [SerializeField] private GameObject gameHUDPanel; 
     
     [Header("Scene Settings")]
     [SerializeField] private string mainMenuSceneName = "mainMenu";
 
-    // --- COPIED SETTINGS VARIABLES FROM MENU CONTROLLER ---
     [Header("Volume Settings")]
     [SerializeField] private TMP_Text volValue = null;
     [SerializeField] private Slider volSlider = null;
@@ -56,7 +54,6 @@ public class inGameUI : MonoBehaviour
 
     private void Awake()
     {
-        // Ensure an EventSystem exists and has the correct Input Module
         EventSystem system = FindAnyObjectByType<EventSystem>();
         if (system == null)
         {
@@ -66,10 +63,8 @@ public class inGameUI : MonoBehaviour
         }
         else
         {
-            // If an EventSystem exists, make sure it uses the new Input System module
             if (system.GetComponent<InputSystemUIInputModule>() == null)
             {
-                // Remove old StandaloneInputModule if it exists
                 var oldModule = system.GetComponent<StandaloneInputModule>();
                 if (oldModule != null) Destroy(oldModule);
                 
@@ -80,12 +75,10 @@ public class inGameUI : MonoBehaviour
 
     private void Start()
     {
-        // 1. Initial State
         if (pauseMenuPanel != null) pauseMenuPanel.SetActive(false);
         if (optionsMenuPanel != null) optionsMenuPanel.SetActive(false);
         if (confirmationPrompt != null) confirmationPrompt.SetActive(false);
         
-        // Fallback: Try to find GameHUD if not assigned
         if (gameHUDPanel == null)
         {
             gameHUDPanel = GameObject.Find("GameHUD");
@@ -98,7 +91,6 @@ public class inGameUI : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        // 2. Initialize Resolution (Copied Logic)
         if (resolutionDropdown != null)
         {
             resolutions = Screen.resolutions;
@@ -154,17 +146,14 @@ public class inGameUI : MonoBehaviour
 
     private void Update()
     {
-        // FIX: Using new Input System to avoid InvalidOperationException
         if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
         {
-            // If Options is open, go back to the Pause Menu
             if (optionsMenuPanel != null && optionsMenuPanel.activeSelf)
             {
                 OnBackFromOptions();
             }
             else
             {
-                // Otherwise, toggle the Pause state
                 if (IsGamePaused)
                 {
                     ResumeGame();
@@ -177,15 +166,13 @@ public class inGameUI : MonoBehaviour
         }
     }
 
-    // --- PAUSE LOGIC ---
-
     public void PauseGame()
     {
         IsGamePaused = true;
         Time.timeScale = 0f; 
         
         if (pauseMenuPanel != null) pauseMenuPanel.SetActive(true);
-        if (gameHUDPanel != null) gameHUDPanel.SetActive(false); // Hide HUD
+        if (gameHUDPanel != null) gameHUDPanel.SetActive(false);
         
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -198,7 +185,7 @@ public class inGameUI : MonoBehaviour
         
         if (pauseMenuPanel != null) pauseMenuPanel.SetActive(false);
         if (optionsMenuPanel != null) optionsMenuPanel.SetActive(false);
-        if (gameHUDPanel != null) gameHUDPanel.SetActive(true); // Show HUD
+        if (gameHUDPanel != null) gameHUDPanel.SetActive(true);
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -216,8 +203,6 @@ public class inGameUI : MonoBehaviour
         SceneManager.LoadScene(mainMenuSceneName);
     }
 
-    // --- MENU NAVIGATION ---
-
     public void OnOptionsClicked()
     {
         Debug.Log("OnOptionsClicked called");
@@ -231,8 +216,6 @@ public class inGameUI : MonoBehaviour
         if (optionsMenuPanel != null) optionsMenuPanel.SetActive(false);
         if (pauseMenuPanel != null) pauseMenuPanel.SetActive(true);
     }
-
-    // --- COPIED SETTINGS LOGIC FROM MENUCONTROLLER ---
 
     public void SetResolution(int resolutionIndex)
     {
