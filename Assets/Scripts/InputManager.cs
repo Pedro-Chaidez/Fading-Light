@@ -27,6 +27,7 @@ public class InputManager : MonoBehaviour
         onFoot.ToggleFlashlight.performed += ctx => flashlight.normLight();
         onFoot.ToggleMaxFlash.performed += ctx => flashlight.maxLight();
         onFoot.UseItem.performed += ctx => inventory.UseItem();
+        onFoot.UseItem_Banish.performed += ctx => inventory.UseItem_Banish();
     }
     private void FixedUpdate()
     {

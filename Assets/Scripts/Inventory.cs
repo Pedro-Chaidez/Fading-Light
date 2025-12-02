@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 using System;
 
@@ -52,6 +53,9 @@ public class Inventory : MonoBehaviour
         }
         
         for (int i = 0; i < items.Count; i++) {
+            GameObject slot = slotIcons[i];
+            Image img = slot.GetComponent<Image>();
+            img.sprite = items[i].icon;
             slotIcons[i].SetActive(true);
         }
     }
@@ -84,6 +88,10 @@ public class Inventory : MonoBehaviour
         else if (items[selectedItem] != null && items[selectedItem].itemName == "Banish")
         {
             Debug.Log("Used " + items[selectedItem].itemName);
+            GameObject[] temp = GameObject.FindGameObjectsWithTag("Ghost");
+            if (temp.Length > 0) {
+                Destroy(temp[0]);
+            }
             Destroy(items[selectedItem].gameObject);
             items.RemoveAt(selectedItem);
             UpdateUI();
