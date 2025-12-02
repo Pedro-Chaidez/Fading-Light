@@ -12,12 +12,14 @@ public class Inventory : MonoBehaviour
     private int selectedItem = 0;
     [SerializeField]
     private GameObject[] slotIcons;
+    private PowerManager powerManager;
 
     [SerializeField]
     private Transform dropPoint;
 
     public void Start() {
         UpdateUI();
+        powerManager = GetComponent<PowerManager>();
     }
     private void Awake()
     {
@@ -64,6 +66,8 @@ public class Inventory : MonoBehaviour
             Debug.Log("Used " + items[selectedItem].itemName);
             Destroy(items[selectedItem].gameObject);
             items.RemoveAt(selectedItem);
+            powerManager.current += 20;
+            UpdateUI();
         }
         else
         {
