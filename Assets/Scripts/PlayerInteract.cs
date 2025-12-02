@@ -15,7 +15,7 @@ public class PlayerInteract : MonoBehaviour
         playerUI = GetComponent<PlayerUI>();
         inputManager = GetComponent<InputManager>();
     }
-    private void FixedUpdate()
+    private void Update()
     {
         playerUI.UpdateText(string.Empty);
         Ray ray = new Ray(cam.transform.position, cam.transform.forward);
@@ -42,12 +42,7 @@ public class PlayerInteract : MonoBehaviour
                 if (inputManager.onFoot.Interact.triggered)
                 {
                     Debug.Log("Interact key pressed! Calling Interact...");
-                    if (playerInventory.isBanish())
-                    {
-                        interactable.BaseInteract();
-                        playerInventory.UseItem_Banish();
-                    }
-                    else
+                    if (playerInventory.isBanish() && playerInventory.UseItem_Banish())
                     {
                         interactable.BaseInteract();
                     }

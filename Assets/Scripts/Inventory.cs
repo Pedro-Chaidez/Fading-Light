@@ -79,11 +79,12 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void UseItem_Banish()
+    public bool UseItem_Banish()
     {
         if (items.Count == 0)
         {
             Debug.LogWarning("Inventory is empty!");
+            return false;
         }
         else if (items[selectedItem] != null && items[selectedItem].itemName == "Banish")
         {
@@ -91,10 +92,12 @@ public class Inventory : MonoBehaviour
             Destroy(items[selectedItem].gameObject);
             items.RemoveAt(selectedItem);
             UpdateUI();
+            return true;
         }
         else
         {
             Debug.LogWarning("Tried to use an Item that is not there");
+            return false;
         }
     }
     public void DropItem()
@@ -173,15 +176,11 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public bool isBanish()
-    {
-        if (items[selectedItem] != null && items[selectedItem].itemName == "Banish")
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+    public bool isBanish() {
+        if (items.Count == 0) return false;
+        if (selectedItem >= items.Count) return false;
+        if (items[selectedItem] == null) return false;
+
+        return items[selectedItem].itemName == "Banish";
     }
 }
