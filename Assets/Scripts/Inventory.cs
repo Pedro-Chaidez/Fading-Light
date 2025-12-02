@@ -88,10 +88,6 @@ public class Inventory : MonoBehaviour
         else if (items[selectedItem] != null && items[selectedItem].itemName == "Banish")
         {
             Debug.Log("Used " + items[selectedItem].itemName);
-            GameObject[] temp = GameObject.FindGameObjectsWithTag("Ghost");
-            if (temp.Length > 0) {
-                Destroy(temp[0]);
-            }
             Destroy(items[selectedItem].gameObject);
             items.RemoveAt(selectedItem);
             UpdateUI();
