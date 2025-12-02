@@ -129,6 +129,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Battery
   promptMessage: Pick up Battery?
   itemName: Battery
+  icon: {fileID: 21300000, guid: df6ee0f14ce02d343a793867bb37c51e, type: 3}
 --- !u!1 &7156088472986580234
 GameObject:
   m_ObjectHideFlags: 0

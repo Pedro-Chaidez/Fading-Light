@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 using System;
 
@@ -10,9 +11,17 @@ public class Inventory : MonoBehaviour
     private List<Item> items = new List<Item>(LIST_CAPACITY);
     [SerializeField]
     private int selectedItem = 0;
+    [SerializeField]
+    private GameObject[] slotIcons;
+    private PowerManager powerManager;
 
     [SerializeField]
     private Transform dropPoint;
+
+    public void Start() {
+        UpdateUI();
+        powerManager = GetComponent<PowerManager>();
+    }
     private void Awake()
     {
         if (instance == null)
@@ -30,10 +39,24 @@ public class Inventory : MonoBehaviour
         {
             items.Add(newItem);
             Debug.Log("Added " + newItem.itemName);
+            UpdateUI();
         }
         else
         {
             Debug.Log("Inventory is full!");
+        }
+    }
+
+    private void UpdateUI() {
+        for (int i = 0; i < slotIcons.Length; i++) {
+            slotIcons[i].SetActive(false);
+        }
+        
+        for (int i = 0; i < items.Count; i++) {
+            GameObject slot = slotIcons[i];
+            Image img = slot.GetComponent<Image>();
+            img.sprite = items[i].icon;
+            slotIcons[i].SetActive(true);
         }
     }
     public void UseItem()
@@ -47,6 +70,8 @@ public class Inventory : MonoBehaviour
             Debug.Log("Used " + items[selectedItem].itemName);
             Destroy(items[selectedItem].gameObject);
             items.RemoveAt(selectedItem);
+            powerManager.current += 20;
+            UpdateUI();
         }
         else
         {
@@ -63,8 +88,13 @@ public class Inventory : MonoBehaviour
         else if (items[selectedItem] != null && items[selectedItem].itemName == "Banish")
         {
             Debug.Log("Used " + items[selectedItem].itemName);
+            GameObject[] temp = GameObject.FindGameObjectsWithTag("Ghost");
+            if (temp.Length > 0) {
+                Destroy(temp[0]);
+            }
             Destroy(items[selectedItem].gameObject);
             items.RemoveAt(selectedItem);
+            UpdateUI();
         }
         else
         {
@@ -107,6 +137,7 @@ public class Inventory : MonoBehaviour
 
                 // 4. Remove it from the inventory list
                 items.RemoveAt(selectedItem);
+                UpdateUI();
             }
             else
             {
