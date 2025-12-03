@@ -23,6 +23,11 @@ public class InputManager : MonoBehaviour
         onFoot.Sprint.performed += ctx => motor.Sprint();
         onFoot.NextItem.performed += ctx => inventory.scrollUp();
         onFoot.PreviousItem.performed += ctx => inventory.scrollDown();
+        onFoot.SelectFirstItem.performed += ctx => inventory.item1Select();
+        onFoot.SelectSecondItem.performed += ctx => inventory.item2Select();
+        onFoot.SelectThirdItem.performed += ctx => inventory.item3Select();
+        onFoot.SelectFourthItem.performed += ctx => inventory.item4Select();
+        onFoot.SelectFifthItem.performed += ctx => inventory.item5Select();
         onFoot.DropItem.performed += ctx => inventory.DropItem();
         onFoot.ToggleFlashlight.performed += ctx => flashlight.normLight();
         onFoot.ToggleMaxFlash.performed += ctx => flashlight.maxLight();

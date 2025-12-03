@@ -148,6 +148,34 @@ public class Inventory : MonoBehaviour
             Debug.LogError("An unexpected error occurred while dropping an item: " + ex.Message);
         }
     }
+
+
+
+    public void item1Select()
+    {
+        selectedItem = 0;
+    }
+    public void item2Select()
+    {
+        selectedItem = 1;
+    }
+
+    public void item3Select()
+    {
+        selectedItem = 2;
+    }
+
+    public void item4Select()
+    {
+        selectedItem = 3;
+    }
+
+    public void item5Select()
+    {
+        selectedItem = 4;
+    }
+
+
     public void scrollUp()
     {
         if (items.Count == 0) return;
