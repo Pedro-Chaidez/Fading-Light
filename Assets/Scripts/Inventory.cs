@@ -11,7 +11,6 @@ public class Inventory : MonoBehaviour
     private List<Item> items = new List<Item>(LIST_CAPACITY);
     [SerializeField]
     private int selectedItem = 0;
-    [SerializeField]
     private GameObject[] slotIcons;
     private PowerManager powerManager;
 
@@ -28,6 +27,7 @@ public class Inventory : MonoBehaviour
             Debug.LogWarning("More than one instance of inventory found!");
         }
         powerManager = GetComponent<PowerManager>();
+        slotIcons = new GameObject[LIST_CAPACITY];
         for (int i = 0; i < LIST_CAPACITY; i++)
         {
             slotIcons[i] = GameObject.Find("/Canvas/Inventory").transform.GetChild(i).gameObject;
