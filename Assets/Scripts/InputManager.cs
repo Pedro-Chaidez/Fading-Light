@@ -14,7 +14,7 @@ public class InputManager : NetworkBehaviour
     private bool CanInput()
     {
         // 1. If Game is Paused BLOCK INPUT
-        if (Time.timeScale == 0 || Cursor.visible) 
+        if (Time.timeScale == 0) 
         {
             return false;
         }
@@ -36,9 +36,9 @@ public class InputManager : NetworkBehaviour
         // --- SAFETY CHECKS ---
         if (motor != null)
         {
-            onFoot.Jump.performed += ctx => { if(CanInput()) motor.Jump(); };
-            onFoot.Crouch.performed += ctx => { if(CanInput()) motor.Crouch(); };
-            onFoot.Sprint.performed += ctx => { if(CanInput()) motor.Sprint(); };
+            onFoot.Jump.performed += ctx => motor.Jump();
+            onFoot.Crouch.performed += ctx => motor.Crouch();
+            onFoot.Sprint.performed += ctx => motor.Sprint();
         }
         else Debug.LogError("InputManager: Missing 'PlayerMotor' script on this object!");
 
@@ -63,13 +63,13 @@ public class InputManager : NetworkBehaviour
     
     private void FixedUpdate()
     {
-        if (!CanInput() || motor == null) return;
+        if (motor == null) return;
         motor.ProcessMove(onFoot.Move.ReadValue<Vector2>());
     }
     
     private void LateUpdate()
     {
-        if (!CanInput() || look == null) return;
+        if (look == null) return;
         look.ProcessLook(onFoot.Look.ReadValue<Vector2>());
     }
     

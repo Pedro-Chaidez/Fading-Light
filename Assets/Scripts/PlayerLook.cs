@@ -18,7 +18,6 @@ public class PlayerLook : NetworkBehaviour
     
     public override void OnNetworkSpawn()
     {
-        playerControls = new InputSystem_Actions(); 
         anim = this.GetComponent<Animator>(); 
 
         if (CanLook())
