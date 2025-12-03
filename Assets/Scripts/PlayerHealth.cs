@@ -16,8 +16,16 @@ public class PlayerHealth : MonoBehaviour {
 
     private PlayerCoordinates playerCoordinates;
     private CharacterController character;
-    private PlayerMotor movement;
-    private Stamina stamina;
+
+    // Change these to interfaces
+    private IPlayerMotor movement;
+    private IStamina stamina;
+
+    // ADD THIS METHOD - for dependency injection
+    public void Initialize(IStamina staminaComponent, IPlayerMotor motorComponent) {
+        stamina = staminaComponent;
+        movement = motorComponent;
+    }
 
     private void Start() {
         currentHealth = maxHealth;
@@ -27,8 +35,14 @@ public class PlayerHealth : MonoBehaviour {
         }
         playerCoordinates = GetComponent<PlayerCoordinates>();
         character = GetComponent<CharacterController>();
-        movement = GetComponent<PlayerMotor>();
-        stamina = GetComponent<Stamina>();
+
+        // Only get components if not already injected (for testing)
+        if (movement == null) {
+            movement = GetComponent<PlayerMotor>();
+        }
+        if (stamina == null) {
+            stamina = GetComponent<Stamina>();
+        }
     }
     private void Update() {
         if (currentHealth > maxHealth) {
@@ -78,25 +92,47 @@ public class PlayerHealth : MonoBehaviour {
 
     private void Die() {
         Debug.Log("You died!");
+
         if (diedScreen != null) {
             diedScreen.SetActive(true);
         }
-        GetComponent<InputManager>().enabled = false;
-        stamina.enabled = false;
+
+        // Null-safe check for InputManager
+        var inputManager = GetComponent<InputManager>();
+        if (inputManager != null) {
+            inputManager.enabled = false;
+        }
+
+        // Null-safe check for Stamina
+        if (stamina != null) {
+            stamina.enabled = false;
+        }
     }
 
     public void Resurrect() {
         Debug.Log("Resurrected");
+
         if (diedScreen != null) {
             diedScreen.SetActive(false);
         }
+
         currentHealth = maxHealth;
-        stamina.current = stamina.max;
-        movement.sprinting = false;
-        movement.speed = 6f;
-        GetComponent<InputManager>().enabled = true;
-        stamina.enabled = true;
-        
+
+        if (stamina != null) {
+            stamina.current = stamina.max;
+            stamina.enabled = true;
+        }
+
+        if (movement != null) {
+            movement.sprinting = false;
+            movement.speed = 6f;
+        }
+
+        var inputManager = GetComponent<InputManager>();
+        if (inputManager != null) {
+            inputManager.enabled = true;
+        }
+
         if (playerCoordinates != null && character != null) {
             character.enabled = false;
             transform.position = playerCoordinates.GetInitPosition();

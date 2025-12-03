@@ -3,18 +3,28 @@ using UnityEngine.InputSystem.Controls;
 using UnityEngine.Timeline;
 
 [RequireComponent(typeof(CharacterController))]
-public class PlayerMotor : MonoBehaviour
+public class PlayerMotor : MonoBehaviour, IPlayerMotor
 {
     private CharacterController controller;
     private Vector3 playerVelocity;
     private bool isGrounded;
     private bool lerpCrouch;
     public bool crouching;
-    public bool sprinting;
-    public float speed = 6f;
+    private bool _sprinting;
+    private float _speed;
     public float gravity = -10f;
     public float jumpHeight = 7f;
     public float crouchTimer = 1f;
+
+    public bool sprinting {
+        get { return _sprinting; }
+        set { _sprinting = value; }
+    }
+
+    public float speed {
+        get { return _speed; }
+        set { _speed = value; }
+    }
     private void Start()
     {
         controller = GetComponent<CharacterController>();
