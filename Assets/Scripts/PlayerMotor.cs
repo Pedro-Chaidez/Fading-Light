@@ -11,7 +11,7 @@ public class PlayerMotor : MonoBehaviour, IPlayerMotor
     private bool lerpCrouch;
     public bool crouching;
     private bool _sprinting;
-    private float _speed;
+    private float _speed = 6f;
     public float gravity = -10f;
     public float jumpHeight = 7f;
     public float crouchTimer = 1f;
