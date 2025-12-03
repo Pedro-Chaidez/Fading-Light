@@ -17,11 +17,6 @@ public class Inventory : MonoBehaviour
 
     [SerializeField]
     private Transform dropPoint;
-
-    public void Start() {
-        UpdateUI();
-        powerManager = GetComponent<PowerManager>();
-    }
     private void Awake()
     {
         if (instance == null)
@@ -32,6 +27,12 @@ public class Inventory : MonoBehaviour
         {
             Debug.LogWarning("More than one instance of inventory found!");
         }
+        powerManager = GetComponent<PowerManager>();
+        for (int i = 0; i < LIST_CAPACITY; i++)
+        {
+            slotIcons[i] = GameObject.Find("/Canvas/Inventory").transform.GetChild(i).gameObject;
+        }
+        UpdateUI();
     }
     public void AddItem(Item newItem)
     {
