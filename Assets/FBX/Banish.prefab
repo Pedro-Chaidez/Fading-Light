@@ -127,7 +127,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Banish
   promptMessage: Pick up Banish?
   itemName: Banish
-  icon: {fileID: 21300000, guid: eeacccd9eea137d44bd2b4396361cc38, type: 3}
 --- !u!1 &3396406709036116477
 GameObject:
   m_ObjectHideFlags: 0
