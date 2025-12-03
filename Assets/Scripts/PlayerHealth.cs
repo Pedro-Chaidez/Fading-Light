@@ -83,6 +83,10 @@ public class PlayerHealth : MonoBehaviour {
         }
         GetComponent<InputManager>().enabled = false;
         stamina.enabled = false;
+
+        // Unlock cursor so player can click buttons
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     public void Resurrect() {
@@ -96,6 +100,10 @@ public class PlayerHealth : MonoBehaviour {
         movement.speed = 6f;
         GetComponent<InputManager>().enabled = true;
         stamina.enabled = true;
+
+        // Lock cursor back for gameplay
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         
         if (playerCoordinates != null && character != null) {
             character.enabled = false;
