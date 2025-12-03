@@ -19,26 +19,29 @@ public class PowerManager : MonoBehaviour
     }
 
     void Update() {
-        if (current <= 0) {
+        if (current <= 0)
             current = 0;
-        }
 
         if (flashlight != null && Time.time - lastTick >= tickTime) {
-            if (flashlight.viewDistance == 10f) {
-                current -= tickValue;
-                bar1.SetActive(true);
-                bar3.SetActive(false);
-            } else if (flashlight.viewDistance == 15f) {
-                current -= (tickValue * 3);
-                bar1.SetActive(true);
-                bar3.SetActive(true);
-            } else {
-                bar1.SetActive(false);
-                bar3.SetActive(false);
+            if (bar1 != null && bar3 != null) {
+                if (flashlight.viewDistance == 10f) {
+                    current -= tickValue;
+                    bar1.SetActive(true);
+                    bar3.SetActive(false);
+                } else if (flashlight.viewDistance == 15f) {
+                    current -= tickValue * 3;
+                    bar1.SetActive(true);
+                    bar3.SetActive(true);
+                } else {
+                    bar1.SetActive(false);
+                    bar3.SetActive(false);
+                }
             }
-                lastTick = Time.time;
+
+            lastTick = Time.time;
         }
         current = Mathf.Clamp(current, 0f, start);
-        percentage.text = Mathf.RoundToInt(current).ToString() + "%";
+        if (percentage != null)
+            percentage.text = Mathf.RoundToInt(current).ToString() + "%";
     }
 }

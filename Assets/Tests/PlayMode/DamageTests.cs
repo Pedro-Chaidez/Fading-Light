@@ -3,42 +3,41 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-public class GhostDamageTests {
+public class DamageTests {
     [UnityTest]
-    public IEnumerator GhostDamage_DamagesPlayerOnTriggerStay() {
+    public IEnumerator Damage_OnTriggerStay() {
         // Arrange
         var ghostObject = new GameObject();
         var ghostDamage = ghostObject.AddComponent<GhostDamage>();
         ghostDamage.damagePerSecond = 10f;
 
-        // Add collider and make it a trigger
         var ghostCollider = ghostObject.AddComponent<BoxCollider>();
         ghostCollider.isTrigger = true;
 
-        // Create player
         var playerObject = new GameObject();
         var playerHealth = playerObject.AddComponent<PlayerHealth>();
+
         var healthBarObject = new GameObject();
         playerHealth.healthBar = healthBarObject.AddComponent<UnityEngine.UI.Image>();
 
-        // Add collider to player
         var playerCollider = playerObject.AddComponent<BoxCollider>();
-
-        // Add Rigidbody (required for physics interactions)
         playerObject.AddComponent<Rigidbody>();
 
         yield return null; // Wait for Start()
 
         float initialHealth = playerHealth.currentHealth;
 
-        // Act - position player inside ghost trigger
+        // Act
         playerObject.transform.position = ghostObject.transform.position;
 
-        yield return new WaitForSeconds(1.5f); // Wait for damage to apply
+        // Ensure the trigger event fires
+        yield return new WaitForFixedUpdate();
 
-        // Assert
-        Assert.Less(playerHealth.currentHealth, initialHealth, "Player should take damage");
-        Assert.AreEqual(90f, playerHealth.currentHealth, 0.1f, "Player should lose 10 health");
+        // Wait enough time for damage to apply
+        yield return new WaitForSeconds(1f);
+
+        // Assert - should drop by EXACTLY 10
+        Assert.AreEqual(initialHealth - 10f, playerHealth.currentHealth, 0.1f);
 
         // Cleanup
         Object.Destroy(ghostObject);
@@ -46,8 +45,9 @@ public class GhostDamageTests {
         Object.Destroy(healthBarObject);
     }
 
+
     [UnityTest]
-    public IEnumerator GhostDamage_DamagesOnlyOncePerSecond() {
+    public IEnumerator Damage_OncePerSecond() {
         // Arrange
         var ghostObject = new GameObject();
         var ghostDamage = ghostObject.AddComponent<GhostDamage>();
@@ -92,7 +92,7 @@ public class GhostDamageTests {
     }
 
     [UnityTest]
-    public IEnumerator GhostDamage_DoesNotDamageNonPlayerObjects() {
+    public IEnumerator Damage_DoesNotDamageNonPlayerObjects() {
         // Arrange
         var ghostObject = new GameObject();
         var ghostDamage = ghostObject.AddComponent<GhostDamage>();
