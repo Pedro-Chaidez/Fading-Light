@@ -3,6 +3,7 @@ using UnityEngine;
 public abstract class Item : Interactable
 {
     public string itemName;
+    public Sprite icon;
     protected string itemType;
     protected float durability;
     protected abstract void useItem();

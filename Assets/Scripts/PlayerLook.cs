@@ -1,48 +1,13 @@
 using UnityEngine;
-using Unity.Netcode;
 
-public class PlayerLook : NetworkBehaviour
+public class PlayerLook : MonoBehaviour
 {
     public Camera cam;
     private float xRotation = 0f;
     public float xSensitivity = 30f;
     public float ySensitivity = 30f;
-
-    private InputSystem_Actions playerControls;
-    private Animator anim;
-
-    private bool CanLook()
-    {
-        return !IsSpawned || IsOwner;
-    }
-    
-    public override void OnNetworkSpawn()
-    {
-        playerControls = new InputSystem_Actions(); 
-        anim = this.GetComponent<Animator>(); 
-
-        if (CanLook())
-        {
-            if (Camera.main != null)
-            {
-                Camera.main.gameObject.SetActive(false);
-            }
-
-            cam.gameObject.SetActive(true); 
-           
-        }
-        else
-        {
-            cam.gameObject.SetActive(false); 
-        }
-    }
-    
     public void ProcessLook(Vector2 input)
     {
-        if (!CanLook())
-        {
-            return;
-        }
         float mouseX = input.x;
         float mouseY = input.y;
 
@@ -53,7 +18,6 @@ public class PlayerLook : NetworkBehaviour
 
         transform.Rotate(Vector3.up * (mouseX * Time.deltaTime) * xSensitivity);
     }
-    
     private void Awake()
     {
         //Cursor.lockState = CursorLockMode.Locked;
