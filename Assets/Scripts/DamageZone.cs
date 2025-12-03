@@ -5,24 +5,34 @@ public class GhostDamage : MonoBehaviour {
     private float damageInterval = 1f;
     private float lastDamageTime = -999f;
 
-    private void OnTriggerStay(Collider other) {
-        ProcessDamage(other);
+    private PlayerHealth playerInside;
+
+    private void OnTriggerEnter(Collider other) {
+        var p = other.GetComponent<PlayerHealth>();
+        if (p != null)
+            playerInside = p;
     }
 
-    // Extract logic for testing
-    private void ProcessDamage(Collider other) {
-        PlayerHealth player = other.GetComponent<PlayerHealth>();
-        if (player != null) {
-            if (Time.time - lastDamageTime >= damageInterval) {
-                player.TakeDamage(damagePerSecond);
-                lastDamageTime = Time.time;
-            }
+    private void OnTriggerExit(Collider other) {
+        var p = other.GetComponent<PlayerHealth>();
+        if (p != null && p == playerInside)
+            playerInside = null;
+    }
+
+    private void FixedUpdate() {
+        if (playerInside == null) return;
+
+        if (Time.time - lastDamageTime >= damageInterval) {
+            playerInside.TakeDamage(damagePerSecond);
+            lastDamageTime = Time.time;
+            Debug.Log("Player Health: " + playerInside.currentHealth);
         }
     }
 
 #if UNITY_EDITOR
-    public void TestProcessDamage(Collider other) {
-        ProcessDamage(other);
+    public void TestProcessDamage(PlayerHealth ph) {
+        playerInside = ph;
+        FixedUpdate();
     }
 #endif
 }

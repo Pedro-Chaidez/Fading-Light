@@ -7,11 +7,7 @@ public class BanishItem : Interactable {
             Destroy(temp[0]);
         }
     }
-
-    // Add this test helper method
-#if UNITY_EDITOR
     public void TestInteract() {
         Interact();
     }
-#endif
 }
