@@ -41,7 +41,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3770214598504157843}
-  - component: {fileID: 6702594861492548457}
   m_Layer: 0
   m_Name: Corridor
   m_TagString: Untagged
@@ -67,24 +66,6 @@ Transform:
   - {fileID: 5492146087483481612}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6702594861492548457
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 791388096509451994}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b2dfa3341e39a54a80ab78c9de2d697, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Room
-  roomSize: {x: 1, y: 1, z: 1}
-  roomName: Corridor
-  floorParent: {fileID: 7657972160046192816}
-  ceilingParent: {fileID: 1715161168906952119}
-  wallsParent: {fileID: 5492146087483481612}
-  doorLocations: []
 --- !u!1 &1675997413133387816
 GameObject:
   m_ObjectHideFlags: 0

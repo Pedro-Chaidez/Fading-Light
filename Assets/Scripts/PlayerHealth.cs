@@ -4,8 +4,9 @@ using UnityEngine.UI;
 public class PlayerHealth : MonoBehaviour {
     public float maxHealth = 100f;
     public float currentHealth;
-    public Image healthBar;
-    public GameObject diedScreen;
+    private Image healthBar;
+    [SerializeField]
+    private GameObject diedScreen;
     public float lerp;
     float lerpSpeed;
 
@@ -29,6 +30,9 @@ public class PlayerHealth : MonoBehaviour {
         character = GetComponent<CharacterController>();
         movement = GetComponent<PlayerMotor>();
         stamina = GetComponent<Stamina>();
+        healthBar = GameObject.Find("/HealthBar/Bar").GetComponent<Image>();
+        diedScreen = Instantiate(diedScreen);
+        diedScreen.SetActive(false);
     }
     private void Update() {
         if (currentHealth > maxHealth) {

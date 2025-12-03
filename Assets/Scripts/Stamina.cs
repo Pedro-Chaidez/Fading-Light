@@ -7,7 +7,7 @@ public class Stamina : MonoBehaviour
 {
     public float max = 100f;
     public float current;
-    public Image staminaBar;
+    private Image staminaBar;
     public float lerp;
     float lerpSpeed;
     public float drainSpeed = 20f;
@@ -27,6 +27,7 @@ public class Stamina : MonoBehaviour
         }
         playerCoordinates = GetComponent<PlayerCoordinates>();
         position = playerCoordinates.GetInitPosition();
+        staminaBar = GameObject.Find("/Stamina/Bar").GetComponent<Image>();
     }
 
     void Update()

@@ -51,7 +51,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4994166867411024031}
-  - component: {fileID: 4083242124836268382}
   m_Layer: 0
   m_Name: LivingRoom
   m_TagString: Untagged
@@ -78,39 +77,6 @@ Transform:
   - {fileID: 4361088863287793355}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4083242124836268382
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5710348155225903176}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b2dfa3341e39a54a80ab78c9de2d697, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Room
-  roomSize: {x: 2, y: 1, z: 3}
-  roomName: LivingRoom
-  floorParent: {fileID: 6698038114386392812}
-  ceilingParent: {fileID: 913571196100617942}
-  wallsParent: {fileID: 7513360264977684012}
-  doorLocations:
-  - doorName: NorthDoor1
-    localPosition: {x: 0, y: 0, z: 2}
-    direction: 0
-  - doorName: NorthDoor2
-    localPosition: {x: 1, y: 0, z: 2}
-    direction: 0
-  - doorName: EastDoor
-    localPosition: {x: 1, y: 0, z: 1}
-    direction: 2
-  - doorName: SouthDoor1
-    localPosition: {x: 0, y: 0, z: 0}
-    direction: 1
-  - doorName: SouthDoor2
-    localPosition: {x: 1, y: 0, z: 0}
-    direction: 1
 --- !u!1 &6441458281345403836
 GameObject:
   m_ObjectHideFlags: 0
@@ -559,7 +525,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: DoorWall (5)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7644104073373501738, guid: e5175d92b2485d84ea5e9b34f5673b07, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -869,7 +836,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: DoorWall (4)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7644104073373501738, guid: e5175d92b2485d84ea5e9b34f5673b07, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1009,7 +977,8 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7644104073373501738, guid: e5175d92b2485d84ea5e9b34f5673b07, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1381,7 +1350,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: DoorWall
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7644104073373501738, guid: e5175d92b2485d84ea5e9b34f5673b07, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1513,7 +1483,8 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7644104073373501738, guid: e5175d92b2485d84ea5e9b34f5673b07, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1591,7 +1562,8 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7644104073373501738, guid: e5175d92b2485d84ea5e9b34f5673b07, type: 3}
     m_RemovedGameObjects:
     - {fileID: 6891399554858983413, guid: e5175d92b2485d84ea5e9b34f5673b07, type: 3}
     m_AddedGameObjects: []

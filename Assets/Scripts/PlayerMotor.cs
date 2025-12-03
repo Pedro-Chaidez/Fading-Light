@@ -15,7 +15,7 @@ public class PlayerMotor : MonoBehaviour
     public float gravity = -10f;
     public float jumpHeight = 7f;
     public float crouchTimer = 1f;
-    private void Start()
+    private void Awake()
     {
         controller = GetComponent<CharacterController>();
     }
