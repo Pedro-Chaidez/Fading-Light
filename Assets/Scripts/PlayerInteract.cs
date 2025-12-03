@@ -42,7 +42,12 @@ public class PlayerInteract : MonoBehaviour
                 if (inputManager.onFoot.Interact.triggered)
                 {
                     Debug.Log("Interact key pressed! Calling Interact...");
-                    if (playerInventory.isBanish() && playerInventory.UseItem_Banish())
+                    if (playerInventory.isBanish())
+                    {
+                        interactable.BaseInteract();
+                        playerInventory.UseItem_Banish();
+                    }
+                    else
                     {
                         interactable.BaseInteract();
                     }
