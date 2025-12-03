@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem.Controls;
-using Unity.Netcode;
+using UnityEngine.Timeline;
 
 [RequireComponent(typeof(CharacterController))]
-public class PlayerMotor : NetworkBehaviour
+public class PlayerMotor : MonoBehaviour
 {
     private CharacterController controller;
     private Vector3 playerVelocity;
@@ -15,23 +15,12 @@ public class PlayerMotor : NetworkBehaviour
     public float gravity = -10f;
     public float jumpHeight = 7f;
     public float crouchTimer = 1f;
-
-    private bool CanMove()
-    {
-        return !IsSpawned || IsOwner;
-    }
-
     private void Start()
     {
         controller = GetComponent<CharacterController>();
     }
-    
     private void Update()
     {
-        if (!CanMove())
-        {
-            return;
-        }
         isGrounded = controller.isGrounded;
         if (lerpCrouch)
         {
@@ -40,24 +29,15 @@ public class PlayerMotor : NetworkBehaviour
             p *= p;
         }
     }
-    
     public void Crouch()
     {
-        if (!CanMove())
-        {
-            return;
-        }
         crouching = !crouching;
         crouchTimer = 0;
         lerpCrouch = true;
+
     }
-    
     public void Sprint()
     {
-        if (!CanMove())
-        {
-            return;
-        }
         sprinting = !sprinting;
         if (sprinting)
         {
@@ -68,13 +48,8 @@ public class PlayerMotor : NetworkBehaviour
             speed = 6f;
         }
     }
-    
     public void ProcessMove(Vector2 input)
     {
-        if (!CanMove())
-        {
-            return;
-        }
         Vector3 moveDirection = Vector3.zero;
         moveDirection.x = input.x;
         moveDirection.z = input.y;
@@ -83,14 +58,10 @@ public class PlayerMotor : NetworkBehaviour
         if (isGrounded && playerVelocity.y < 0)
             playerVelocity.y = -2f;
         controller.Move(playerVelocity * Time.deltaTime);
+
     }
-    
     public void Jump()
     {
-        if (!CanMove())
-        {
-            return;
-        }
         if (isGrounded)
         {
             playerVelocity.y = Mathf.Sqrt(jumpHeight * -3.0f * gravity);
