@@ -199,51 +199,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""SelectFirstItem"",
-                    ""type"": ""Button"",
-                    ""id"": ""731392c1-2979-44ec-96bd-04ea7ac75d54"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""SelectSecondItem"",
-                    ""type"": ""Button"",
-                    ""id"": ""7fe0aade-fdbf-41f2-b8f9-28e3e88d6eca"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""SelectThirdItem"",
-                    ""type"": ""Button"",
-                    ""id"": ""24fb29bf-d6de-40f8-afa8-ca7f1bb401de"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""SelectFourthItem"",
-                    ""type"": ""Button"",
-                    ""id"": ""af98bdf0-a8ba-402c-aac3-394ec72635d8"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""SelectFifthItem"",
-                    ""type"": ""Button"",
-                    ""id"": ""c9b70834-078b-4af5-92d4-a164e2ace022"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -640,61 +595,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""UseItem"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""1e003d0d-0807-4abd-9fb5-8bee71d3baf1"",
-                    ""path"": ""<Keyboard>/1"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""SelectFirstItem"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""a57a46fd-843a-42be-a43b-f29a5e22e8a5"",
-                    ""path"": ""<Keyboard>/2"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""SelectSecondItem"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""afe86a1b-53fa-4138-9738-af351852b6b8"",
-                    ""path"": ""<Keyboard>/3"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""SelectThirdItem"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""9686fbbd-be5e-4bbc-bedb-96471a8caa2a"",
-                    ""path"": ""<Keyboard>/4"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""SelectFourthItem"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""33eeff3f-393f-4e22-a3b1-d56c3b4ef304"",
-                    ""path"": ""<Keyboard>/5"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""SelectFifthItem"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1294,11 +1194,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_DropItem = m_Player.FindAction("DropItem", throwIfNotFound: true);
         m_Player_ToggleMaxFlash = m_Player.FindAction("ToggleMaxFlash", throwIfNotFound: true);
         m_Player_UseItem = m_Player.FindAction("UseItem", throwIfNotFound: true);
-        m_Player_SelectFirstItem = m_Player.FindAction("SelectFirstItem", throwIfNotFound: true);
-        m_Player_SelectSecondItem = m_Player.FindAction("SelectSecondItem", throwIfNotFound: true);
-        m_Player_SelectThirdItem = m_Player.FindAction("SelectThirdItem", throwIfNotFound: true);
-        m_Player_SelectFourthItem = m_Player.FindAction("SelectFourthItem", throwIfNotFound: true);
-        m_Player_SelectFifthItem = m_Player.FindAction("SelectFifthItem", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1404,11 +1299,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_DropItem;
     private readonly InputAction m_Player_ToggleMaxFlash;
     private readonly InputAction m_Player_UseItem;
-    private readonly InputAction m_Player_SelectFirstItem;
-    private readonly InputAction m_Player_SelectSecondItem;
-    private readonly InputAction m_Player_SelectThirdItem;
-    private readonly InputAction m_Player_SelectFourthItem;
-    private readonly InputAction m_Player_SelectFifthItem;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -1468,26 +1358,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/UseItem".
         /// </summary>
         public InputAction @UseItem => m_Wrapper.m_Player_UseItem;
-        /// <summary>
-        /// Provides access to the underlying input action "Player/SelectFirstItem".
-        /// </summary>
-        public InputAction @SelectFirstItem => m_Wrapper.m_Player_SelectFirstItem;
-        /// <summary>
-        /// Provides access to the underlying input action "Player/SelectSecondItem".
-        /// </summary>
-        public InputAction @SelectSecondItem => m_Wrapper.m_Player_SelectSecondItem;
-        /// <summary>
-        /// Provides access to the underlying input action "Player/SelectThirdItem".
-        /// </summary>
-        public InputAction @SelectThirdItem => m_Wrapper.m_Player_SelectThirdItem;
-        /// <summary>
-        /// Provides access to the underlying input action "Player/SelectFourthItem".
-        /// </summary>
-        public InputAction @SelectFourthItem => m_Wrapper.m_Player_SelectFourthItem;
-        /// <summary>
-        /// Provides access to the underlying input action "Player/SelectFifthItem".
-        /// </summary>
-        public InputAction @SelectFifthItem => m_Wrapper.m_Player_SelectFifthItem;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1550,21 +1420,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @UseItem.started += instance.OnUseItem;
             @UseItem.performed += instance.OnUseItem;
             @UseItem.canceled += instance.OnUseItem;
-            @SelectFirstItem.started += instance.OnSelectFirstItem;
-            @SelectFirstItem.performed += instance.OnSelectFirstItem;
-            @SelectFirstItem.canceled += instance.OnSelectFirstItem;
-            @SelectSecondItem.started += instance.OnSelectSecondItem;
-            @SelectSecondItem.performed += instance.OnSelectSecondItem;
-            @SelectSecondItem.canceled += instance.OnSelectSecondItem;
-            @SelectThirdItem.started += instance.OnSelectThirdItem;
-            @SelectThirdItem.performed += instance.OnSelectThirdItem;
-            @SelectThirdItem.canceled += instance.OnSelectThirdItem;
-            @SelectFourthItem.started += instance.OnSelectFourthItem;
-            @SelectFourthItem.performed += instance.OnSelectFourthItem;
-            @SelectFourthItem.canceled += instance.OnSelectFourthItem;
-            @SelectFifthItem.started += instance.OnSelectFifthItem;
-            @SelectFifthItem.performed += instance.OnSelectFifthItem;
-            @SelectFifthItem.canceled += instance.OnSelectFifthItem;
         }
 
         /// <summary>
@@ -1612,21 +1467,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @UseItem.started -= instance.OnUseItem;
             @UseItem.performed -= instance.OnUseItem;
             @UseItem.canceled -= instance.OnUseItem;
-            @SelectFirstItem.started -= instance.OnSelectFirstItem;
-            @SelectFirstItem.performed -= instance.OnSelectFirstItem;
-            @SelectFirstItem.canceled -= instance.OnSelectFirstItem;
-            @SelectSecondItem.started -= instance.OnSelectSecondItem;
-            @SelectSecondItem.performed -= instance.OnSelectSecondItem;
-            @SelectSecondItem.canceled -= instance.OnSelectSecondItem;
-            @SelectThirdItem.started -= instance.OnSelectThirdItem;
-            @SelectThirdItem.performed -= instance.OnSelectThirdItem;
-            @SelectThirdItem.canceled -= instance.OnSelectThirdItem;
-            @SelectFourthItem.started -= instance.OnSelectFourthItem;
-            @SelectFourthItem.performed -= instance.OnSelectFourthItem;
-            @SelectFourthItem.canceled -= instance.OnSelectFourthItem;
-            @SelectFifthItem.started -= instance.OnSelectFifthItem;
-            @SelectFifthItem.performed -= instance.OnSelectFifthItem;
-            @SelectFifthItem.canceled -= instance.OnSelectFifthItem;
         }
 
         /// <summary>
@@ -2011,41 +1851,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnUseItem(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "SelectFirstItem" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnSelectFirstItem(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "SelectSecondItem" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnSelectSecondItem(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "SelectThirdItem" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnSelectThirdItem(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "SelectFourthItem" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnSelectFourthItem(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "SelectFifthItem" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnSelectFifthItem(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.
