@@ -113,15 +113,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "UseItem_Banish",
-                    "type": "Button",
-                    "id": "b1dcf9ea-f4b7-43f6-81a3-9d1f3c0864ff",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -518,17 +509,6 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "UseItem",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "f8eaa7cf-cec4-4761-bf89-0a41cb64f244",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "UseItem_Banish",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
