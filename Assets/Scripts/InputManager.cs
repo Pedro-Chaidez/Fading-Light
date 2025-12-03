@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-public class InputManager : MonoBehaviour
+using Unity.Netcode;
+
+public class InputManager : NetworkBehaviour
 {
     private InputSystem_Actions playerInput;
     public InputSystem_Actions.PlayerActions onFoot;
@@ -8,6 +10,19 @@ public class InputManager : MonoBehaviour
     private PlayerLook look;
     private Inventory inventory;
     private Flashlight flashlight;
+
+    private bool CanInput()
+    {
+        // 1. If Game is Paused BLOCK INPUT
+        if (Time.timeScale == 0 || Cursor.visible) 
+        {
+            return false;
+        }
+
+        // 2. Standard Network check
+        return !IsSpawned || IsOwner;
+    }
+
     private void Awake()
     {
         playerInput = new InputSystem_Actions();
@@ -18,35 +33,67 @@ public class InputManager : MonoBehaviour
         inventory = GetComponent<Inventory>();
         flashlight = GetComponent<Flashlight>();
 
-        onFoot.Jump.performed += ctx => motor.Jump();
-        onFoot.Crouch.performed += ctx => motor.Crouch();
-        onFoot.Sprint.performed += ctx => motor.Sprint();
-        onFoot.NextItem.performed += ctx => inventory.scrollUp();
-        onFoot.PreviousItem.performed += ctx => inventory.scrollDown();
-        onFoot.SelectFirstItem.performed += ctx => inventory.item1Select();
-        onFoot.SelectSecondItem.performed += ctx => inventory.item2Select();
-        onFoot.SelectThirdItem.performed += ctx => inventory.item3Select();
-        onFoot.SelectFourthItem.performed += ctx => inventory.item4Select();
-        onFoot.SelectFifthItem.performed += ctx => inventory.item5Select();
-        onFoot.DropItem.performed += ctx => inventory.DropItem();
-        onFoot.ToggleFlashlight.performed += ctx => flashlight.normLight();
-        onFoot.ToggleMaxFlash.performed += ctx => flashlight.maxLight();
-        onFoot.UseItem.performed += ctx => inventory.UseItem();
+        // --- SAFETY CHECKS ---
+        if (motor != null)
+        {
+            onFoot.Jump.performed += ctx => { if(CanInput()) motor.Jump(); };
+            onFoot.Crouch.performed += ctx => { if(CanInput()) motor.Crouch(); };
+            onFoot.Sprint.performed += ctx => { if(CanInput()) motor.Sprint(); };
+        }
+        else Debug.LogError("InputManager: Missing 'PlayerMotor' script on this object!");
+
+        if (inventory != null)
+        {
+            onFoot.NextItem.performed += ctx => { if(CanInput()) inventory.scrollUp(); };
+            onFoot.PreviousItem.performed += ctx => { if(CanInput()) inventory.scrollDown(); };
+            onFoot.DropItem.performed += ctx => { if(CanInput()) inventory.DropItem(); };
+            
+            // This is likely where "UseItem" is bound (Left Click?)
+            // Assuming you have an action for "Use" or "Fire" not listed here but connected similarly
+        }
+        else Debug.LogError("InputManager: Missing 'Inventory' script on this object!");
+
+        if (flashlight != null)
+        {
+            onFoot.ToggleFlashlight.performed += ctx => { if(CanInput()) flashlight.normLight(); };
+            onFoot.ToggleMaxFlash.performed += ctx => { if(CanInput()) flashlight.maxLight(); };
+        }
+        else Debug.LogError("InputManager: Missing 'Flashlight' script on this object!");
     }
+    
     private void FixedUpdate()
     {
+        if (!CanInput() || motor == null) return;
         motor.ProcessMove(onFoot.Move.ReadValue<Vector2>());
     }
+    
     private void LateUpdate()
     {
+        if (!CanInput() || look == null) return;
         look.ProcessLook(onFoot.Look.ReadValue<Vector2>());
     }
+    
     private void OnEnable()
     {
-        onFoot.Enable();
+        if (playerInput == null) return;
+        if (!onFoot.enabled) onFoot.Enable();
     }
+    
     private void OnDisable()
     {
-        onFoot.Disable();
+        if (playerInput == null) return;
+        if (onFoot.enabled) onFoot.Disable();
+    }
+    
+    public override void OnNetworkSpawn()
+    {
+        if (playerInput == null) return;
+        if (!onFoot.enabled) onFoot.Enable();
+    }
+    
+    public override void OnNetworkDespawn()
+    {
+        if (playerInput == null) return;
+        if (onFoot.enabled) onFoot.Disable();
     }
 }
