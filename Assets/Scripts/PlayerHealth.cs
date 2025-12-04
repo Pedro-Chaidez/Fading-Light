@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UnityEditor.SearchService;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour {
@@ -19,6 +20,8 @@ public class PlayerHealth : MonoBehaviour {
     private CharacterController character;
     private PlayerMotor movement;
     private Stamina stamina;
+    private PowerManager powerManager;
+    private Inventory inventory;
 
     private void Start() {
         currentHealth = maxHealth;
@@ -30,6 +33,8 @@ public class PlayerHealth : MonoBehaviour {
         character = GetComponent<CharacterController>();
         movement = GetComponent<PlayerMotor>();
         stamina = GetComponent<Stamina>();
+        powerManager = GetComponent<PowerManager>();
+        inventory = GetComponent<Inventory>();
         healthBar = GameObject.Find("/HealthBar/Bar").GetComponent<Image>();
         diedScreen = Instantiate(diedScreen);
         diedScreen.SetActive(false);
@@ -87,27 +92,7 @@ public class PlayerHealth : MonoBehaviour {
         }
         GetComponent<InputManager>().enabled = false;
         stamina.enabled = false;
-    }
-
-    public void Resurrect() {
-        Debug.Log("Resurrected");
-        if (diedScreen != null) {
-            diedScreen.SetActive(false);
-        }
-        currentHealth = maxHealth;
-        stamina.current = stamina.max;
-        movement.sprinting = false;
-        movement.speed = 6f;
-        GetComponent<InputManager>().enabled = true;
-        stamina.enabled = true;
-        
-        if (playerCoordinates != null && character != null) {
-            character.enabled = false;
-            transform.position = playerCoordinates.GetInitPosition();
-            transform.rotation = playerCoordinates.GetRotation();
-            character.enabled = true;
-        }
-
-        Debug.Log("Player Health: " + currentHealth);
+        powerManager.enabled = false;
+        inventory.enabled = false;
     }
 }
