@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CoverageSession xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="0.0.0.0">
+  <Summary numSequencePoints="22" visitedSequencePoints="22" numBranchPoints="0" visitedBranchPoints="0" sequenceCoverage="100.0" branchCoverage="0.0" maxCyclomaticComplexity="0" minCyclomaticComplexity="0" maxCrapScore="0" minCrapScore="0" visitedClasses="2" numClasses="2" visitedMethods="4" numMethods="4" />
+  <Modules>
+    <Module>
+      <Summary numSequencePoints="16" visitedSequencePoints="16" numBranchPoints="0" visitedBranchPoints="0" sequenceCoverage="100.0" branchCoverage="0.0" maxCyclomaticComplexity="0" minCyclomaticComplexity="0" maxCrapScore="0" minCrapScore="0" visitedClasses="1" numClasses="1" visitedMethods="2" numMethods="2" />
+      <ModuleTime>0001-01-01T00:00:00</ModuleTime>
+      <ModuleName>EditMode</ModuleName>
+      <Files>
+        <File uid="5" fullPath="C:/Users/Colin/OneDrive/Documents/GitHub/Fading-Light/Assets/Tests/EditMode/FlashlightTests.cs" />
+      </Files>
+      <Classes>
+        <Class>
+          <Summary numSequencePoints="16" visitedSequencePoints="16" numBranchPoints="0" visitedBranchPoints="0" sequenceCoverage="100.0" branchCoverage="0.0" maxCyclomaticComplexity="0" minCyclomaticComplexity="0" maxCrapScore="0" minCrapScore="0" visitedClasses="1" numClasses="1" visitedMethods="2" numMethods="2" />
+          <FullName>FlashlightTests</FullName>
+          <Methods>
+            <Method visited="true" cyclomaticComplexity="0" nPathComplexity="0" sequenceCoverage="100.0" branchCoverage="0" crapScore="0" isConstructor="false" isStatic="false" isGetter="false" isSetter="false">
+              <Summary numSequencePoints="8" visitedSequencePoints="8" numBranchPoints="0" visitedBranchPoints="0" sequenceCoverage="100.0" branchCoverage="0" maxCyclomaticComplexity="0" minCyclomaticComplexity="0" maxCrapScore="0" minCrapScore="0" visitedClasses="0" numClasses="0" visitedMethods="1" numMethods="1" />
+              <MetadataToken>100663297</MetadataToken>
+              <Name>System.Void FlashlightTests::Flashlight_NormalLight()</Name>
+              <FileRef uid="5" />
+              <SequencePoints>
+                <SequencePoint vc="1" uspid="4487" ordinal="0" offset="0" sl="6" sc="42" el="6" ec="42" bec="0" bev="0" fileid="5" />
+                <SequencePoint vc="1" uspid="4488" ordinal="0" offset="1" sl="8" sc="9" el="8" ec="9" bec="0" bev="0" fileid="5" />
+                <SequencePoint vc="1" uspid="4489" ordinal="0" offset="7" sl="9" sc="9" el="9" ec="9" bec="0" bev="0" fileid="5" />
+                <SequencePoint vc="1" uspid="4490" ordinal="0" offset="14" sl="12" sc="9" el="12" ec="9" bec="0" bev="0" fileid="5" />
+                <SequencePoint vc="1" uspid="4491" ordinal="0" offset="21" sl="15" sc="9" el="15" ec="9" bec="0" bev="0" fileid="5" />
+                <SequencePoint vc="1" uspid="4492" ordinal="0" offset="54" sl="18" sc="9" el="18" ec="9" bec="0" bev="0" fileid="5" />
+                <SequencePoint vc="1" uspid="4493" ordinal="0" offset="61" sl="21" sc="9" el="21" ec="9" bec="0" bev="0" fileid="5" />
+                <SequencePoint vc="1" uspid="4494" ordinal="0" offset="94" sl="22" sc="5" el="22" ec="5" bec="0" bev="0" fileid="5" />
+              </SequencePoints>
+              <BranchPoints />
+            </Method>
+            <Method visited="true" cyclomaticComplexity="0" nPathComplexity="0" sequenceCoverage="100.0" branchCoverage="0" crapScore="0" isConstructor="false" isStatic="false" isGetter="false" isSetter="false">
+              <Summary numSequencePoints="8" visitedSequencePoints="8" numBranchPoints="0" visitedBranchPoints="0" sequenceCoverage="100.0" branchCoverage="0" maxCyclomaticComplexity="0" minCyclomaticComplexity="0" maxCrapScore="0" minCrapScore="0" visitedClasses="0" numClasses="0" visitedMethods="1" numMethods="1" />
+              <MetadataToken>100663298</MetadataToken>
+              <Name>System.Void FlashlightTests::Flashlight_MaxLight()</Name>
+              <FileRef uid="5" />
+              <SequencePoints>
+                <SequencePoint vc="1" uspid="4495" ordinal="0" offset="0" sl="25" sc="39" el="25" ec="39" bec="0" bev="0" fileid="5" />
+                <SequencePoint vc="1" uspid="4496" ordinal="0" offset="1" sl="27" sc="9" el="27" ec="9" bec="0" bev="0" fileid="5" />
+                <SequencePoint vc="1" uspid="4497" ordinal="0" offset="7" sl="28" sc="9" el="28" ec="9" bec="0" bev="0" fileid="5" />
+                <SequencePoint vc="1" uspid="4498" ordinal="0" offset="14" sl="31" sc="9" el="31" ec="9" bec="0" bev="0" fileid="5" />
+                <SequencePoint vc="1" uspid="4499" ordinal="0" offset="21" sl="34" sc="9" el="34" ec="9" bec="0" bev="0" fileid="5" />
+                <SequencePoint vc="1" uspid="4500" ordinal="0" offset="54" sl="37" sc="9" el="37" ec="9" bec="0" bev="0" fileid="5" />
+                <SequencePoint vc="1" uspid="4501" ordinal="0" offset="61" sl="40" sc="9" el="40" ec="9" bec="0" bev="0" fileid="5" />
+                <SequencePoint vc="1" uspid="4502" ordinal="0" offset="94" sl="41" sc="5" el="41" ec="5" bec="0" bev="0" fileid="5" />
+              </SequencePoints>
+              <BranchPoints />
+            </Method>
+          </Methods>
+        </Class>
+      </Classes>
+    </Module>
+    <Module>
+      <Summary numSequencePoints="6" visitedSequencePoints="6" numBranchPoints="0" visitedBranchPoints="0" sequenceCoverage="100.0" branchCoverage="0.0" maxCyclomaticComplexity="0" minCyclomaticComplexity="0" maxCrapScore="0" minCrapScore="0" visitedClasses="1" numClasses="1" visitedMethods="2" numMethods="2" />
+      <ModuleTime>0001-01-01T00:00:00</ModuleTime>
+      <ModuleName>Scripts</ModuleName>
+      <Files>
+        <File uid="10" fullPath="C:/Users/Colin/OneDrive/Documents/GitHub/Fading-Light/Assets/Scripts/BanishItem.cs" />
+        <File uid="11" fullPath="C:/Users/Colin/OneDrive/Documents/GitHub/Fading-Light/Assets/Scripts/Button.cs" />
+        <File uid="12" fullPath="C:/Users/Colin/OneDrive/Documents/GitHub/Fading-Light/Assets/Scripts/DamageZone.cs" />
+        <File uid="13" fullPath="C:/Users/Colin/OneDrive/Documents/GitHub/Fading-Light/Assets/Scripts/EnemyMovement.cs" />
+        <File uid="14" fullPath="C:/Users/Colin/OneDrive/Documents/GitHub/Fading-Light/Assets/Scripts/Flashlight.cs" />
+        <File uid="15" fullPath="C:/Users/Colin/OneDrive/Documents/GitHub/Fading-Light/Assets/Scripts/FlashlightLogic.cs" />
+        <File uid="16" fullPath="C:/Users/Colin/OneDrive/Documents/GitHub/Fading-Light/Assets/Scripts/InputManager.cs" />
+        <File uid="17" fullPath="C:/Users/Colin/OneDrive/Documents/GitHub/Fading-Light/Assets/Scripts/InputSystem_Actions.cs" />
+        <File uid="18" fullPath="C:/Users/Colin/OneDrive/Documents/GitHub/Fading-Light/Assets/Scripts/Interactable.cs" />
+        <File uid="19" fullPath="C:/Users/Colin/OneDrive/Documents/GitHub/Fading-Light/Assets/Scripts/Interactables/Banish.cs" />
+        <File uid="20" fullPath="C:/Users/Colin/OneDrive/Documents/GitHub/Fading-Light/Assets/Scripts/Interactables/Battery.cs" />
+        <File uid="21" fullPath="C:/Users/Colin/OneDrive/Documents/GitHub/Fading-Light/Assets/Scripts/Interactables/DamageProtection.cs" />
+        <File uid="22" fullPath="C:/Users/Colin/OneDrive/Documents/GitHub/Fading-Light/Assets/Scripts/Interactables/FriendResurrection.cs" />
+        <File uid="23" fullPath="C:/Users/Colin/OneDrive/Documents/GitHub/Fading-Light/Assets/Scripts/Interactables/PortableBanish.cs" />
+        <File uid="24" fullPath="C:/Users/Colin/OneDrive/Documents/GitHub/Fading-Light/Assets/Scripts/Interactables/SpeedBoost.cs" />
+        <File uid="25" fullPath="C:/Users/Colin/OneDrive/Documents/GitHub/Fading-Light/Assets/Scripts/Inventory.cs" />
+        <File uid="26" fullPath="C:/Users/Colin/OneDrive/Documents/GitHub/Fading-Light/Assets/Scripts/Item.cs" />
+        <File uid="27" fullPath="C:/Users/Colin/OneDrive/Documents/GitHub/Fading-Light/Assets/Scripts/PlayerCoordinates.cs" />
+        <File uid="28" fullPath="C:/Users/Colin/OneDrive/Documents/GitHub/Fading-Light/Assets/Scripts/PlayerHealth.cs" />
+        <File uid="29" fullPath="C:/Users/Colin/OneDrive/Documents/GitHub/Fading-Light/Assets/Scripts/PlayerInteract.cs" />
+        <File uid="30" fullPath="C:/Users/Colin/OneDrive/Documents/GitHub/Fading-Light/Assets/Scripts/PlayerLook.cs" />
+        <File uid="31" fullPath="C:/Users/Colin/OneDrive/Documents/GitHub/Fading-Light/Assets/Scripts/PlayerMotor.cs" />
+        <File uid="32" fullPath="C:/Users/Colin/OneDrive/Documents/GitHub/Fading-Light/Assets/Scripts/PlayerMovement.cs" />
+        <File uid="33" fullPath="C:/Users/Colin/OneDrive/Documents/GitHub/Fading-Light/Assets/Scripts/PlayerUI.cs" />
+        <File uid="34" fullPath="C:/Users/Colin/OneDrive/Documents/GitHub/Fading-Light/Assets/Scripts/PowerManager.cs" />
+        <File uid="35" fullPath="C:/Users/Colin/OneDrive/Documents/GitHub/Fading-Light/Assets/Scripts/PrefabSpawner.cs" />
+        <File uid="36" fullPath="C:/Users/Colin/OneDrive/Documents/GitHub/Fading-Light/Assets/Scripts/Stamina.cs" />
+      </Files>
+      <Classes>
+        <Class>
+          <Summary numSequencePoints="6" visitedSequencePoints="6" numBranchPoints="0" visitedBranchPoints="0" sequenceCoverage="100.0" branchCoverage="0.0" maxCyclomaticComplexity="0" minCyclomaticComplexity="0" maxCrapScore="0" minCrapScore="0" visitedClasses="1" numClasses="1" visitedMethods="2" numMethods="2" />
+          <FullName>Flashlight</FullName>
+          <Methods>
+            <Method visited="true" cyclomaticComplexity="0" nPathComplexity="0" sequenceCoverage="100.0" branchCoverage="0" crapScore="0" isConstructor="false" isStatic="false" isGetter="false" isSetter="false">
+              <Summary numSequencePoints="3" visitedSequencePoints="3" numBranchPoints="0" visitedBranchPoints="0" sequenceCoverage="100.0" branchCoverage="0" maxCyclomaticComplexity="0" minCyclomaticComplexity="0" maxCrapScore="0" minCrapScore="0" visitedClasses="0" numClasses="0" visitedMethods="1" numMethods="1" />
+              <MetadataToken>100663315</MetadataToken>
+              <Name>System.Void Flashlight::normLight()</Name>
+              <FileRef uid="14" />
+              <SequencePoints>
+                <SequencePoint vc="2" uspid="5033" ordinal="0" offset="0" sl="57" sc="5" el="57" ec="5" bec="0" bev="0" fileid="14" />
+                <SequencePoint vc="2" uspid="5034" ordinal="0" offset="1" sl="58" sc="9" el="58" ec="9" bec="0" bev="0" fileid="14" />
+                <SequencePoint vc="2" uspid="5035" ordinal="0" offset="16" sl="59" sc="5" el="59" ec="5" bec="0" bev="0" fileid="14" />
+              </SequencePoints>
+              <BranchPoints />
+            </Method>
+            <Method visited="true" cyclomaticComplexity="0" nPathComplexity="0" sequenceCoverage="100.0" branchCoverage="0" crapScore="0" isConstructor="false" isStatic="false" isGetter="false" isSetter="false">
+              <Summary numSequencePoints="3" visitedSequencePoints="3" numBranchPoints="0" visitedBranchPoints="0" sequenceCoverage="100.0" branchCoverage="0" maxCyclomaticComplexity="0" minCyclomaticComplexity="0" maxCrapScore="0" minCrapScore="0" visitedClasses="0" numClasses="0" visitedMethods="1" numMethods="1" />
+              <MetadataToken>100663316</MetadataToken>
+              <Name>System.Void Flashlight::maxLight()</Name>
+              <FileRef uid="14" />
+              <SequencePoints>
+                <SequencePoint vc="2" uspid="5036" ordinal="0" offset="0" sl="62" sc="5" el="62" ec="5" bec="0" bev="0" fileid="14" />
+                <SequencePoint vc="2" uspid="5037" ordinal="0" offset="1" sl="63" sc="9" el="63" ec="9" bec="0" bev="0" fileid="14" />
+                <SequencePoint vc="2" uspid="5038" ordinal="0" offset="16" sl="64" sc="5" el="64" ec="5" bec="0" bev="0" fileid="14" />
+              </SequencePoints>
+              <BranchPoints />
+            </Method>
+          </Methods>
+        </Class>
+      </Classes>
+    </Module>
+  </Modules>
+</CoverageSession>
