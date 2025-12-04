@@ -555,8 +555,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
   maxHealth: 100
-  currentHealth: 0
-  healthBar: {fileID: 0}
+  currentHealth: 100
   diedScreen: {fileID: 7492251959166266539, guid: 33a9ba301c6a07347bc99a9ce7f14ee9, type: 3}
   lerp: 10
   lowHealthThreshold: 30
@@ -600,12 +599,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Inventory
   items: []
   selectedItem: 0
-  slotIcons:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   dropPoint: {fileID: 8306555739002868427}
 --- !u!114 &7096689952958387887
 MonoBehaviour:
@@ -661,7 +654,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Stamina
   max: 100
   current: 0
-  staminaBar: {fileID: 0}
   lerp: 5
   drainSpeed: 25
   regenSpeed: 15
@@ -697,9 +689,6 @@ MonoBehaviour:
   start: 100
   current: 0
   tickValue: 0.01
-  percentage: {fileID: 0}
-  bar1: {fileID: 0}
-  bar3: {fileID: 0}
   PowerUI: {fileID: 6381408639252396501, guid: fdfdd8573a8478140acc7e9b46f53706, type: 3}
 --- !u!4 &9058595185037577404 stripped
 Transform:

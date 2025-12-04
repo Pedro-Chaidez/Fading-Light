@@ -84,7 +84,7 @@ public class Door : Interactable
     {
         isOpen = !isOpen;
         isAnimating = true;
-        
+        AnimateDoor();
         if (isOpen)
         {
             PlaySound(openSound);

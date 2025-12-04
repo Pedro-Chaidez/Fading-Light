@@ -5,10 +5,16 @@ public class PrefabSpawner : MonoBehaviour
     [SerializeField]
     private GameObject prefabToSpawn; 
     private Transform respawnPoint;
+    [SerializeField]
+    private bool spawnOnStart;
 
     private void Awake()
     {
         respawnPoint = GetComponent<Transform>();
+        if (spawnOnStart)
+        {
+            RespawnPrefab();
+        }
     }
 
     public void RespawnPrefab()

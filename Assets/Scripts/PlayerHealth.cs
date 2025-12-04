@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour {
     public float maxHealth = 100f;
-    public float currentHealth;
+    public float currentHealth = 100f;
     private Image healthBar;
     [SerializeField]
     private GameObject diedScreen;
@@ -20,8 +20,9 @@ public class PlayerHealth : MonoBehaviour {
     private PlayerMotor movement;
     private Stamina stamina;
 
-    private void Start() {
-        currentHealth = maxHealth;
+    private void Awake() {
+        maxHealth = 100f;
+        currentHealth = 100f;
         Debug.Log("Player Health: " + currentHealth);
         if (diedScreen != null) {
             diedScreen.SetActive(false);
