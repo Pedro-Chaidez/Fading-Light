@@ -5,10 +5,6 @@ public class DisplayWinScreen : MonoBehaviour
     [Header("UI Settings")]
     // Rename this to clearly indicate it's the reference from the Inspector
     [SerializeField] private GameObject youWinScreenPrefab;
-
-    // This will hold the actual object currently in the scene
-    private GameObject winScreenInstance;
-
     // Cache the list of ghosts so we don't have to search the whole world every frame
     private GameObject[] ghosts;
     private bool isLevelCleared;
@@ -29,8 +25,8 @@ public class DisplayWinScreen : MonoBehaviour
         if (youWinScreenPrefab != null)
         {
             // Create the screen and store it in 'winScreenInstance', keeping the Prefab reference safe
-            winScreenInstance = Instantiate(youWinScreenPrefab);
-            winScreenInstance.SetActive(false);
+            youWinScreenPrefab = Instantiate(youWinScreenPrefab);
+            youWinScreenPrefab.SetActive(false);
         }
         else
         {
@@ -75,9 +71,9 @@ public class DisplayWinScreen : MonoBehaviour
 
         if (allGhostsDead)
         {
-            if (winScreenInstance != null)
+            if (youWinScreenPrefab != null)
             {
-                winScreenInstance.SetActive(true);
+                youWinScreenPrefab.SetActive(true);
             }
             isLevelCleared = true;
         }
