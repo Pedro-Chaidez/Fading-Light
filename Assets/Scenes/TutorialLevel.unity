@@ -224,9 +224,33 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1278309912740584550, guid: 5e439fa4b98642a46aa6ead1e88f39f1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1896755440059269974, guid: 5e439fa4b98642a46aa6ead1e88f39f1, type: 3}
       propertyPath: m_Name
       value: Mansion0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2073172303026070642, guid: 5e439fa4b98642a46aa6ead1e88f39f1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.089
+      objectReference: {fileID: 0}
+    - target: {fileID: 2893339281201656975, guid: 5e439fa4b98642a46aa6ead1e88f39f1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4776709637048703811, guid: 5e439fa4b98642a46aa6ead1e88f39f1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5258523864691881972, guid: 5e439fa4b98642a46aa6ead1e88f39f1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5683212756099367616, guid: 5e439fa4b98642a46aa6ead1e88f39f1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6297399858856240917, guid: 5e439fa4b98642a46aa6ead1e88f39f1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -268,10 +292,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7972118363444544025, guid: 5e439fa4b98642a46aa6ead1e88f39f1, type: 3}
+      propertyPath: spawnOnStart
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7972118363444544025, guid: 5e439fa4b98642a46aa6ead1e88f39f1, type: 3}
+      propertyPath: prefabToSpawn
+      value: 
+      objectReference: {fileID: 2391704193216289254, guid: 2f08bb8cd3b9605428d785897a8dd043, type: 3}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 5683212756099367616, guid: 5e439fa4b98642a46aa6ead1e88f39f1, type: 3}
+    - {fileID: 5258523864691881972, guid: 5e439fa4b98642a46aa6ead1e88f39f1, type: 3}
+    - {fileID: 8090043785850062959, guid: 5e439fa4b98642a46aa6ead1e88f39f1, type: 3}
+    - {fileID: 7597596969165728854, guid: 5e439fa4b98642a46aa6ead1e88f39f1, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1896755440059269974, guid: 5e439fa4b98642a46aa6ead1e88f39f1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 692930535}
   m_SourcePrefab: {fileID: 100100000, guid: 5e439fa4b98642a46aa6ead1e88f39f1, type: 3}
 --- !u!1 &266104964
 GameObject:
@@ -304,6 +343,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PrefabSpawner
   prefabToSpawn: {fileID: 8574089525948241414, guid: 0f098d68faf1d604ea27968bbea3517c, type: 3}
+  spawnOnStart: 0
 --- !u!4 &266104966
 Transform:
   m_ObjectHideFlags: 0
@@ -331,6 +371,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f81ec6cb065b2c448b1366361e889b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+--- !u!1 &692930533 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1896755440059269974, guid: 5e439fa4b98642a46aa6ead1e88f39f1, type: 3}
+  m_PrefabInstance: {fileID: 255360215}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &692930535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 692930533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshSurface
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 247
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: f0f81d6e81c0d984cb7cdf4979c8827c, type: 2}
+  m_BuildHeightMesh: 0
 --- !u!1001 &1048430884
 PrefabInstance:
   m_ObjectHideFlags: 0
