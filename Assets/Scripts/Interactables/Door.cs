@@ -6,23 +6,27 @@ public class Door : Interactable
     [SerializeField] private bool isLocked = false;
     [SerializeField] private bool requiresKey = false;
     [SerializeField] private string requiredKeyID = "";
-    
+
     [Header("Animation")]
     [SerializeField] private float openSpeed = 2f;
-    [SerializeField] private float doorOpenAngle = 90f;
-    [SerializeField] private Transform doorTransform;
-    
+    [SerializeField] private float openAngle = 90f;
+
+    [Tooltip("Assign the Parent Object here if you want the pivot to be different from the mesh center.")]
+    [SerializeField] private Transform doorPivot;
+
     [Header("Audio")]
     [SerializeField] private AudioClip openSound;
     [SerializeField] private AudioClip closeSound;
     [SerializeField] private AudioClip lockedSound;
-    
+
     private AudioSource audioSource;
     private bool isOpen = false;
     private bool isAnimating = false;
+
+    // ROTATION: storing start and target rotations
     private Quaternion closedRotation;
-    private Quaternion openRotation;
-    
+    private Quaternion targetRotation;
+
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -30,16 +34,20 @@ public class Door : Interactable
         {
             audioSource = gameObject.AddComponent<AudioSource>();
         }
-        
-        if (doorTransform == null)
+
+        // AUTO-DETECT PIVOT:
+        // Changed default to 'transform' (self) to prevent accidental rotation of 
+        // the entire room/wall if the parent is a container object.
+        if (doorPivot == null)
         {
-            doorTransform = transform;
+            doorPivot = transform;
         }
-        
-        closedRotation = doorTransform.localRotation;
-        openRotation = closedRotation * Quaternion.Euler(0, doorOpenAngle, 0);
+
+        // Initialize rotation based on the pivot's current state
+        closedRotation = doorPivot.localRotation;
+        targetRotation = closedRotation;
     }
-    
+
     void Update()
     {
         if (isAnimating)
@@ -47,20 +55,21 @@ public class Door : Interactable
             AnimateDoor();
         }
     }
-    
-    public void Interact(GameObject interactor = null)
+
+    protected override void Interact()
     {
-        if (isAnimating) return;
-        
+        // Find player to determine which side they are on
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+
         if (isLocked)
         {
-            if (requiresKey && interactor != null)
+            if (requiresKey && player != null)
             {
-                // Check if the interactor has the required key
-                if (HasRequiredKey(interactor))
+                if (HasRequiredKey(player))
                 {
                     Unlock();
-                    ToggleDoor();
+                    // Pass the player so we can calculate direction
+                    ToggleDoor(player.transform.position);
                 }
                 else
                 {
@@ -76,67 +85,89 @@ public class Door : Interactable
         }
         else
         {
-            ToggleDoor();
+            // Pass the player position to determine open direction
+            Vector3 playerPos = (player != null) ? player.transform.position : transform.position + transform.forward;
+            ToggleDoor(playerPos);
         }
     }
-    
-    private void ToggleDoor()
+
+    private void ToggleDoor(Vector3 interactorPosition)
     {
         isOpen = !isOpen;
-        isAnimating = true;
-        AnimateDoor();
+
         if (isOpen)
         {
+            // --- DIRECTION CALCULATION ---
+            // Calculate vector from Pivot to Player
+            Vector3 directionToInteractor = interactorPosition - doorPivot.position;
+
+            // Dot Product check:
+            // > 0 means player is in front (facing the same way as door forward)
+            // < 0 means player is behind
+            float dot = Vector3.Dot(doorPivot.forward, directionToInteractor);
+
+            // If player is in front, open angle is negative (swing out).
+            // If player is behind, open angle is positive (swing in).
+            float angle = (dot >= 0) ? -openAngle : openAngle;
+
+            // Calculate the new target rotation relative to the CLOSED state
+            targetRotation = closedRotation * Quaternion.Euler(0, angle, 0);
+
             PlaySound(openSound);
         }
         else
         {
+            // Closing: Always return to original rotation
+            targetRotation = closedRotation;
             PlaySound(closeSound);
         }
+
+        isAnimating = true;
     }
-    
+
     private void AnimateDoor()
     {
-        Quaternion targetRotation = isOpen ? openRotation : closedRotation;
-        doorTransform.localRotation = Quaternion.Slerp(
-            doorTransform.localRotation,
+        // CHANGED: Use RotateTowards for constant speed. 
+        // Slerp with Time.deltaTime creates an asymptotic curve that slows down indefinitely at the end.
+        // We multiply openSpeed by 45 to make '2' feel similar to the previous speed but linear.
+        float step = openSpeed * 45f * Time.deltaTime;
+
+        doorPivot.localRotation = Quaternion.RotateTowards(
+            doorPivot.localRotation,
             targetRotation,
-            Time.deltaTime * openSpeed
+            step
         );
-        
-        if (Quaternion.Angle(doorTransform.localRotation, targetRotation) < 0.1f)
+
+        // Check if we are close enough to stop
+        if (Quaternion.Angle(doorPivot.localRotation, targetRotation) < 0.1f)
         {
-            doorTransform.localRotation = targetRotation;
+            doorPivot.localRotation = targetRotation;
             isAnimating = false;
         }
     }
-    
+
     public void Lock()
     {
         isLocked = true;
     }
-    
+
     public void Unlock()
     {
         isLocked = false;
     }
-    
+
     public void SetRequiredKey(string keyID)
     {
         requiresKey = true;
         requiredKeyID = keyID;
     }
-    
+
     private bool HasRequiredKey(GameObject interactor)
     {
-        // This is a placeholder - implement your own inventory system check
-        // For example:
-        // Inventory inventory = interactor.GetComponent<Inventory>();
-        // return inventory != null && inventory.HasKey(requiredKeyID);
-        
-        return false; // Default to false
+        // Placeholder implementation
+        return false;
     }
-    
+
     private void PlaySound(AudioClip clip)
     {
         if (audioSource != null && clip != null)
@@ -144,28 +175,9 @@ public class Door : Interactable
             audioSource.PlayOneShot(clip);
         }
     }
-    
+
     private void PlayLockedSound()
     {
         PlaySound(lockedSound);
-    }
-    
-    public bool IsOpen()
-    {
-        return isOpen;
-    }
-    
-    public bool IsLocked()
-    {
-        return isLocked;
-    }
-    
-    // For simple collision-based interaction
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player") && !isLocked)
-        {
-            Interact(other.gameObject);
-        }
     }
 }
