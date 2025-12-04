@@ -148,8 +148,8 @@ MonoBehaviour:
   requiresKey: 0
   requiredKeyID: 
   openSpeed: 2
-  slideDistance: 2
-  doorTransform: {fileID: 0}
+  openAngle: 90
+  doorPivot: {fileID: 7430014763621203022}
   openSound: {fileID: 8300000, guid: 56581f92fab239549aa4dd611298d2ee, type: 3}
   closeSound: {fileID: 8300000, guid: 9410e1c11bb39794797dad1533aa6bc7, type: 3}
   lockedSound: {fileID: 8300000, guid: 832f518cf68f3314786c1063ae9a6f11, type: 3}

@@ -9,9 +9,10 @@ public class Door : Interactable
 
     [Header("Animation")]
     [SerializeField] private float openSpeed = 2f;
-    // SLIDE SETTINGS: Distance to move up
-    [SerializeField] private float slideDistance = 2f;
-    [SerializeField] private Transform doorTransform;
+    [SerializeField] private float openAngle = 90f;
+
+    [Tooltip("Assign the Parent Object here if you want the pivot to be different from the mesh center.")]
+    [SerializeField] private Transform doorPivot;
 
     [Header("Audio")]
     [SerializeField] private AudioClip openSound;
@@ -22,9 +23,9 @@ public class Door : Interactable
     private bool isOpen = false;
     private bool isAnimating = false;
 
-    // POSITIONS: storing start and end locations
-    private Vector3 closedPosition;
-    private Vector3 openPosition;
+    // ROTATION: storing start and target rotations
+    private Quaternion closedRotation;
+    private Quaternion targetRotation;
 
     void Start()
     {
@@ -34,14 +35,17 @@ public class Door : Interactable
             audioSource = gameObject.AddComponent<AudioSource>();
         }
 
-        if (doorTransform == null)
+        // AUTO-DETECT PIVOT:
+        // Changed default to 'transform' (self) to prevent accidental rotation of 
+        // the entire room/wall if the parent is a container object.
+        if (doorPivot == null)
         {
-            doorTransform = transform;
+            doorPivot = transform;
         }
 
-        // Initialize positions relative to the parent
-        closedPosition = doorTransform.localPosition;
-        openPosition = closedPosition + new Vector3(0, slideDistance, 0);
+        // Initialize rotation based on the pivot's current state
+        closedRotation = doorPivot.localRotation;
+        targetRotation = closedRotation;
     }
 
     void Update()
@@ -52,24 +56,20 @@ public class Door : Interactable
         }
     }
 
-    // CHANGED: Override the base Interact() method with NO arguments
-    // This matches the signature called by PlayerInteract.cs
     protected override void Interact()
     {
-        if (isAnimating) return;
+        // Find player to determine which side they are on
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
 
         if (isLocked)
         {
-            // Attempt to find the player to check for keys since checking
-            // relies on inventory. 
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
-
             if (requiresKey && player != null)
             {
                 if (HasRequiredKey(player))
                 {
                     Unlock();
-                    ToggleDoor();
+                    // Pass the player so we can calculate direction
+                    ToggleDoor(player.transform.position);
                 }
                 else
                 {
@@ -85,39 +85,63 @@ public class Door : Interactable
         }
         else
         {
-            ToggleDoor();
+            // Pass the player position to determine open direction
+            Vector3 playerPos = (player != null) ? player.transform.position : transform.position + transform.forward;
+            ToggleDoor(playerPos);
         }
     }
 
-    private void ToggleDoor()
+    private void ToggleDoor(Vector3 interactorPosition)
     {
         isOpen = !isOpen;
-        isAnimating = true;
 
         if (isOpen)
         {
+            // --- DIRECTION CALCULATION ---
+            // Calculate vector from Pivot to Player
+            Vector3 directionToInteractor = interactorPosition - doorPivot.position;
+
+            // Dot Product check:
+            // > 0 means player is in front (facing the same way as door forward)
+            // < 0 means player is behind
+            float dot = Vector3.Dot(doorPivot.forward, directionToInteractor);
+
+            // If player is in front, open angle is negative (swing out).
+            // If player is behind, open angle is positive (swing in).
+            float angle = (dot >= 0) ? -openAngle : openAngle;
+
+            // Calculate the new target rotation relative to the CLOSED state
+            targetRotation = closedRotation * Quaternion.Euler(0, angle, 0);
+
             PlaySound(openSound);
         }
         else
         {
+            // Closing: Always return to original rotation
+            targetRotation = closedRotation;
             PlaySound(closeSound);
         }
+
+        isAnimating = true;
     }
 
     private void AnimateDoor()
     {
-        Vector3 targetPosition = isOpen ? openPosition : closedPosition;
+        // CHANGED: Use RotateTowards for constant speed. 
+        // Slerp with Time.deltaTime creates an asymptotic curve that slows down indefinitely at the end.
+        // We multiply openSpeed by 45 to make '2' feel similar to the previous speed but linear.
+        float step = openSpeed * 45f * Time.deltaTime;
 
-        // Move position instead of rotation
-        doorTransform.localPosition = Vector3.Lerp(
-            doorTransform.localPosition,
-            targetPosition,
-            Time.deltaTime * openSpeed
+        doorPivot.localRotation = Quaternion.RotateTowards(
+            doorPivot.localRotation,
+            targetRotation,
+            step
         );
 
-        if (Vector3.Distance(doorTransform.localPosition, targetPosition) < 0.01f)
+        // Check if we are close enough to stop
+        if (Quaternion.Angle(doorPivot.localRotation, targetRotation) < 0.1f)
         {
-            doorTransform.localPosition = targetPosition;
+            doorPivot.localRotation = targetRotation;
             isAnimating = false;
         }
     }
@@ -141,9 +165,6 @@ public class Door : Interactable
     private bool HasRequiredKey(GameObject interactor)
     {
         // Placeholder implementation
-        // Inventory inventory = interactor.GetComponent<Inventory>();
-        // return inventory != null && inventory.HasKey(requiredKeyID);
-
         return false;
     }
 
