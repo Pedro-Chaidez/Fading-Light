@@ -31,7 +31,7 @@ public class EnemyMovement : MonoBehaviour
     public float facingThreshold = 0.9f;
     public bool stunned = false;
 
-    private void Awake()
+    private void Start()
     {
         players = GameObject.FindGameObjectsWithTag("Player");
         playertransforms = new Transform[players.Length];
@@ -47,15 +47,6 @@ public class EnemyMovement : MonoBehaviour
 
     private void Update()
     {
-        if(players.Length == 0)
-        {
-            players = GameObject.FindGameObjectsWithTag("Player");
-            playertransforms = new Transform[players.Length];
-            for (int i = 0; i < players.Length; i++)
-            {
-                playertransforms.SetValue(players[i].transform, i);
-            }
-        }
         if (playerInView())
         {
             outOfSight = 0f;

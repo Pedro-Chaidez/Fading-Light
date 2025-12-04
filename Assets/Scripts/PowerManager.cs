@@ -8,22 +8,14 @@ public class PowerManager : MonoBehaviour
     public float tickValue = 0.01f;
     private float tickTime = 0.01f;
     private float lastTick = 0f;
-    private TMP_Text percentage;
-    private GameObject bar1;
-    private GameObject bar3;
+    public TMP_Text percentage;
+    public GameObject bar1;
+    public GameObject bar3;
     private Flashlight flashlight;
-    [SerializeField]
-    private GameObject PowerUI;
     void Start()
     {
         flashlight = GetComponent<Flashlight>();
         current = start;
-        PowerUI = Instantiate(PowerUI);
-        percentage = PowerUI.transform.GetChild(1).GetComponent<TMP_Text>();
-        bar1 = PowerUI.transform.GetChild(3).gameObject;
-        bar1.SetActive(false);
-        bar3 = PowerUI.transform.GetChild(4).gameObject;
-        bar3.SetActive(false);
     }
 
     void Update() {

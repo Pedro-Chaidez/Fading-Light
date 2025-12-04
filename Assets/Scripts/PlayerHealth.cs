@@ -1,13 +1,11 @@
-﻿using UnityEditor.SearchService;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour {
     public float maxHealth = 100f;
-    public float currentHealth = 100f;
-    private Image healthBar;
-    [SerializeField]
-    private GameObject diedScreen;
+    public float currentHealth;
+    public Image healthBar;
+    public GameObject diedScreen;
     public float lerp;
     float lerpSpeed;
 
@@ -18,27 +16,33 @@ public class PlayerHealth : MonoBehaviour {
 
     private PlayerCoordinates playerCoordinates;
     private CharacterController character;
-    private PlayerMotor movement;
-    private Stamina stamina;
-    private PowerManager powerManager;
-    private Inventory inventory;
 
-    private void Awake() {
-        maxHealth = 100f;
-        currentHealth = 100f;
+    // Change these to interfaces
+    private IPlayerMotor movement;
+    private IStamina stamina;
+
+    // ADD THIS METHOD - for dependency injection
+    public void Initialize(IStamina staminaComponent, IPlayerMotor motorComponent) {
+        stamina = staminaComponent;
+        movement = motorComponent;
+    }
+
+    private void Start() {
+        currentHealth = maxHealth;
         Debug.Log("Player Health: " + currentHealth);
         if (diedScreen != null) {
             diedScreen.SetActive(false);
         }
         playerCoordinates = GetComponent<PlayerCoordinates>();
         character = GetComponent<CharacterController>();
-        movement = GetComponent<PlayerMotor>();
-        stamina = GetComponent<Stamina>();
-        powerManager = GetComponent<PowerManager>();
-        inventory = GetComponent<Inventory>();
-        healthBar = GameObject.Find("/HealthBar/Bar").GetComponent<Image>();
-        diedScreen = Instantiate(diedScreen);
-        diedScreen.SetActive(false);
+
+        // Only get components if not already injected (for testing)
+        if (movement == null) {
+            movement = GetComponent<PlayerMotor>();
+        }
+        if (stamina == null) {
+            stamina = GetComponent<Stamina>();
+        }
     }
     private void Update() {
         if (currentHealth > maxHealth) {
@@ -92,9 +96,50 @@ public class PlayerHealth : MonoBehaviour {
         if (diedScreen != null) {
             diedScreen.SetActive(true);
         }
-        GetComponent<InputManager>().enabled = false;
-        stamina.enabled = false;
-        powerManager.enabled = false;
-        inventory.enabled = false;
+
+        // Null-safe check for InputManager
+        var inputManager = GetComponent<InputManager>();
+        if (inputManager != null) {
+            inputManager.enabled = false;
+        }
+
+        // Null-safe check for Stamina
+        if (stamina != null) {
+            stamina.enabled = false;
+        }
+    }
+
+    public void Resurrect() {
+        Debug.Log("Resurrected");
+
+        if (diedScreen != null) {
+            diedScreen.SetActive(false);
+        }
+
+        currentHealth = maxHealth;
+
+        if (stamina != null) {
+            stamina.current = stamina.max;
+            stamina.enabled = true;
+        }
+
+        if (movement != null) {
+            movement.sprinting = false;
+            movement.speed = 6f;
+        }
+
+        var inputManager = GetComponent<InputManager>();
+        if (inputManager != null) {
+            inputManager.enabled = true;
+        }
+
+        if (playerCoordinates != null && character != null) {
+            character.enabled = false;
+            transform.position = playerCoordinates.GetInitPosition();
+            transform.rotation = playerCoordinates.GetRotation();
+            character.enabled = true;
+        }
+
+        Debug.Log("Player Health: " + currentHealth);
     }
 }

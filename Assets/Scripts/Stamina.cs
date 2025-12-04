@@ -5,9 +5,25 @@ using UnityEngine.UI;
 
 public class Stamina : MonoBehaviour, IStamina
 {
-    public float max = 100f;
-    public float current;
-    private Image staminaBar;
+    [SerializeField] private float _max = 100f;
+    [SerializeField] private float _current;
+
+    public float max {
+        get { return _max; }
+        set { _max = value; }
+    }
+
+    public float current {
+        get { return _current; }
+        set { _current = value; }
+    }
+    public new bool enabled {
+        get { return base.enabled; }
+        set { base.enabled = value; }
+    }
+
+
+    public Image staminaBar;
     public float lerp;
     float lerpSpeed;
     public float drainSpeed = 20f;
@@ -27,7 +43,6 @@ public class Stamina : MonoBehaviour, IStamina
         }
         playerCoordinates = GetComponent<PlayerCoordinates>();
         position = playerCoordinates.GetInitPosition();
-        staminaBar = GameObject.Find("/Stamina/Bar").GetComponent<Image>();
     }
 
     void Update()
