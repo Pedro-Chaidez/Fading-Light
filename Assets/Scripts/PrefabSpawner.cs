@@ -8,7 +8,7 @@ public class PrefabSpawner : MonoBehaviour
     [SerializeField]
     private bool spawnOnStart;
 
-    private void Awake()
+    private void Start()
     {
         respawnPoint = GetComponent<Transform>();
         if (spawnOnStart)

@@ -236,6 +236,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 1.089
       objectReference: {fileID: 0}
+    - target: {fileID: 2647750263396290380, guid: 5e439fa4b98642a46aa6ead1e88f39f1, type: 3}
+      propertyPath: spawnOnStart
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2893339281201656975, guid: 5e439fa4b98642a46aa6ead1e88f39f1, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -300,7 +304,8 @@ PrefabInstance:
       propertyPath: prefabToSpawn
       value: 
       objectReference: {fileID: 2391704193216289254, guid: 2f08bb8cd3b9605428d785897a8dd043, type: 3}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7408760487787983003, guid: 5e439fa4b98642a46aa6ead1e88f39f1, type: 3}
     m_RemovedGameObjects:
     - {fileID: 5683212756099367616, guid: 5e439fa4b98642a46aa6ead1e88f39f1, type: 3}
     - {fileID: 5258523864691881972, guid: 5e439fa4b98642a46aa6ead1e88f39f1, type: 3}
