@@ -9,7 +9,7 @@ using TMPro;
 public class MenuController : MonoBehaviour
 {
     [Header("Scene To Load")]
-    [SerializeField] private string singlePlayerSceneName = "Main Game";
+    [SerializeField] private string singlePlayerSceneName = "TutorialLevel";
 
     [Header("UI Panels")]
     [SerializeField] private GameObject optionsMenuPanel = null;
@@ -48,6 +48,9 @@ public class MenuController : MonoBehaviour
 
     private void Start()
     {
+        // Force the scene name to ensure it overrides any old Inspector values
+        singlePlayerSceneName = "TutorialLevel";
+
         // Ensure cursor is visible and unlocked in the menu
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
