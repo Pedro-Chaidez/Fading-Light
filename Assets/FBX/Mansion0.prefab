@@ -1565,7 +1565,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpawnRoom
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 5788191191191541274, guid: 91d9b6293e28d1945ae088404c72f74c, type: 3}
+      propertyPath: spawnOnStart
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 1314012635211491789, guid: 91d9b6293e28d1945ae088404c72f74c, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
