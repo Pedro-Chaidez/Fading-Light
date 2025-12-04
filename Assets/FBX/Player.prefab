@@ -520,7 +520,7 @@ MonoBehaviour:
   crouchTimer: 1
   walkingClip: {fileID: 8300000, guid: 4e3f38d790207474399aaa9fd6b31d52, type: 3}
   walkInterval: 0.7
-  sprintInterval: 0.4
+  sprintInterval: 0.3
 --- !u!114 &1140354165909895898
 MonoBehaviour:
   m_ObjectHideFlags: 0
