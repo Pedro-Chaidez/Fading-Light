@@ -5,10 +5,22 @@ public class PlayerUI : MonoBehaviour
     private TextMeshProUGUI promptText;
     private void Start()
     {
-        promptText = GameObject.Find("/Canvas/InteractText").GetComponent<TextMeshProUGUI>();
+        var obj = GameObject.Find("InteractText");
+        if (obj != null)
+        {
+            promptText = obj.GetComponent<TextMeshProUGUI>();
+        }
+        
+        if (promptText == null)
+        {
+            Debug.LogWarning("PlayerUI: Could not find 'InteractText' object or TextMeshProUGUI component. UI prompts will not work.");
+        }
     }
     public void UpdateText(string promptMessage)
     {
-        promptText.text = promptMessage;
+        if (promptText != null)
+        {
+            promptText.text = promptMessage;
+        }
     }
 }
