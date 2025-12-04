@@ -12,12 +12,17 @@ public class DisplayWinScreen : MonoBehaviour
     // Cache the list of ghosts so we don't have to search the whole world every frame
     private GameObject[] ghosts;
     private bool isLevelCleared;
+    private float timer = 0f;
+    private const float countdownDuration = 5f;
+    private bool timerActive = false;
 
     void Awake()
     {
         isLevelCleared = false;
-
+        timer = 0f; // Reset the timer
+        timerActive = true;
         // 1. Find the ghosts ONLY once when the level starts.
+
         ghosts = GameObject.FindGameObjectsWithTag("Ghost");
 
         // 2. Handle the UI instantiation safely
@@ -35,6 +40,18 @@ public class DisplayWinScreen : MonoBehaviour
 
     void LateUpdate()
     {
+        if (timerActive)
+        {
+            timer += Time.deltaTime; // Add the time since the last frame
+
+            if (timer >= countdownDuration)
+            {
+                Debug.Log("5 seconds have passed in LateUpdate!");
+                // Perform actions here after 5 seconds
+                timerActive = false; // Stop the timer
+                return;
+            }
+        }
         // If we already won, stop doing math!
         if (isLevelCleared) return;
 
