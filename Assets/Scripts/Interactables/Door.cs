@@ -6,23 +6,26 @@ public class Door : Interactable
     [SerializeField] private bool isLocked = false;
     [SerializeField] private bool requiresKey = false;
     [SerializeField] private string requiredKeyID = "";
-    
+
     [Header("Animation")]
     [SerializeField] private float openSpeed = 2f;
-    [SerializeField] private float doorOpenAngle = 90f;
+    // SLIDE SETTINGS: Distance to move up
+    [SerializeField] private float slideDistance = 2f;
     [SerializeField] private Transform doorTransform;
-    
+
     [Header("Audio")]
     [SerializeField] private AudioClip openSound;
     [SerializeField] private AudioClip closeSound;
     [SerializeField] private AudioClip lockedSound;
-    
+
     private AudioSource audioSource;
     private bool isOpen = false;
     private bool isAnimating = false;
-    private Quaternion closedRotation;
-    private Quaternion openRotation;
-    
+
+    // POSITIONS: storing start and end locations
+    private Vector3 closedPosition;
+    private Vector3 openPosition;
+
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -30,16 +33,17 @@ public class Door : Interactable
         {
             audioSource = gameObject.AddComponent<AudioSource>();
         }
-        
+
         if (doorTransform == null)
         {
             doorTransform = transform;
         }
-        
-        closedRotation = doorTransform.localRotation;
-        openRotation = closedRotation * Quaternion.Euler(0, doorOpenAngle, 0);
+
+        // Initialize positions relative to the parent
+        closedPosition = doorTransform.localPosition;
+        openPosition = closedPosition + new Vector3(0, slideDistance, 0);
     }
-    
+
     void Update()
     {
         if (isAnimating)
@@ -47,17 +51,22 @@ public class Door : Interactable
             AnimateDoor();
         }
     }
-    
-    public void Interact(GameObject interactor = null)
+
+    // CHANGED: Override the base Interact() method with NO arguments
+    // This matches the signature called by PlayerInteract.cs
+    protected override void Interact()
     {
         if (isAnimating) return;
-        
+
         if (isLocked)
         {
-            if (requiresKey && interactor != null)
+            // Attempt to find the player to check for keys since checking
+            // relies on inventory. 
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+
+            if (requiresKey && player != null)
             {
-                // Check if the interactor has the required key
-                if (HasRequiredKey(interactor))
+                if (HasRequiredKey(player))
                 {
                     Unlock();
                     ToggleDoor();
@@ -79,12 +88,12 @@ public class Door : Interactable
             ToggleDoor();
         }
     }
-    
+
     private void ToggleDoor()
     {
         isOpen = !isOpen;
         isAnimating = true;
-        AnimateDoor();
+
         if (isOpen)
         {
             PlaySound(openSound);
@@ -94,49 +103,50 @@ public class Door : Interactable
             PlaySound(closeSound);
         }
     }
-    
+
     private void AnimateDoor()
     {
-        Quaternion targetRotation = isOpen ? openRotation : closedRotation;
-        doorTransform.localRotation = Quaternion.Slerp(
-            doorTransform.localRotation,
-            targetRotation,
+        Vector3 targetPosition = isOpen ? openPosition : closedPosition;
+
+        // Move position instead of rotation
+        doorTransform.localPosition = Vector3.Lerp(
+            doorTransform.localPosition,
+            targetPosition,
             Time.deltaTime * openSpeed
         );
-        
-        if (Quaternion.Angle(doorTransform.localRotation, targetRotation) < 0.1f)
+
+        if (Vector3.Distance(doorTransform.localPosition, targetPosition) < 0.01f)
         {
-            doorTransform.localRotation = targetRotation;
+            doorTransform.localPosition = targetPosition;
             isAnimating = false;
         }
     }
-    
+
     public void Lock()
     {
         isLocked = true;
     }
-    
+
     public void Unlock()
     {
         isLocked = false;
     }
-    
+
     public void SetRequiredKey(string keyID)
     {
         requiresKey = true;
         requiredKeyID = keyID;
     }
-    
+
     private bool HasRequiredKey(GameObject interactor)
     {
-        // This is a placeholder - implement your own inventory system check
-        // For example:
+        // Placeholder implementation
         // Inventory inventory = interactor.GetComponent<Inventory>();
         // return inventory != null && inventory.HasKey(requiredKeyID);
-        
-        return false; // Default to false
+
+        return false;
     }
-    
+
     private void PlaySound(AudioClip clip)
     {
         if (audioSource != null && clip != null)
@@ -144,28 +154,9 @@ public class Door : Interactable
             audioSource.PlayOneShot(clip);
         }
     }
-    
+
     private void PlayLockedSound()
     {
         PlaySound(lockedSound);
-    }
-    
-    public bool IsOpen()
-    {
-        return isOpen;
-    }
-    
-    public bool IsLocked()
-    {
-        return isLocked;
-    }
-    
-    // For simple collision-based interaction
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player") && !isLocked)
-        {
-            Interact(other.gameObject);
-        }
     }
 }
