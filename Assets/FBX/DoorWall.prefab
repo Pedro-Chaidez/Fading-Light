@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1374220072897906219}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: DoorWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59,19 +59,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9074594807982636234, guid: 15745f8b70e5d524183539fa272d90a3, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9074594807982636234, guid: 15745f8b70e5d524183539fa272d90a3, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9074594807982636234, guid: 15745f8b70e5d524183539fa272d90a3, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9074594807982636234, guid: 15745f8b70e5d524183539fa272d90a3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -90
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9074594807982636234, guid: 15745f8b70e5d524183539fa272d90a3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -85,6 +85,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Door_Wooden_Round_Right
       objectReference: {fileID: 0}
+    - target: {fileID: 9074594807983055082, guid: 15745f8b70e5d524183539fa272d90a3, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074594807983055082, guid: 15745f8b70e5d524183539fa272d90a3, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9074594807983055083, guid: 15745f8b70e5d524183539fa272d90a3, type: 3}
     m_RemovedGameObjects: []
@@ -95,7 +103,7 @@ PrefabInstance:
       addedObject: {fileID: 6206100085830457929}
     - targetCorrespondingSourceObject: {fileID: 9074594807983055082, guid: 15745f8b70e5d524183539fa272d90a3, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 7644104073373501738}
+      addedObject: {fileID: 4390621306085731149}
   m_SourcePrefab: {fileID: 100100000, guid: 15745f8b70e5d524183539fa272d90a3, type: 3}
 --- !u!1 &7430014763621097582 stripped
 GameObject:
@@ -123,7 +131,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.3448642, y: 2.1738925, z: 0.32937062}
   m_Center: {x: 0.6446914, y: 1.1131961, z: 0.05084342}
---- !u!114 &7644104073373501738
+--- !u!114 &4390621306085731149
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -132,7 +140,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7430014763621097582}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 789fd5d8a5806e048afb000514cfb86c, type: 3}
+  m_Script: {fileID: 11500000, guid: 7969de4259fde514b9b8e0eb0f77509d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Door
   promptMessage: Use Door?
@@ -140,8 +148,8 @@ MonoBehaviour:
   requiresKey: 0
   requiredKeyID: 
   openSpeed: 2
-  doorOpenAngle: 90
-  doorTransform: {fileID: 7430014763621203022}
+  openAngle: 90
+  doorPivot: {fileID: 7430014763621203022}
   openSound: {fileID: 8300000, guid: 56581f92fab239549aa4dd611298d2ee, type: 3}
   closeSound: {fileID: 8300000, guid: 9410e1c11bb39794797dad1533aa6bc7, type: 3}
   lockedSound: {fileID: 8300000, guid: 832f518cf68f3314786c1063ae9a6f11, type: 3}
@@ -161,6 +169,10 @@ PrefabInstance:
     - target: {fileID: 370700119055577111, guid: b89b3b3efb3070240952a3335d270247, type: 3}
       propertyPath: m_Name
       value: Dungeon_Passage
+      objectReference: {fileID: 0}
+    - target: {fileID: 370700119055577111, guid: b89b3b3efb3070240952a3335d270247, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 370700119056002103, guid: b89b3b3efb3070240952a3335d270247, type: 3}
       propertyPath: m_LocalPosition.x
