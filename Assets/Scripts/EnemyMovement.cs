@@ -47,20 +47,38 @@ public class EnemyMovement : MonoBehaviour
 
     private void Update()
     {
-        if(players.Length == 0)
+        if(players == null || players.Length == 0)
         {
             players = GameObject.FindGameObjectsWithTag("Player");
-            playertransforms = new Transform[players.Length];
-            for (int i = 0; i < players.Length; i++)
+            if (players != null && players.Length > 0)
             {
-                playertransforms.SetValue(players[i].transform, i);
+                playertransforms = new Transform[players.Length];
+                for (int i = 0; i < players.Length; i++)
+                {
+                    if (players[i] != null)
+                    {
+                        playertransforms.SetValue(players[i].transform, i);
+                    }
+                }
+            }
+            else
+            {
+                playertransforms = new Transform[0];
+                return; // No players found, can't do anything
             }
         }
+        
+        // Validate arrays are still valid
+        if (playertransforms == null || playertransforms.Length == 0)
+        {
+            return;
+        }
+        
         if (playerInView())
         {
             outOfSight = 0f;
             chasing = true;
-            if (!stunned)
+            if (!stunned && currPlayer != null)
             {
                 agent.SetDestination(currPlayer.position);
             }
@@ -72,7 +90,7 @@ public class EnemyMovement : MonoBehaviour
         else if (chasing)
         {
             outOfSight += Time.deltaTime;
-            if (outOfSight < aggroLost)
+            if (outOfSight < aggroLost && currPlayer != null)
             {
                 if (!stunned)
                 {
@@ -97,12 +115,29 @@ public class EnemyMovement : MonoBehaviour
     }
     private bool playerInView()
     {
+        // Safety checks
+        if (playertransforms == null || playertransforms.Length == 0)
+        {
+            return false;
+        }
+        
+        if (players == null || players.Length != playertransforms.Length)
+        {
+            return false;
+        }
+        
         Vector3[] dirToPlayers = new Vector3[playertransforms.Length];
         float[] distanceToPlayers = new float[playertransforms.Length];
         float[] anglesBetweenPlayers = new float[playertransforms.Length];
 
         for (int i = 0; i < playertransforms.Length; i++)
         {
+            // Skip null players
+            if (playertransforms[i] == null || players[i] == null)
+            {
+                continue;
+            }
+            
             dirToPlayers.SetValue((playertransforms[i].position - transform.position).normalized, i);
             distanceToPlayers.SetValue(dirToPlayers[i].magnitude, i);
             anglesBetweenPlayers.SetValue(Vector3.Angle(transform.forward, dirToPlayers[i]), i);
@@ -112,6 +147,12 @@ public class EnemyMovement : MonoBehaviour
 
         for (int i = 0; i < playertransforms.Length; i++)
         {
+            // Skip null players
+            if (playertransforms[i] == null || players[i] == null)
+            {
+                continue;
+            }
+            
             if (distanceToPlayers[i] <= viewDistance && anglesBetweenPlayers[i] <= viewAngle / 2f)
             {
                 if (Physics.Raycast(transform.position + Vector3.up, dirToPlayers[i], out RaycastHit hit, viewDistance, ~obstacleMask))
@@ -122,7 +163,10 @@ public class EnemyMovement : MonoBehaviour
                         Vector3 enemyDir = (transform.position - playertransforms[i].position).normalized;
                         float enemyDot = Vector3.Dot(transform.forward, playerDir);
                         float playerDot = Vector3.Dot(playertransforms[i].forward, enemyDir);
-                        if(enemyDot > facingThreshold && playerDot > facingThreshold && players[i].GetComponent<Flashlight>().maxLightToggle)
+                        
+                        // Safe check for Flashlight component
+                        Flashlight flashlight = players[i].GetComponent<Flashlight>();
+                        if(enemyDot > facingThreshold && playerDot > facingThreshold && flashlight != null && flashlight.maxLightToggle)
                         {
                             stunned = true;
                         }
@@ -148,7 +192,10 @@ public class EnemyMovement : MonoBehaviour
                         Vector3 enemyDir = (transform.position - playertransforms[i].position).normalized;
                         float enemyDot = Vector3.Dot(transform.forward, playerDir);
                         float playerDot = Vector3.Dot(playertransforms[i].forward, enemyDir);
-                        if (enemyDot > facingThreshold && playerDot > facingThreshold && players[i].GetComponent<Flashlight>().maxLightToggle)
+                        
+                        // Safe check for Flashlight component
+                        Flashlight flashlight = players[i].GetComponent<Flashlight>();
+                        if (enemyDot > facingThreshold && playerDot > facingThreshold && flashlight != null && flashlight.maxLightToggle)
                         {
                             stunned = true;
                         }

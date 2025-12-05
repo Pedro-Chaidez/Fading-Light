@@ -1,68 +1,115 @@
 using UnityEngine;
+using UnityEngine.UI;
+using Unity.Netcode;
 
 public class DisplayWinScreen : MonoBehaviour
 {
     [Header("UI Settings")]
-    // Rename this to clearly indicate it's the reference from the Inspector
     [SerializeField] private GameObject youWinScreenPrefab;
 
-    // This will hold the actual object currently in the scene
     private GameObject winScreenInstance;
-
-    // Cache the list of ghosts so we don't have to search the whole world every frame
-    private GameObject[] ghosts;
     private bool isLevelCleared;
+    private int initialGhostCount = 0;
+    private bool hasSeenGhosts = false;
 
     void Awake()
     {
+        // Check if we're in a networked game - if so, let NetworkWinScreenManager handle it
+        if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsListening)
+        {
+            // In multiplayer, NetworkWinScreenManager handles this
+            // This script can be disabled or used as fallback
+            if (NetworkWinScreenManager.Instance != null)
+            {
+                Debug.Log("DisplayWinScreen: NetworkWinScreenManager detected. Disabling local win screen manager.");
+                enabled = false;
+                return;
+            }
+        }
+        
         isLevelCleared = false;
+        
+        // Count ghosts at the start of the scene
+        GameObject[] initialGhosts = GameObject.FindGameObjectsWithTag("Ghost");
+        initialGhostCount = initialGhosts.Length;
+        hasSeenGhosts = initialGhostCount > 0;
+        
+        Debug.Log($"DisplayWinScreen: Scene started with {initialGhostCount} ghost(s).");
 
-        // 1. Find the ghosts ONLY once when the level starts.
-        ghosts = GameObject.FindGameObjectsWithTag("Ghost");
-
-        // 2. Handle the UI instantiation safely
+        // Handle the UI instantiation safely
         if (youWinScreenPrefab != null)
         {
-            // Create the screen and store it in 'winScreenInstance', keeping the Prefab reference safe
-            winScreenInstance = Instantiate(youWinScreenPrefab);
+            // Find Canvas to parent the win screen (important for builds)
+            Canvas canvas = FindFirstObjectByType<Canvas>();
+            if (canvas == null)
+            {
+                GameObject canvasObj = GameObject.Find("Canvas");
+                if (canvasObj != null)
+                {
+                    canvas = canvasObj.GetComponent<Canvas>();
+                }
+            }
+
+            if (canvas != null)
+            {
+                winScreenInstance = Instantiate(youWinScreenPrefab, canvas.transform);
+            }
+            else
+            {
+                winScreenInstance = Instantiate(youWinScreenPrefab);
+                Debug.LogWarning("DisplayWinScreen: Canvas not found! Win screen instantiated without parent.");
+            }
+            
             winScreenInstance.SetActive(false);
         }
         else
         {
-            Debug.LogError("YouWinScreen Prefab is not assigned in the Inspector!");
+            Debug.LogError("DisplayWinScreen: YouWinScreen Prefab is not assigned in the Inspector!");
         }
     }
 
     void LateUpdate()
     {
-        // If we already won, stop doing math!
+        // If we already won, stop checking
         if (isLevelCleared) return;
 
-        // 3. THE FIX:
-        // Instead of searching the world with FindGameObjectsWithTag,
-        // we check the list we already made.
+        // If there were no ghosts at the start, don't show win screen
+        if (!hasSeenGhosts) return;
 
-        bool allGhostsDead = true;
+        // Dynamically check for ghosts each frame (more reliable)
+        GameObject[] currentGhosts = GameObject.FindGameObjectsWithTag("Ghost");
+        int currentGhostCount = currentGhosts.Length;
 
-        foreach (GameObject ghost in ghosts)
+        // Check if all ghosts are gone
+        if (currentGhostCount == 0)
         {
-            // In Unity, if an object is Destroyed, it equals 'null'.
-            // So we check: Is this ghost still alive (not null) AND active?
-            if (ghost != null && ghost.activeInHierarchy)
-            {
-                // Found a living ghost, so we haven't won yet.
-                allGhostsDead = false;
-                break;
-            }
-        }
-
-        if (allGhostsDead)
-        {
+            // All ghosts are dead! Show win screen
             if (winScreenInstance != null)
             {
                 winScreenInstance.SetActive(true);
+                
+                // Bring to front
+                if (winScreenInstance.transform.parent != null)
+                {
+                    winScreenInstance.transform.SetAsLastSibling();
+                }
+                
+                // Ensure visibility
+                CanvasGroup canvasGroup = winScreenInstance.GetComponent<CanvasGroup>();
+                if (canvasGroup != null)
+                {
+                    canvasGroup.alpha = 1f;
+                    canvasGroup.interactable = true;
+                    canvasGroup.blocksRaycasts = true;
+                }
+                
+                Debug.Log($"DisplayWinScreen: All {initialGhostCount} ghost(s) eliminated! Win screen displayed.");
+                isLevelCleared = true;
             }
-            isLevelCleared = true;
+            else
+            {
+                Debug.LogError("DisplayWinScreen: Win screen instance is null! Cannot display win screen.");
+            }
         }
     }
 }

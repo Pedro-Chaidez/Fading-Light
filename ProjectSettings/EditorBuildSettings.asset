@@ -5,21 +5,24 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/Test.unity
-    guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
     path: Assets/Scenes/mainMenu.unity
     guid: 6e2e9a0329eb742fdbeb84d9c8aec90c
+  - enabled: 1
+    path: Assets/Scenes/TutorialLevel.unity
+    guid: e868ab34c345d8c42baee8020aced11b
+  - enabled: 1
+    path: Assets/Scenes/Level1.unity
+    guid: b4a1bc0e0cc75724b927ca68a10b4a47
+  - enabled: 0
+    path: Assets/Scenes/Test.unity
+    guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 0
     path: Assets/Scenes/Main Game.unity
     guid: 19ff704fb590c2647b75d6d998043cc6
   - enabled: 1
-    path: Assets/Scenes/TutorialLevel.unity
-    guid: de5eb51962ef97e4e9bb8920d5ad6f7f
-  - enabled: 1
-    path: Assets/Scenes/Level1.unity
-    guid: b4a1bc0e0cc75724b927ca68a10b4a47
+    path: Assets/FadingNight.unity
+    guid: cd0f9c7edab274cc8ba5c47b11e3a29a
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
