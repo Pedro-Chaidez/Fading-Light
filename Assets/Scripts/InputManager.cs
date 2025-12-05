@@ -36,29 +36,29 @@ public class InputManager : MonoBehaviour
     private void FixedUpdate()
     {
         if (motor != null && playerInput != null)
-        {
-            motor.ProcessMove(onFoot.Move.ReadValue<Vector2>());
+    {
+        motor.ProcessMove(onFoot.Move.ReadValue<Vector2>());
         }
     }
     private void LateUpdate()
     {
         if (look != null && playerInput != null)
-        {
-            look.ProcessLook(onFoot.Look.ReadValue<Vector2>());
+    {
+        look.ProcessLook(onFoot.Look.ReadValue<Vector2>());
         }
     }
     private void OnEnable()
     {
         if (playerInput != null)
-        {
-            onFoot.Enable();
+    {
+        onFoot.Enable();
         }
     }
     private void OnDisable()
     {
         if (playerInput != null)
-        {
-            onFoot.Disable();
+    {
+        onFoot.Disable();
         }
     }
     

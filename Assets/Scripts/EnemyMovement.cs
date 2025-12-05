@@ -52,14 +52,14 @@ public class EnemyMovement : MonoBehaviour
             players = GameObject.FindGameObjectsWithTag("Player");
             if (players != null && players.Length > 0)
             {
-                playertransforms = new Transform[players.Length];
-                for (int i = 0; i < players.Length; i++)
+            playertransforms = new Transform[players.Length];
+            for (int i = 0; i < players.Length; i++)
                 {
                     if (players[i] != null)
-                    {
-                        playertransforms.SetValue(players[i].transform, i);
-                    }
-                }
+            {
+                playertransforms.SetValue(players[i].transform, i);
+            }
+        }
             }
             else
             {
