@@ -1,39 +1,48 @@
 {
   "summary": {
-    "generatedon": "2025-12-04T13:06:06Z",
+    "generatedon": "2025-12-06T03:10:19Z",
     "parser": "MultiReportParser (6x OpenCoverParser)",
     "assemblies": 3,
-    "classes": 34,
-    "files": 32,
-    "coveredlines": 838,
-    "uncoveredlines": 578,
-    "coverablelines": 1416,
-    "totallines": 3807,
-    "linecoverage": 59.1,
+    "classes": 43,
+    "files": 40,
+    "coveredlines": 1657,
+    "uncoveredlines": 551,
+    "coverablelines": 2208,
+    "totallines": 4971,
+    "linecoverage": 75,
     "coveredbranches": 0,
     "totalbranches": 0,
-    "coveredmethods": 131,
-    "totalmethods": 208,
-    "methodcoverage": 62.9
+    "coveredmethods": 225,
+    "totalmethods": 303,
+    "methodcoverage": 74.2
  },
   "coverage": {
     "assemblies": [
-      { "name": "EditMode", "classes": 1, "coverage": 100, "coveredlines": 16, "coverablelines": 16, "totallines": 42, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 100, "coveredmethods": 2, "totalmethods": 2, "classesinassembly": [
-        { "name": "FlashlightTests", "coverage": 100, "coveredlines": 16, "coverablelines": 16, "totallines": 42, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 100, "coveredmethods": 2, "totalmethods": 2 } ] },
-      { "name": "PlayMode", "classes": 6, "coverage": 98.2, "coveredlines": 284, "coverablelines": 289, "totallines": 907, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 94.4, "coveredmethods": 34, "totalmethods": 36, "classesinassembly": [
+      { "name": "EditMode", "classes": 4, "coverage": 95.6, "coveredlines": 196, "coverablelines": 205, "totallines": 340, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 100, "coveredmethods": 22, "totalmethods": 22, "classesinassembly": [
+        { "name": "FlashlightTests", "coverage": 64, "coveredlines": 16, "coverablelines": 25, "totallines": 32, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 100, "coveredmethods": 4, "totalmethods": 4 },
+        { "name": "PlayerMotorTests", "coverage": 100, "coveredlines": 44, "coverablelines": 44, "totallines": 73, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 100, "coveredmethods": 6, "totalmethods": 6 },
+        { "name": "PowerManagerTests", "coverage": 100, "coveredlines": 38, "coverablelines": 38, "totallines": 66, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 100, "coveredmethods": 6, "totalmethods": 6 },
+        { "name": "PrefabSpawnerTests", "coverage": 100, "coveredlines": 98, "coverablelines": 98, "totallines": 169, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 100, "coveredmethods": 6, "totalmethods": 6 } ] },
+      { "name": "PlayMode", "classes": 12, "coverage": 98.8, "coveredlines": 793, "coverablelines": 802, "totallines": 1864, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 97.2, "coveredmethods": 72, "totalmethods": 74, "classesinassembly": [
         { "name": "BanishTests", "coverage": 100, "coveredlines": 23, "coverablelines": 23, "totallines": 52, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 100, "coveredmethods": 2, "totalmethods": 2 },
         { "name": "DamageTests", "coverage": 100, "coveredlines": 66, "coverablelines": 66, "totallines": 125, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 100, "coveredmethods": 3, "totalmethods": 3 },
-        { "name": "InventoryTests", "coverage": 96.7, "coveredlines": 88, "coverablelines": 91, "totallines": 170, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 91.6, "coveredmethods": 11, "totalmethods": 12 },
+        { "name": "EnemyMovementTests", "coverage": 100, "coveredlines": 88, "coverablelines": 88, "totallines": 140, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 100, "coveredmethods": 6, "totalmethods": 6 },
+        { "name": "InventoryTests", "coverage": 96.1, "coveredlines": 101, "coverablelines": 105, "totallines": 185, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 100, "coveredmethods": 16, "totalmethods": 16 },
         { "name": "MockStamina", "coverage": 100, "coveredlines": 2, "coverablelines": 2, "totallines": 195, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 100, "coveredmethods": 1, "totalmethods": 1 },
         { "name": "PlayerHealthTests", "coverage": 100, "coveredlines": 105, "coverablelines": 105, "totallines": 195, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 100, "coveredmethods": 17, "totalmethods": 17 },
-        { "name": "TestItem", "coverage": 0, "coveredlines": 0, "coverablelines": 2, "totallines": 170, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 0, "coveredmethods": 0, "totalmethods": 1 } ] },
-      { "name": "Scripts", "classes": 27, "coverage": 48.4, "coveredlines": 538, "coverablelines": 1111, "totallines": 3223, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 55.8, "coveredmethods": 95, "totalmethods": 170, "classesinassembly": [
+        { "name": "PlayerInteractTests", "coverage": 100, "coveredlines": 86, "coverablelines": 86, "totallines": 145, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 100, "coveredmethods": 6, "totalmethods": 6 },
+        { "name": "PlayerMotorPlayModeTests", "coverage": 100, "coveredlines": 43, "coverablelines": 43, "totallines": 76, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 100, "coveredmethods": 4, "totalmethods": 4 },
+        { "name": "PowerManagerPlayModeTests", "coverage": 100, "coveredlines": 69, "coverablelines": 69, "totallines": 115, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 100, "coveredmethods": 5, "totalmethods": 5 },
+        { "name": "StaminaTests", "coverage": 100, "coveredlines": 209, "coverablelines": 209, "totallines": 306, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 100, "coveredmethods": 11, "totalmethods": 11 },
+        { "name": "TestInteractable", "coverage": 25, "coveredlines": 1, "coverablelines": 4, "totallines": 145, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 50, "coveredmethods": 1, "totalmethods": 2 },
+        { "name": "TestItem", "coverage": 0, "coveredlines": 0, "coverablelines": 2, "totallines": 185, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 0, "coveredmethods": 0, "totalmethods": 1 } ] },
+      { "name": "Scripts", "classes": 27, "coverage": 55.6, "coveredlines": 668, "coverablelines": 1201, "totallines": 3292, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 63.2, "coveredmethods": 131, "totalmethods": 207, "classesinassembly": [
         { "name": "Banish", "coverage": 66.6, "coveredlines": 6, "coverablelines": 9, "totallines": 16, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 50, "coveredmethods": 1, "totalmethods": 2 },
         { "name": "BanishItem", "coverage": 100, "coveredlines": 9, "coverablelines": 9, "totallines": 13, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 100, "coveredmethods": 2, "totalmethods": 2 },
         { "name": "Battery", "coverage": 71.4, "coveredlines": 5, "coverablelines": 7, "totallines": 15, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 50, "coveredmethods": 1, "totalmethods": 2 },
         { "name": "Button", "coverage": 100, "coveredlines": 4, "coverablelines": 4, "totallines": 12, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 100, "coveredmethods": 1, "totalmethods": 1 },
         { "name": "DamageProtection", "coverage": 0, "coveredlines": 0, "coverablelines": 9, "totallines": 27, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 0, "coveredmethods": 0, "totalmethods": 2 },
-        { "name": "EnemyMovement", "coverage": 0, "coveredlines": 0, "coverablelines": 143, "totallines": 196, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 0, "coveredmethods": 0, "totalmethods": 6 },
+        { "name": "EnemyMovement", "coverage": 43.1, "coveredlines": 73, "coverablelines": 169, "totallines": 185, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 85.7, "coveredmethods": 18, "totalmethods": 21 },
         { "name": "Flashlight", "coverage": 81.8, "coveredlines": 36, "coverablelines": 44, "totallines": 65, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 100, "coveredmethods": 4, "totalmethods": 4 },
         { "name": "FlashlightLogic", "coverage": 0, "coveredlines": 0, "coverablelines": 7, "totallines": 17, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 0, "coveredmethods": 0, "totalmethods": 2 },
         { "name": "FriendResurrection", "coverage": 0, "coveredlines": 0, "coverablelines": 7, "totallines": 14, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 0, "coveredmethods": 0, "totalmethods": 2 },
@@ -45,15 +54,15 @@
         { "name": "Item", "coverage": 100, "coveredlines": 5, "coverablelines": 5, "totallines": 22, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 100, "coveredmethods": 1, "totalmethods": 1 },
         { "name": "PlayerCoordinates", "coverage": 83.3, "coveredlines": 15, "coverablelines": 18, "totallines": 31, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 80, "coveredmethods": 4, "totalmethods": 5 },
         { "name": "PlayerHealth", "coverage": 82.8, "coveredlines": 82, "coverablelines": 99, "totallines": 145, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 100, "coveredmethods": 10, "totalmethods": 10 },
-        { "name": "PlayerInteract", "coverage": 100, "coveredlines": 39, "coverablelines": 39, "totallines": 54, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 100, "coveredmethods": 3, "totalmethods": 3 },
+        { "name": "PlayerInteract", "coverage": 68.4, "coveredlines": 50, "coverablelines": 73, "totallines": 96, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 78.5, "coveredmethods": 11, "totalmethods": 14 },
         { "name": "PlayerLook", "coverage": 100, "coveredlines": 13, "coverablelines": 13, "totallines": 26, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 100, "coveredmethods": 3, "totalmethods": 3 },
-        { "name": "PlayerMotor", "coverage": 62.7, "coveredlines": 32, "coverablelines": 51, "totallines": 80, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 81.8, "coveredmethods": 9, "totalmethods": 11 },
+        { "name": "PlayerMotor", "coverage": 78.4, "coveredlines": 40, "coverablelines": 51, "totallines": 80, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 90.9, "coveredmethods": 10, "totalmethods": 11 },
         { "name": "PlayerMovement", "coverage": 0, "coveredlines": 0, "coverablelines": 42, "totallines": 62, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 0, "coveredmethods": 0, "totalmethods": 3 },
         { "name": "PlayerUI", "coverage": 100, "coveredlines": 3, "coverablelines": 3, "totallines": 11, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 100, "coveredmethods": 1, "totalmethods": 1 },
         { "name": "PortableBanish", "coverage": 0, "coveredlines": 0, "coverablelines": 9, "totallines": 16, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 0, "coveredmethods": 0, "totalmethods": 2 },
-        { "name": "PowerManager", "coverage": 96.9, "coveredlines": 32, "coverablelines": 33, "totallines": 47, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 100, "coveredmethods": 3, "totalmethods": 3 },
-        { "name": "PrefabSpawner", "coverage": 76.9, "coveredlines": 10, "coverablelines": 13, "totallines": 27, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 100, "coveredmethods": 2, "totalmethods": 2 },
+        { "name": "PowerManager", "coverage": 93.6, "coveredlines": 59, "coverablelines": 63, "totallines": 85, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 78.5, "coveredmethods": 11, "totalmethods": 14 },
+        { "name": "PrefabSpawner", "coverage": 100, "coveredlines": 13, "coverablelines": 13, "totallines": 27, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 100, "coveredmethods": 2, "totalmethods": 2 },
         { "name": "SpeedBoost", "coverage": 0, "coveredlines": 0, "coverablelines": 10, "totallines": 19, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 0, "coveredmethods": 0, "totalmethods": 2 },
-        { "name": "Stamina", "coverage": 77, "coveredlines": 47, "coverablelines": 61, "totallines": 92, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 72.7, "coveredmethods": 8, "totalmethods": 11 } ] } ]
+        { "name": "Stamina", "coverage": 90.1, "coveredlines": 55, "coverablelines": 61, "totallines": 92, "branchcoverage": null, "coveredbranches": 0, "totalbranches": 0, "methodcoverage": 81.8, "coveredmethods": 9, "totalmethods": 11 } ] } ]
   }
 }

@@ -148,6 +148,21 @@ public class InventoryTests {
         Assert.IsTrue(inventory.isBanish());
     }
 
+    [UnityTest]
+    public IEnumerator ScrollUp_ChangesSelectedItem() {
+        inventory.AddItem(CreateItem("Item1"));
+        inventory.AddItem(CreateItem("Item2"));
+        yield return null;
+
+        int initialSelected = GetPrivateSelectedItem();
+
+        inventory.scrollUp();
+        yield return null;
+
+        int newSelected = GetPrivateSelectedItem();
+        Assert.AreNotEqual(initialSelected, newSelected, "Selected item should change");
+    }
+
     // ------- Helpers to read private fields -------
     private List<Item> GetPrivateItems() {
         return (List<Item>)typeof(Inventory)
