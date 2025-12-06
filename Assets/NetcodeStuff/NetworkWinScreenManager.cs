@@ -45,8 +45,8 @@ public class NetworkWinScreenManager : NetworkBehaviour
     
     private System.Collections.IEnumerator DelayedCountInitialGhosts()
     {
-        // Wait a few frames for ghosts to spawn
-        yield return new WaitForSeconds(0.5f);
+        // Wait longer for ghosts to spawn (they might spawn late via NetworkPrefabSpawner)
+        yield return new WaitForSeconds(1f);
         CountInitialGhosts();
     }
 
@@ -64,6 +64,8 @@ public class NetworkWinScreenManager : NetworkBehaviour
 
     private void InitializeWinScreen()
     {
+        if (!IsClient) return;
+        
         if (youWinScreenPrefab == null)
         {
             Debug.LogError("NetworkWinScreenManager: YouWinScreen Prefab is not assigned!");
@@ -90,7 +92,23 @@ public class NetworkWinScreenManager : NetworkBehaviour
             Debug.LogWarning("NetworkWinScreenManager: Canvas not found! Win screen instantiated without parent.");
         }
         
+        // FORCE hide the win screen - multiple safeguards
         winScreenInstance.SetActive(false);
+        
+        // Hide all children
+        foreach (Transform child in winScreenInstance.transform)
+        {
+            child.gameObject.SetActive(false);
+        }
+        
+        // Set CanvasGroup to invisible
+        CanvasGroup canvasGroup = winScreenInstance.GetComponent<CanvasGroup>();
+        if (canvasGroup != null)
+        {
+            canvasGroup.alpha = 0f;
+            canvasGroup.interactable = false;
+            canvasGroup.blocksRaycasts = false;
+        }
     }
 
     private void CountInitialGhosts()
