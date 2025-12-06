@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Unity.Netcode;
 using Unity.Collections; 
 using UnityEngine;
@@ -12,7 +13,7 @@ public class LobbyManager : NetworkBehaviour
     public static LobbyManager Instance { get; private set; }
 
     [Header("Lobby Settings")]
-    [SerializeField] private string gameSceneName = "Main Game";
+    [SerializeField] private string gameSceneName = "TutorialLevel";
     [SerializeField] private int minPlayersToStart = 1;
 
     [Header("Visual Customization")]
@@ -38,7 +39,11 @@ public class LobbyManager : NetworkBehaviour
 
     private NetworkList<FixedString32Bytes> connectedPlayers = new NetworkList<FixedString32Bytes>();
     private HashSet<string> foundServers = new HashSet<string>(); 
-    private string selectedServerIP; 
+    private string selectedServerIP;
+    
+    [Header("Player Name Settings")]
+    [SerializeField] private bool useCustomNames = true;
+    [SerializeField] private string defaultPlayerNamePrefix = "Player"; 
 
     private void Awake()
     {
@@ -117,12 +122,36 @@ public class LobbyManager : NetworkBehaviour
         base.OnDestroy();
     }
 
-    public void CreateLobby()
+    public async void CreateLobby()
     {
+        if (NetworkManager.Singleton == null)
+        {
+            Debug.LogError("NetworkManager.Singleton is null!");
+            return;
+        }
+
         if (NetworkManager.Singleton.IsListening) 
         {
             Debug.Log("NetworkManager was active. Shutting down...");
             NetworkManager.Singleton.Shutdown();
+            
+            // Wait for shutdown to complete
+            await Task.Delay(200);
+            
+            // Additional check - wait until not listening
+            int maxWait = 50; // Max 5 seconds
+            while (NetworkManager.Singleton != null && NetworkManager.Singleton.IsListening && maxWait > 0)
+            {
+                await Task.Delay(100);
+                maxWait--;
+            }
+        }
+
+        // Ensure NetworkManager is still valid
+        if (NetworkManager.Singleton == null)
+        {
+            Debug.LogError("NetworkManager.Singleton became null after shutdown!");
+            return;
         }
 
         bool started = NetworkManager.Singleton.StartHost();
@@ -133,7 +162,7 @@ public class LobbyManager : NetworkBehaviour
         }
         else
         {
-            Debug.LogError("Failed to start Host!");
+            Debug.LogError($"Failed to start Host! IsListening: {NetworkManager.Singleton.IsListening}, IsClient: {NetworkManager.Singleton.IsClient}, IsHost: {NetworkManager.Singleton.IsHost}, IsServer: {NetworkManager.Singleton.IsServer}");
         }
     }
 
@@ -233,7 +262,9 @@ public class LobbyManager : NetworkBehaviour
         {
             if (!IsPlayerInList(clientId)) 
             {
-                connectedPlayers.Add($"Player {clientId}");
+                // Default name until client sends their name
+                string defaultName = $"{defaultPlayerNamePrefix} {clientId}";
+                connectedPlayers.Add(defaultName);
             }
         }
         
@@ -279,6 +310,13 @@ public class LobbyManager : NetworkBehaviour
         {
             connectedPlayers.OnListChanged += OnPlayerListChanged;
             UpdatePlayerListUI();
+            
+            // Register this player's name
+            if (IsOwner)
+            {
+                ulong localClientId = NetworkManager.Singleton.LocalClientId;
+                RegisterPlayerNameServerRpc(GetPlayerName(), localClientId);
+            }
         }
     }
 
@@ -287,6 +325,43 @@ public class LobbyManager : NetworkBehaviour
         if (IsClient && connectedPlayers != null)
         {
             connectedPlayers.OnListChanged -= OnPlayerListChanged;
+        }
+        base.OnNetworkDespawn();
+    }
+    
+    private string GetPlayerName()
+    {
+        if (useCustomNames)
+        {
+            // Try to get saved player name
+            string savedName = PlayerPrefs.GetString("PlayerName", "");
+            if (!string.IsNullOrEmpty(savedName))
+            {
+                return savedName;
+            }
+        }
+        return $"{defaultPlayerNamePrefix} {NetworkManager.Singleton.LocalClientId}";
+    }
+    
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    private void RegisterPlayerNameServerRpc(FixedString32Bytes playerName, ulong clientId)
+    {
+        
+        // Update the connected players list with the custom name
+        bool found = false;
+        for (int i = 0; i < connectedPlayers.Count; i++)
+        {
+            string currentName = connectedPlayers[i].ToString();
+            if (currentName.Contains($"Player {clientId}") || currentName == playerName.ToString())
+            {
+                connectedPlayers[i] = playerName;
+                found = true;
+                break;
+            }
+        }
+        if (!found)
+        {
+            connectedPlayers.Add(playerName);
         }
     }
 
@@ -325,14 +400,19 @@ public class LobbyManager : NetworkBehaviour
                 textComp.fontSize = fontSize; 
                 textComp.fontStyle = FontStyles.Normal; 
                 
-                if (NetworkManager.Singleton != null && pName.Contains($"Player {NetworkManager.Singleton.LocalClientId}"))
+                // Check if this is the local player
+                bool isLocalPlayer = false;
+                if (NetworkManager.Singleton != null)
                 {
-                    textComp.color = localPlayerColor;
+                    ulong localId = NetworkManager.Singleton.LocalClientId;
+                    string localName = GetPlayerName();
+                    if (pName == localName || pName.Contains($"Player {localId}"))
+                    {
+                        isLocalPlayer = true;
+                    }
                 }
-                else
-                {
-                    textComp.color = otherPlayerColor;
-                }
+                
+                textComp.color = isLocalPlayer ? localPlayerColor : otherPlayerColor;
             }
         }
     }
@@ -360,7 +440,11 @@ public class LobbyManager : NetworkBehaviour
             LanDiscovery.Instance.StopListening();
         }
 
-        if (NetworkManager.Singleton != null) NetworkManager.Singleton.Shutdown();
+        if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsListening)
+        {
+            Debug.Log("LeaveLobby: Shutting down NetworkManager...");
+            NetworkManager.Singleton.Shutdown();
+        }
         
         BackToMain(); 
         
@@ -370,6 +454,12 @@ public class LobbyManager : NetworkBehaviour
             {
                 DestroyImmediate(playerListContainer.GetChild(i).gameObject);
             }
+        }
+        
+        // Clear connected players list
+        if (IsServer && connectedPlayers != null)
+        {
+            connectedPlayers.Clear();
         }
     }
 }
